@@ -99,7 +99,7 @@ class BaseClient(object):
             headers['Authorization'] = 'Bearer %s' % self._getToken()
         if (self.__accept_verbosity):
             # All possible routes should call the same verbosity header function to ensure case sensitivity
-            # accept-verbosity and Accept-Verbosity would not overwrite each other, leading to unpredicable response from OCS
+            # accept-verbosity and Accept-Verbosity would not overwrite each other, leading to unpredicable response from ADH
             headers.update(BaseClient.getVerbosityHeader(True))
         if self.__request_timeout is not None:
             headers['Request-Timeout'] = str(self.__request_timeout)
