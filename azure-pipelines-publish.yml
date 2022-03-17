@@ -1,0 +1,16 @@
+jobs:
+  - job: PublishLibrary
+    pool:
+      name: 00-OSIManaged-Containers
+      demands: Agent.OS -equals Linux
+    steps:
+      - bash: |
+          echo Install tools
+          pip install wheel
+          pip install twine
+          echo Build library
+          python setup.py sdist bdist_wheel
+          echo Upload library
+          python -m twine upload dist/* -u $(username) -p $(password)
+          echo Complete
+        displayName: 'Publish library'
