@@ -3,7 +3,7 @@
 | :loudspeaker: **Notice**: Samples have been updated to reflect that they work on AVEVA Data Hub. The samples also work on OSIsoft Cloud Services unless otherwise noted. |
 | -----------------------------------------------------------------------------------------------|  
 
-**Version:** 0.7.0_preview
+**Version:** 0.7.1_preview
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-sample_libraries-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2622&branchName=main)
 
@@ -28,6 +28,6 @@ Developed using Python 3.9.5.
 
 [AVEVA Samples](https://github.com/osisoft/OSI-samples) are licensed under the Apache 2 license.
 
-For the main ADH sample libraries page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/SAMPLE_LIBRARIES.md)  
-For the main ADH samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
+For the main ADH sample libraries page [ReadMe](https://github.com/osisoft/OSI-Samples-ADH/blob/main/docs/SAMPLE_LIBRARIES.md)  
+For the main ADH samples page [ReadMe](https://github.com/osisoft/OSI-Samples-ADH)  
 For the main AVEVA samples page [ReadMe](https://github.com/osisoft/OSI-Samples)
