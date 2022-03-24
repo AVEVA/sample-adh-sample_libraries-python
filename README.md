@@ -1,6 +1,6 @@
-# Aveva Data Hub Python Library Sample
+# AVEVA Data Hub Python Library Sample
 
-| :loudspeaker: **Notice**: Samples have been updated to reflect that they work on AVEVA Data Hub. The samples also work on OSIsoft Cloud Services unless otherwise noted. |
+| :loudspeaker: **Notice**: This library is an AVEVA Data Hub targeted version of the ocs_sample_library_preview. The ocs_sample_library_preview library is being deprecated and this library should be used moving forward. |
 | -----------------------------------------------------------------------------------------------|  
 
 **Version:** 0.7.1_preview
