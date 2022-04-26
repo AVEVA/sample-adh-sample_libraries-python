@@ -11,8 +11,7 @@ class BaseClient(object):
     """Handles communication with Sds Service.  Internal Use"""
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
-                 client_secret: str = None, accept_verbosity: bool = False, 
-                 log_file: str = 'logfile.txt', log_level = logging.CRITICAL):
+                 client_secret: str = None, accept_verbosity: bool = False):
         self.__api_version = api_version
         self.__tenant = tenant
         self.__url = url  # if resource.endswith("/")  else resource + "/"
@@ -26,11 +25,7 @@ class BaseClient(object):
             self.__auth_object = None
 
         self.__uri_api = url + '/api/' + api_version
-        self.__session = requests.Session()
-        
-        logging.basicConfig(filename=log_file, encoding='utf-8', level=log_level, datefmt='%Y-%m-%d %H:%M:%S',
-                            format='%(asctime)s %(module)16s,line: %(lineno)4d %(levelname)8s | %(message)s')
-        
+        self.__session = requests.Session()        
 
     @property
     def uri(self) -> str:
@@ -79,14 +74,6 @@ class BaseClient(object):
     @RequestTimeout.setter
     def RequestTimeout(self, value: int):
         self.__request_timeout = value
-
-    @property
-    def LogLevel(self) -> logging._Level:
-        pass
-    
-    @LogLevel.setter
-    def LogLevel(self, value):
-        logging.getLogger().setLevel(value)
 
     def _getToken(self) -> str:
         """

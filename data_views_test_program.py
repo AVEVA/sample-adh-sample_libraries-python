@@ -100,6 +100,12 @@ def main(test=False):
     print(' ######  #    #   #   #    #   ##   # ###### #    # #          #    ')
     print('--------------------------------------------------------------------')
 
+    # Step 0 - set up logger
+    log_file = 'logfile.txt'
+    log_level = logging.ERROR
+    logging.basicConfig(filename=log_file, encoding='utf-8', level=log_level, datefmt='%Y-%m-%d %H:%M:%S',
+                    format='%(asctime)s %(module)16s,line: %(lineno)4d %(levelname)8s | %(message)s')
+
     # Step 1
     print()
     print('Step 1: Authenticate against ADH')
@@ -107,10 +113,10 @@ def main(test=False):
                            appsettings.get('TenantId'),
                            appsettings.get('Resource'),
                            appsettings.get('ClientId'),
-                           appsettings.get('ClientSecret'),
-                           log_level= logging.DEBUG)
+                           appsettings.get('ClientSecret'))
 
-    namespace_id = appsettings.get('NamespaceId')
+    #namespace_id = appsettings.get('NamespaceId')
+    namespace_id = 'fake'
 
     print(namespace_id)
     print(adh_client.uri)
