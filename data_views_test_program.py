@@ -102,7 +102,7 @@ def main(test=False):
 
     # Step 0 - set up logger
     log_file = 'logfile.txt'
-    log_level = logging.ERROR
+    log_level = logging.DEBUG
     logging.basicConfig(filename=log_file, encoding='utf-8', level=log_level, datefmt='%Y-%m-%d %H:%M:%S',
                     format='%(asctime)s %(module)16s,line: %(lineno)4d %(levelname)8s | %(message)s')
 
@@ -115,8 +115,8 @@ def main(test=False):
                            appsettings.get('ClientId'),
                            appsettings.get('ClientSecret'))
 
-    #namespace_id = appsettings.get('NamespaceId')
-    namespace_id = 'fake'
+    namespace_id = appsettings.get('NamespaceId')
+    #namespace_id = 'fake'
 
     print(namespace_id)
     print(adh_client.uri)

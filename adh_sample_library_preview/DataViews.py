@@ -1,5 +1,6 @@
 from __future__ import annotations
 import json
+import logging
 import re
 from typing import Any
 
@@ -264,6 +265,7 @@ class DataViews(Securable, object):
             without affecting the client itself.
         :return:
         """
+        logging.debug(f'Getting interpolated data for {data_view_id}')
         if url is None:
             if namespace_id is None:
                 raise TypeError
