@@ -3,7 +3,7 @@
 | :loudspeaker: **Notice**: This library is an AVEVA Data Hub targeted version of the ocs_sample_library_preview. The ocs_sample_library_preview library is being deprecated and this library should be used moving forward. |
 | -----------------------------------------------------------------------------------------------|  
 
-**Version:** 0.7.1_preview
+**Version:** 0.8.0_preview
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-sample_libraries-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=4674&branchName=main)
 
@@ -21,6 +21,10 @@ The library is not intended to show every endpoint and every option/parameter fo
 Other language libraries and samples are available on [GitHub](https://github.com/osisoft/OSI-Samples).
 
 Tests are done by testing the sample apps that use this.
+
+
+## Logging
+TODO: write this section
 
 ---
 

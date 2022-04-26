@@ -1,4 +1,5 @@
 from __future__ import annotations
+import logging
 import requests
 from urllib.parse import urlsplit
 
@@ -10,7 +11,8 @@ class BaseClient(object):
     """Handles communication with Sds Service.  Internal Use"""
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
-                 client_secret: str = None, accept_verbosity: bool = False):
+                 client_secret: str = None, accept_verbosity: bool = False, 
+                 log_file: str = 'logfile.txt', log_level = logging.CRITICAL):
         self.__api_version = api_version
         self.__tenant = tenant
         self.__url = url  # if resource.endswith("/")  else resource + "/"
@@ -25,6 +27,10 @@ class BaseClient(object):
 
         self.__uri_api = url + '/api/' + api_version
         self.__session = requests.Session()
+        
+        logging.basicConfig(filename=log_file, encoding='utf-8', level=log_level, datefmt='%Y-%m-%d %H:%M:%S',
+                            format='%(asctime)s %(module)16s,line: %(lineno)4d %(levelname)8s | %(message)s')
+        
 
     @property
     def uri(self) -> str:
@@ -73,6 +79,14 @@ class BaseClient(object):
     @RequestTimeout.setter
     def RequestTimeout(self, value: int):
         self.__request_timeout = value
+
+    @property
+    def LogLevel(self) -> logging._Level:
+        pass
+    
+    @LogLevel.setter
+    def LogLevel(self, value):
+        logging.getLogger().setLevel(value)
 
     def _getToken(self) -> str:
         """
@@ -141,6 +155,7 @@ class BaseClient(object):
         return { 'Accept-Verbosity': verbosity_string } 
 
     def checkResponse(self, response, main_message: str):
+        logging.debug(f'requested executed - status code: {response.status_code}')
         if response.status_code < 200 or response.status_code >= 300:
             status = response.status_code
             reason = response.text
@@ -155,6 +170,7 @@ class BaseClient(object):
             response.close()
 
             message = main_message + error
+            logging.error(message)
             raise SdsError(message)
 
         # this happens on a collection return that is partially successful
@@ -174,6 +190,7 @@ class BaseClient(object):
             response.close()
 
             message = main_message + errorToWrite
+            logging.error(message)
             raise SdsError(message)
 
     def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
@@ -187,6 +204,7 @@ class BaseClient(object):
         if additional_headers:
             headers.update(additional_headers)
 
+        logging.debug(f'executing request - method: {method}, url: {url}')
         return self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
 
     def __del__(self):

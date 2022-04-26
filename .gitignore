@@ -136,3 +136,5 @@ config.ini
 product-readiness.*
 appsettings.json
 sample_local_testing_program.py
+program.py
+logfile.txt

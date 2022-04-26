@@ -1,3 +1,5 @@
+import logging
+
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
@@ -20,7 +22,8 @@ class ADHClient:
     """
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str,
-                 client_secret: str = None, accept_verbosity: bool = False):
+                 client_secret: str = None, accept_verbosity: bool = False,
+                 log_file: str = 'logfile.txt', log_level = logging.CRITICAL):
         """
         Use this to help in communinication with ADH
         :param api_version: Version of the api you are communicating with
@@ -31,8 +34,8 @@ class ADHClient:
         :param accept_verbosity: Sets whether in value calls you get all values or just
             non-default values
         """
-        self.__base_client = BaseClient(api_version, tenant, url, client_id,
-                                        client_secret, accept_verbosity)
+        self.__base_client = BaseClient(api_version, tenant, url, client_id, client_secret,
+                                        accept_verbosity, log_file, log_level)
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)
         self.__asset_types = AssetTypes(self.__base_client)
@@ -83,6 +86,17 @@ class ADHClient:
     @request_timeout.setter
     def request_timeout(self, value: int):
         self.__base_client.RequestTimeout = value
+
+    @property
+    def log_level(self) -> int:
+        """
+        :return: Log level of the logger
+        """
+        return self.__base_client.LogLevel
+
+    @log_level.setter
+    def log_level(self, value):
+        self.__base_client.LogLevel = value
 
     @property
     def AssetRules(self) -> AssetRules:
