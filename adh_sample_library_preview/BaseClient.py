@@ -4,6 +4,7 @@ import requests
 from urllib.parse import urlsplit
 
 from .Authentication import Authentication
+from .Logger import LoggerFlags
 from .SdsError import SdsError
 
 
@@ -26,6 +27,7 @@ class BaseClient(object):
 
         self.__uri_api = url + '/api/' + api_version
         self.__session = requests.Session()        
+        self.__logger_flags = LoggerFlags()
 
     @property
     def uri(self) -> str:
@@ -74,6 +76,13 @@ class BaseClient(object):
     @RequestTimeout.setter
     def RequestTimeout(self, value: int):
         self.__request_timeout = value
+
+    @property
+    def LoggerFlags(self) -> LoggerFlags:
+        """
+        :return: The uri of this ADH client as a string
+        """
+        return self.__logger_flags
 
     def _getToken(self) -> str:
         """
@@ -141,8 +150,11 @@ class BaseClient(object):
         verbosity_string = 'verbose' if verbose else 'non-verbose'
         return { 'Accept-Verbosity': verbosity_string } 
 
-    def checkResponse(self, response, main_message: str):
-        logging.debug(f'requested executed - status code: {response.status_code}')
+    def checkResponse(self, response, main_message: str, parent_call_logging_enabled = False):
+
+        if parent_call_logging_enabled or self.__logger_flags.BaseClient:
+            logging.debug(f'requested executed - status code: {response.status_code}')
+
         if response.status_code < 200 or response.status_code >= 300:
             status = response.status_code
             reason = response.text
@@ -157,7 +169,9 @@ class BaseClient(object):
             response.close()
 
             message = main_message + error
-            logging.error(message)
+            if parent_call_logging_enabled or self.__logger_flags.BaseClient:
+                # TODO: should this be wrapped for errors? I would assume warning, error, and critical are not bound by the flags
+                logging.error(message)
             raise SdsError(message)
 
         # this happens on a collection return that is partially successful
@@ -177,10 +191,12 @@ class BaseClient(object):
             response.close()
 
             message = main_message + errorToWrite
-            logging.error(message)
+            if parent_call_logging_enabled or self.__logger_flags.BaseClient:
+                # TODO: should this be wrapped for errors? I would assume warning, error, and critical are not bound by the flags
+                logging.error(message)
             raise SdsError(message)
 
-    def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
+    def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, parent_call_logging_enabled = False, **kwargs):
         
         # Start with the necessary headers for SDS calls, such as authorization and content-type
         if not headers:
@@ -191,7 +207,9 @@ class BaseClient(object):
         if additional_headers:
             headers.update(additional_headers)
 
-        logging.debug(f'executing request - method: {method}, url: {url}')
+        if parent_call_logging_enabled or self.__logger_flags.BaseClient:
+            logging.debug(f'executing request - method: {method}, url: {url}')
+        
         return self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
 
     def __del__(self):

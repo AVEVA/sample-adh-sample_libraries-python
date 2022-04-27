@@ -118,6 +118,9 @@ def main(test=False):
     namespace_id = appsettings.get('NamespaceId')
     #namespace_id = 'fake'
 
+    #adh_client.LoggerFlags.DataViews = True
+    #adh_client.__base_client.__logger_flags.DataViews = True
+
     print(namespace_id)
     print(adh_client.uri)
 

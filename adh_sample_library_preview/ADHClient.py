@@ -6,6 +6,7 @@ from .AssetTypes import AssetTypes
 from .BaseClient import BaseClient
 from .Communities import Communities
 from .DataViews import DataViews
+from .Logger import LoggerFlags
 from .Namespaces import Namespaces
 from .Roles import Roles
 from .SharedStreams import SharedStreams
@@ -65,6 +66,13 @@ class ADHClient:
         return self.__base_client.tenant
 
     @property
+    def tenant(self) -> str:
+        """
+        :return: The tenant of this ADH client as a string
+        """
+        return self.__base_client.tenant
+
+    @property
     def acceptverbosity(self) -> bool:
         """
         :return: Whether this will include the accept verbosity header
@@ -85,6 +93,13 @@ class ADHClient:
     @request_timeout.setter
     def request_timeout(self, value: int):
         self.__base_client.RequestTimeout = value
+
+    @property
+    def LoggerFlags(self) -> LoggerFlags:
+        """
+        :return: The uri of this ADH client as a string
+        """
+        return self.__base_client.LoggerFlags
 
     @property
     def AssetRules(self) -> AssetRules:

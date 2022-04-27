@@ -8,6 +8,7 @@ from .BaseClient import BaseClient
 from .DataView.DataView import DataView
 from .DataView.ResolvedDataItems import ResolvedDataItems
 from .DataView.FieldSets import ResolvedFieldSets
+from .Logger import LoggerFlags
 from .Securable import Securable
 
 
@@ -25,6 +26,7 @@ class DataViews(Securable, object):
         
         self.__base_client = client
         self.__urlLinks = re.compile(r'<(\S+)>; rel="(\S+)"')
+        self.__logger_flags = client.LoggerFlags
 
         self.__setPathAndQueryTemplates()
 
@@ -265,7 +267,9 @@ class DataViews(Securable, object):
             without affecting the client itself.
         :return:
         """
-        logging.debug(f'Getting interpolated data for {data_view_id}')
+        if self.__logger_flags.DataViews:
+            logging.debug(f'Getting interpolated data for {data_view_id}')
+
         if url is None:
             if namespace_id is None:
                 raise TypeError
@@ -299,12 +303,14 @@ class DataViews(Securable, object):
                     dataView_id=self.__base_client.encode(data_view_id),
                 ),
                 params=params,
-                additional_headers=additional_headers
+                additional_headers=additional_headers,
+                parent_call_logging_enabled=self.__logger_flags.DataViews
             )
 
         self.__base_client.checkResponse(
             response,
             f'Failed to get Data View data interpolated for Data View, {data_view_id}.',
+            parent_call_logging_enabled=self.__logger_flags.DataViews
         )
 
         # build dictionary of first/next page URL links, if any
