@@ -25,19 +25,17 @@ class Users(object):
 
         self.__setPathAndQueryTemplates()
 
-    def getUserById(self, namespace_id: str, user_id: str) -> User:
+    def getUserById(self, user_id: str) -> User:
         """
         Returns the specified User
-        :param namespace_id: The namespace identifier
         :param user_id: The user identifier
         """
-        if namespace_id is None:
-            raise TypeError
+
         if user_id is None:
             raise TypeError
 
         response = self.__base_client.request('get', self.__user_path.format(
-            namespace_id=namespace_id, user_id=self.__base_client.encode(user_id)))
+            tenant_id=self.__tenant, user_id=self.__base_client.encode(user_id)))
         self.__base_client.checkResponse(
             response, f'Failed to get User, {user_id}.')
 
@@ -66,19 +64,17 @@ class Users(object):
             results.append(User.fromJson(item))
         return results
 
-    def getInvitationById(self, namespace_id: str, invitation_id: str) -> UserInvitation:
+    def getInvitationById(self, invitation_id: str) -> UserInvitation:
         """
         Returns the specified User Invitation
-        :param namespace_id: The namespace identifier
         :param invitation_id: The user invitation
         """
-        if namespace_id is None:
-            raise TypeError
+
         if invitation_id is None:
             raise TypeError
 
         response = self.__base_client.request('get', self.__invitation_path.format(
-            namespace_id=namespace_id, user_id=invitation_id))
+            tenant_id=self.__tenant, user_id=invitation_id))
         self.__base_client.checkResponse(
             response, f'Failed to get User Invitation, {invitation_id}.')
 
