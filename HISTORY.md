@@ -1,5 +1,9 @@
 # Version History
 
+## 0.7.4_preview / 2022-05-24
+
+- Fix typo in communities route
+
 ## 0.7.3_preview / 2022-05-24
 
 - Update communities queries to be compliant with changes made to the API
