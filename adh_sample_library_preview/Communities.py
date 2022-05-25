@@ -144,10 +144,9 @@ class Communities(object):
         Creates URLs that are used by the client
         : return:
         """
-        self.__tenant_path = self.__base_client.uri_API + \
-            '-preview/Tenants/' + self.__base_client.tenant
-        self.__communities_path = self.__tenant_path + '/Communities'
+        self.__base_path = self.__base_client.uri_API + '-preview/'
+        self.__communities_path = self.__base_path + '/Communities'
         self.__community_path = self.__communities_path + '/{community_id}'
         self.__summary_path = self.__community_path + '/Summary'
-        self.__search_streams_path = self.__tenant_path + \
+        self.__search_streams_path = self.__base_path + \
             '/Search/Communities/{community_id}/Streams'
