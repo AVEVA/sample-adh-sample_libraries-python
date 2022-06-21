@@ -2,11 +2,15 @@ from __future__ import annotations
 import requests
 from urllib.parse import urlsplit
 
+from adh_sample_library_preview.AbstractBaseClient import AbstractBaseClient
+
 from .Authentication import Authentication
 from .SdsError import SdsError
+from .SDS.SdsResultPage import SdsResultPage
+from .SDS.SdsStream import SdsStream
 
 
-class BaseClient(object):
+class BaseClient(AbstractBaseClient):
     """Handles communication with Sds Service.  Internal Use"""
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
@@ -74,6 +78,7 @@ class BaseClient(object):
     def RequestTimeout(self, value: int):
         self.__request_timeout = value
 
+
     def _getToken(self) -> str:
         """
         Gets the bearer token
@@ -81,12 +86,14 @@ class BaseClient(object):
         """
         return self.__auth_object.getToken()
 
+
     def encode(self, url: str):
         """
         Url encodes a provided url string
         :return:
         """
         return requests.utils.quote(url, safe=':')
+
 
     def sdsHeaders(self) -> dict[str, str]:
         """
@@ -106,6 +113,7 @@ class BaseClient(object):
 
         return headers
 
+
     def communityHeaders(self, community_id: str):
         """
         DEPRECATED - Use the additional_headers parameter on the BaseClient.request method 
@@ -119,6 +127,7 @@ class BaseClient(object):
 
         return headers
 
+
     def sdsNonVerboseHeader(self):
         """
         DEPRECATED - Use the additional_headers parameter on the BaseClient.request method 
@@ -131,16 +140,36 @@ class BaseClient(object):
 
         return headers
 
+
     @staticmethod
     def getCommunityIdHeader(community_id: str) -> dict[str, str]:
         return { 'Community-id': community_id }
+
 
     @staticmethod
     def getVerbosityHeader(verbose: bool) -> dict[str, str]:
         verbosity_string = 'verbose' if verbose else 'non-verbose'
         return { 'Accept-Verbosity': verbosity_string } 
 
-    def checkResponse(self, response, main_message: str):
+
+    def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
+        
+        # Start with the necessary headers for SDS calls, such as authorization and content-type
+        if not headers:
+            headers = self.sdsHeaders()
+        
+        # Extend this with the additional headers provided that either suppliment or override the default values
+        # This allows additional headers to be added to the HTTP call without blocking the base header call
+        if additional_headers:
+            headers.update(additional_headers)
+
+        response = self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
+        self.checkResponse(response=response)
+
+        return response;
+
+
+    def checkResponse(self, response, main_message: str = ''):
         if response.status_code < 200 or response.status_code >= 300:
             status = response.status_code
             reason = response.text
@@ -176,18 +205,64 @@ class BaseClient(object):
             message = main_message + errorToWrite
             raise SdsError(message)
 
-    def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
-        
-        # Start with the necessary headers for SDS calls, such as authorization and content-type
-        if not headers:
-            headers = self.sdsHeaders()
-        
-        # Extend this with the additional headers provided that either suppliment or override the default values
-        # This allows additional headers to be added to the HTTP call without blocking the base header call
-        if additional_headers:
-            headers.update(additional_headers)
 
-        return self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
+    def resolveContent(self, response, value_class = None, contentType = None):
+
+        if contentType == 'value':
+            result = response.json()
+            if value_class is None:
+                return result
+            return value_class.fromJson(result)
+
+        elif contentType == 'paged':
+            content = SdsResultPage.fromJson(response.json())
+
+            if value_class is None:
+                return content
+
+            results = SdsResultPage(continuation_token=content.ContinuationToken)
+            for r in content.Results:
+                results.Results.append(value_class.fromJson(r))
+            return results
+        
+        elif contentType == 'streams':
+            content = response.json()
+
+            results: list[SdsStream] = []
+            for item in content:
+                results.append(SdsStream.fromJson(item))
+            return results
+        elif contentType == 'bulk':
+            content = response.json()
+
+            if value_class is None:
+                return content
+
+            values = []
+            for valueArray in content:
+                valuesInside = []
+                for value in valueArray:
+                    valuesInside.append(value_class.fromJson(value))
+                values.append(valuesInside)
+            return values
+        else:
+            content = response.json()
+            if value_class is None:
+                return content
+            
+            results = []
+            for c in content:
+                results.append(value_class.fromJson(c))
+            return results
+
+
+    def validateParameters(*args):
+        for arg in args:
+            if arg is None:
+                raise TypeError
+            if type(arg) is list and not arg:
+                raise TypeError
+
 
     def __del__(self):
         self.__session.close()

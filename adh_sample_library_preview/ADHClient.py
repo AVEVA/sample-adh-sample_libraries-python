@@ -1,3 +1,5 @@
+from adh_sample_library_preview.AbstractBaseClient import AbstractBaseClient
+from adh_sample_library_preview.BaseClientStub import BaseClientStub
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
@@ -19,10 +21,9 @@ class ADHClient:
     A client that handles communication with AVEVA Data Hub
     """
 
-    def __init__(self, api_version: str, tenant: str, url: str, client_id: str,
-                 client_secret: str = None, accept_verbosity: bool = False):
+    def __init__(self, *args, **kwargs):
         """
-        Use this to help in communinication with ADH
+        Use this to help in communication with ADH
         :param api_version: Version of the api you are communicating with
         :param tenant: Your tenant ID
         :param url: The base URL for your ADH instance
@@ -31,8 +32,26 @@ class ADHClient:
         :param accept_verbosity: Sets whether in value calls you get all values or just
             non-default values
         """
-        self.__base_client = BaseClient(api_version, tenant, url, client_id,
-                                        client_secret, accept_verbosity)
+
+        if len(args) == 1 and isinstance(args[0], AbstractBaseClient):
+            self.__base_client = args[0]
+        
+        elif 'base_client' in kwargs:
+            self.__base_client = kwargs.get('base_client')
+        
+        elif len(args) == 6:
+            self.__base_client = BaseClient(args[0], args[1], args[2], args[3], args[4], args[5])
+        
+        elif len(kwargs) == 6:
+            self.__base_client = BaseClient(kwargs.get('api_version'),
+                                            kwargs.get('tenant'), 
+                                            kwargs.get('url'), 
+                                            kwargs.get('client_id'),
+                                            kwargs.get('client_secret'), 
+                                            kwargs.get('accept_verbosity'))
+        else:
+            raise Exception('arg error')
+
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)
         self.__asset_types = AssetTypes(self.__base_client)
