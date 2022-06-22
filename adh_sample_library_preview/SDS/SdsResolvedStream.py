@@ -11,7 +11,7 @@ from .SdsStream import SdsStream
 class SdsResolvedStream(object):
     """Sds resolved stream definition"""
 
-    def __init__(self, id: str = None, name: str = None, description: str = None, resolved = None, type = None):
+    def __init__(self, id: str, type: SdsType, name: str = None, description: str = None, resolved = None):
         """
         :param id: required
         :param name: not required
@@ -115,7 +115,7 @@ class SdsResolvedStream(object):
 
     def toDictionary(self):
         # required properties
-        result = {'Id': self.Id, 'TypeId': self.TypeId}
+        result = {'Id': self.Id, 'Type': self.Type}
 
         # optional properties
         if self.Name is not None:
@@ -159,32 +159,10 @@ class SdsResolvedStream(object):
         if 'Description' in content:
             result.Description = content['Description']
 
-        if 'TypeId' in content:
-            result.TypeId = content['TypeId']
+        if 'Resolved' in content:
+            result.Resolved = content['Resolved']
 
-        if 'Indexes' in content:
-            indexes = content['Indexes']
-            if indexes is not None and len(indexes) > 0:
-                result.Indexes = []
-                for value in indexes:
-                    result.Indexes.append(SdsStreamIndex.fromJson(value))
-
-        if 'InterpolationMode' in content:
-            interpolation_mode = content['InterpolationMode']
-            if interpolation_mode is not None:
-                result.InterpolationMode = SdsInterpolationMode(interpolation_mode)
-
-        if 'ExtrapolationMode' in content:
-            extrapolation_mode = content['ExtrapolationMode']
-            if extrapolation_mode is not None:
-                result.ExtrapolationMode = SdsExtrapolationMode(extrapolation_mode)
-
-        if 'PropertyOverrides' in content:
-            property_overrides = content['PropertyOverrides']
-            if property_overrides is not None and len(property_overrides) > 0:
-                result.PropertyOverrides = []
-                for value in property_overrides:
-                    result.PropertyOverrides.append(
-                        SdsStreamPropertyOverride.fromJson(value))
+        if 'Type' in content:
+            result.Type = content['Type']
 
         return result

@@ -69,6 +69,8 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get resolved SdsStream, {stream_id}.')
 
+        return SdsResolvedStream.fromJson(response.json())
+
 
     def getStreamType(self, namespace_id: str, stream_id: str) -> SdsType:
         """
@@ -1016,16 +1018,16 @@ class Streams(PatchableSecurable, object):
         else:
             payload = values
 
-            response = self.__base_client.request(
-                'PUT',
-                self.__replace_path.format(
-                    stream=self.__stream_path.format(
-                        tenant_id=self.__tenant,
-                        namespace_id=namespace_id,
-                        stream_id=self.__base_client.encode(stream_id))),
-                data=payload)
-            self.__base_client.checkResponse(
-                response, f'Failed to replace multiple values for SdsStream: {stream_id}.')
+        response = self.__base_client.request(
+            'PUT',
+            self.__replace_path.format(
+                stream=self.__stream_path.format(
+                    tenant_id=self.__tenant,
+                    namespace_id=namespace_id,
+                    stream_id=self.__base_client.encode(stream_id))),
+            data=payload)
+        self.__base_client.checkResponse(
+            response, f'Failed to replace multiple values for SdsStream: {stream_id}.')
 
 
     def removeValue(self, namespace_id: str, stream_id: str, key: str):

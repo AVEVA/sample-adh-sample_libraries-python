@@ -33,15 +33,17 @@ class ADHClient:
             non-default values
         """
 
+        # Base client provided
         if len(args) == 1 and isinstance(args[0], AbstractBaseClient):
             self.__base_client = args[0]
-        
         elif 'base_client' in kwargs:
             self.__base_client = kwargs.get('base_client')
         
+        # Unnamed args provided
         elif len(args) == 6:
             self.__base_client = BaseClient(args[0], args[1], args[2], args[3], args[4], args[5])
         
+        # Named args provided
         elif len(kwargs) == 6:
             self.__base_client = BaseClient(kwargs.get('api_version'),
                                             kwargs.get('tenant'), 
@@ -50,7 +52,7 @@ class ADHClient:
                                             kwargs.get('client_secret'), 
                                             kwargs.get('accept_verbosity'))
         else:
-            raise Exception('arg error')
+            raise ValueError('Failed to create ADHClient: Incorrect arguments provided.')
 
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)

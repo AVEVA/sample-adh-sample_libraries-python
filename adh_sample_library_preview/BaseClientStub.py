@@ -53,3 +53,6 @@ class BaseClientStub(AbstractBaseClient):
     def resolveContent(self, response, value_class = None, contentType = None):
         return []
 
+
+    def checkResponse(self, response, main_message: str):
+        pass

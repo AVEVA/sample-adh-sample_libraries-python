@@ -33,3 +33,7 @@ class AbstractBaseClient(ABC):
     @abstractmethod
     def encode(self, url: str):
         pass
+
+    @abstractmethod
+    def checkResponse(self, response, main_message: str):
+        pass
