@@ -4,7 +4,7 @@ from requests.models import Response
 from .AbstractBaseClient import AbstractBaseClient
 
 class BaseClientStub(AbstractBaseClient):
-    """Handles communication with Sds Service.  Internal Use"""
+    """Stubbed BaseClient to use for testing."""
 
     def __init__(self):
         print('Creating stub')

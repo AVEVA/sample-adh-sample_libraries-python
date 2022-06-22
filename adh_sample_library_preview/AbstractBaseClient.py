@@ -14,6 +14,7 @@ class AbstractBaseClient(ABC):
         """
         pass
 
+
     @abstractmethod
     def validateParameters(*args):
         pass
@@ -23,9 +24,11 @@ class AbstractBaseClient(ABC):
     def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
         pass
 
+
     @abstractmethod
     def validateParameters(*args):
         pass
+
 
     @abstractmethod
     def encode(self, url: str):

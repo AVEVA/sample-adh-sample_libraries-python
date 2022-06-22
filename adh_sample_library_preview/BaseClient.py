@@ -1,9 +1,7 @@
 from __future__ import annotations
 import requests
-from urllib.parse import urlsplit
 
 from adh_sample_library_preview.AbstractBaseClient import AbstractBaseClient
-
 from .Authentication import Authentication
 from .SdsError import SdsError
 from .SDS.SdsResultPage import SdsResultPage
@@ -164,12 +162,11 @@ class BaseClient(AbstractBaseClient):
             headers.update(additional_headers)
 
         response = self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
-        self.checkResponse(response=response)
 
         return response;
 
 
-    def checkResponse(self, response, main_message: str = ''):
+    def checkResponse(self, response, main_message: str):
         if response.status_code < 200 or response.status_code >= 300:
             status = response.status_code
             reason = response.text
@@ -208,12 +205,14 @@ class BaseClient(AbstractBaseClient):
 
     def resolveContent(self, response, value_class = None, contentType = None):
 
+        # Value APIs
         if contentType == 'value':
             result = response.json()
             if value_class is None:
                 return result
             return value_class.fromJson(result)
 
+        # Paged data APIs
         elif contentType == 'paged':
             content = SdsResultPage.fromJson(response.json())
 
@@ -225,6 +224,7 @@ class BaseClient(AbstractBaseClient):
                 results.Results.append(value_class.fromJson(r))
             return results
         
+        # Streams APIs
         elif contentType == 'streams':
             content = response.json()
 
@@ -232,6 +232,8 @@ class BaseClient(AbstractBaseClient):
             for item in content:
                 results.append(SdsStream.fromJson(item))
             return results
+
+        # Streams APIs
         elif contentType == 'bulk':
             content = response.json()
 
@@ -245,7 +247,9 @@ class BaseClient(AbstractBaseClient):
                     valuesInside.append(value_class.fromJson(value))
                 values.append(valuesInside)
             return values
-        else: # content_type is None
+        
+        # Other APIs
+        else:
             content = response.json()
             if value_class is None:
                 return content
