@@ -48,8 +48,9 @@ class Streams(PatchableSecurable, object):
                 stream_id=self.__base_client.encode(stream_id)))
 
             return SdsStream.fromJson(response.json())
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to get SdsStream, {stream_id}. Exception: {e}')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get SdsStream, {stream_id}.')
+            raise
 
 
     def getResolvedStream(self, namespace_id: str, stream_id: str) -> SdsResolvedStream:
@@ -70,9 +71,9 @@ class Streams(PatchableSecurable, object):
                 stream_id=self.__base_client.encode(stream_id)))
 
             return SdsResolvedStream.fromJson(response.json())
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to get resolved SdsStream, {stream_id}. Exception: {e}')
-
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get resolved SdsStream, {stream_id}.')
+            raise
 
     def getStreamType(self, namespace_id: str, stream_id: str) -> SdsType:
         """
@@ -90,10 +91,11 @@ class Streams(PatchableSecurable, object):
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=self.__base_client.encode(stream_id)))
-        except SdsError:
-            print(f'Failed to get SdsStream type, {stream_id}.')
 
-        return SdsType.fromJson(response.json())
+            return SdsType.fromJson(response.json())
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get SdsStream type, {stream_id}.')
+            raise
 
 
     def getStreams(self, namespace_id: str, query: str = '', skip: int = 0,
@@ -117,9 +119,9 @@ class Streams(PatchableSecurable, object):
             params={'query': query, 'skip': skip, 'count': count})
 
             return self.__base_client.resolveContent(response=response, contentType='streams')
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to get all SdsStreams. Exception: {e}')
-
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get all SdsStreams.')
+            raise
 
     def getOrCreateStream(self, namespace_id: str, stream: SdsStream) -> SdsStream:
         """
@@ -142,8 +144,10 @@ class Streams(PatchableSecurable, object):
                 data=stream.toJson())
 
             return SdsStream.fromJson(response.json())
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to create SdsStream, {stream.Id}. Exception: {e}')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to create SdsStream, {stream.Id}.')
+            raise
+        
 
     def createOrUpdateStream(self, namespace_id: str, stream: SdsStream):
         """
@@ -164,8 +168,9 @@ class Streams(PatchableSecurable, object):
                 namespace_id=namespace_id,
                 stream_id=self.__base_client.encode(stream.Id)),
             data=stream.toJson())
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to create SdsStream, {stream.Id}. Exception: {e}')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to create SdsStream, {stream.Id}.')
+            raise
 
 
     def updateStreamType(self, namespace_id: str, stream_id: str, stream_view_id: str):
@@ -188,7 +193,9 @@ class Streams(PatchableSecurable, object):
             params={'streamViewId': stream_view_id})
         except SdsError:
             print(f'Failed to update SdsStream type, {stream_id}.')
+            raise
 
+        
     def deleteStream(self, namespace_id: str, stream_id: str):
         """
         Tells Sds Service to delete the stream specified by 'stream_id'
@@ -207,6 +214,8 @@ class Streams(PatchableSecurable, object):
                 stream_id=self.__base_client.encode(stream_id)))
         except SdsError:
             print(f'Failed to delete SdsStream, {stream_id}.')
+            raise
+
 
     def createOrUpdateTags(self, namespace_id: str, stream_id: str, tags: list[str]):
         """
@@ -228,6 +237,8 @@ class Streams(PatchableSecurable, object):
             data=json.dumps(tags))
         except SdsError:
             print(f'Failed to create tags for Stream: {stream_id}.')
+            raise
+
 
     def createOrUpdateMetadata(self, namespace_id: str, stream_id: str, metadata: dict[str, str]):
         """
@@ -249,6 +260,8 @@ class Streams(PatchableSecurable, object):
             data=json.dumps(metadata))
         except SdsError:
             print(f'Failed to create metadata for Stream: {stream_id}.')
+            raise
+
 
     def patchMetadata(self, namespace_id: str, stream_id: str, patch: list[dict, Any]):
         """
@@ -270,6 +283,7 @@ class Streams(PatchableSecurable, object):
             data=json.dumps(patch))
         except SdsError:
             print(f'Failed to update metadata for Stream: {stream_id}.')
+            raise
 
     def getTags(self, namespace_id: str, stream_id: str) -> list[str]:
         """
@@ -289,8 +303,9 @@ class Streams(PatchableSecurable, object):
                 stream_id=self.__base_client.encode(stream_id)))
 
             return response.json()
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to get tags for Stream: {stream_id}. Exception: {e}')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get tags for Stream: {stream_id}.')
+            raise
 
     def getMetadata(self, namespace_id: str, stream_id: str, key: str) -> Any:
         """
@@ -312,8 +327,9 @@ class Streams(PatchableSecurable, object):
                 key=key))
 
             return response.json()
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to get metadata for Stream: {stream_id}. Exception: {e}')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get metadata for Stream: {stream_id}.')
+            raise
 
     # The following section provides functionality to interact with Data
     #  We assume the value(s) passed follow the Sds object patterns
@@ -356,10 +372,12 @@ class Streams(PatchableSecurable, object):
         try:
             response = self.__base_client.request(
                 'GET', self.__data_path.format(stream=url), params={'index': index}, additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get value for SdsStream: {url}. Exception: {e}')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+            return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get value for SdsStream: {url}.')
+            raise
+
 
     def getFirstValue(self, namespace_id: str, stream_id: str, value_class: type = None) -> Any:
         """
@@ -396,11 +414,13 @@ class Streams(PatchableSecurable, object):
 
         try:
             response = self.__base_client.request(
-            'GET', self.__first_path.format(stream=url), additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get first value for SdsStream: {url}. Exception: {e}')
+                'GET', self.__first_path.format(stream=url), additional_headers=additional_headers)
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+            return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get first value for SdsStream: {url}.')
+            raise
+
 
     def getLastValue(self, namespace_id: str, stream_id: str, value_class: type = None) -> Any:
         """
@@ -438,10 +458,12 @@ class Streams(PatchableSecurable, object):
         try:
             response = self.__base_client.request(
                 'GET', self.__last_path.format(stream=url), additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get last value for SdsStream: {url}. Exception: {e}')
-        
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+
+            return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get last value for SdsStream: {url}.')
+            raise
+
 
     def getWindowValues(self, namespace_id: str, stream_id: str, start: str, end: str, 
                         value_class: type = None, filter: str = '') -> list[Any]:
@@ -467,6 +489,7 @@ class Streams(PatchableSecurable, object):
             namespace_id=namespace_id,
             stream_id=self.__base_client.encode(stream_id)), start, end, value_class, filter)
 
+
     def getWindowValuesUrl(self, url: str, start: str, end: str, value_class: type = None, filter: str = '', additional_headers = None) -> list[Any]:
         """
         Retrieves JSON object representing a window of values from the stream
@@ -490,10 +513,12 @@ class Streams(PatchableSecurable, object):
                 'GET', self.__data_path.format(stream=url),
                 params={'startIndex': start, 'endIndex': end, 'filter': filter},
                 additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get window values for SdsStream: {url}. Exception: {e}')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+            return self.__base_client.resolveContent(response=response, value_class=value_class)
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get window values for SdsStream: {url}.')
+            raise
+
 
     def getWindowValuesPaged(self, namespace_id: str, stream_id: str, value_class: type, start: str,
                              end: str, count: int, continuation_token: str = '', filter: str = '') -> SdsResultPage:
@@ -548,10 +573,12 @@ class Streams(PatchableSecurable, object):
                 params={'startIndex': start, 'endIndex': end, 'filter': filter,
                         'count': count, 'continuationToken': continuation_token},
                 additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get window values for SdsStream: {url}. Exception: {e}')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='paged')
+            return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='paged')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get window values for SdsStream: {url}.')
+            raise
+
 
     def getWindowValuesForm(self, namespace_id: str, stream_id: str, value_class: type, start: str,
                             end: str, form: str = '') -> list[Any]:
@@ -599,10 +626,12 @@ class Streams(PatchableSecurable, object):
         try:
             response = self.__base_client.request(
                 'GET', self.__data_path.format(stream=url), params={'startIndex': start, 'endIndex': end, 'form': form}, additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get window values for SdsStream: {url}. Exception: {e}')
+        
+            return self.__base_client.resolveContent(response=response, value_class=value_class)
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get window values for SdsStream: {url}.')
+            raise
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
 
     def getRangeValues(self, namespace_id: str, stream_id: str, value_class: type, start: str,
                        skip: int, count: int, reversed: bool, boundary_type: str, filter: str = '',
@@ -678,8 +707,10 @@ class Streams(PatchableSecurable, object):
                 additional_headers=additional_headers)
 
             return self.__base_client.resolveContent(response=response, value_class=value_class)
-        except SdsError as e:
-            print(f'Failed to get range values for SdsStream: {url}. Exception: {e}')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get range values for SdsStream: {url}.')
+            raise
+
 
     def getRangeValuesInterpolated(self, namespace_id: str, stream_id: str, value_class: type,
                                    start: str, end: str, count: int, filter: str = '') -> list[Any]:
@@ -730,10 +761,12 @@ class Streams(PatchableSecurable, object):
             response = self.__base_client.request(
                 'GET', self.__transform_interpolated_path.format(stream=url),
                 params={'startIndex': start, 'endIndex': end, 'count': count, 'filter': filter}, additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get range values for SdsStream: {url}. Exception: {e}')
+        
+            return self.__base_client.resolveContent(response=response, value_class=value_class)
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get range values for SdsStream: {url}.')
+            raise
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
 
     def getIndexCollectionValues(self, namespace_id: str, stream_id: str, value_class: type,
                                  index: list[str]) -> list[Any]:
@@ -785,10 +818,12 @@ class Streams(PatchableSecurable, object):
             response = self.__base_client.request(
                 'GET', self.__transform_interpolated_path.format(stream=url),
                 params=params, additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get range values for SdsStream: {url}. Exception: {e}')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+            return self.__base_client.resolveContent(response=response, value_class=value_class)
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get range values for SdsStream: {url}.')
+            raise
+
 
     def getSampledValues(self, namespace_id: str, stream_id: str, value_class: type, start: str,
                          end: str, sample_by: str, intervals: str, filter: str = '',
@@ -867,10 +902,12 @@ class Streams(PatchableSecurable, object):
                         'filter': filter,
                         'stream_view_id': stream_view_id},
                 additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get sampled values for SdsStream: {_path}. Exception: {e}')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+            return self.__base_client.resolveContent(response=response, value_class=value_class)
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get sampled values for SdsStream: {_path}.')
+            raise
+
 
     def getSummaries(self, namespace_id: str, stream_id: str, value_class: type, start: str,
                      end: str, count: int, stream_view_id: str = '', filter: str = '') -> list[Any]:
@@ -933,10 +970,12 @@ class Streams(PatchableSecurable, object):
 
         try:
             response = self.__base_client.request('GET', _path, paramsToUse, additional_headers=additional_headers)
-        except SdsError as e:
-            print(f'Failed to get summaries for SdsStream: {_path}. Exception: {e}')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+            return self.__base_client.resolveContent(response=response, value_class=value_class)
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get summaries for SdsStream: {_path}.')
+            raise
+
 
     def insertValues(self, namespace_id: str, stream_id: str, values: list[Any]):
         """
@@ -968,8 +1007,10 @@ class Streams(PatchableSecurable, object):
                         namespace_id=namespace_id,
                         stream_id=self.__base_client.encode(stream_id))),
                 data=payload)
-        except SdsError as e:
-            print(f'Failed to insert multiple values for SdsStream: {stream_id}. Exception: {e}')
+        except SdsError:
+            print(f'Failed to insert multiple values for SdsStream: {stream_id}.')
+            raise
+
 
     def updateValues(self, namespace_id: str, stream_id: str, values: list[Any]):
         """
@@ -1000,8 +1041,10 @@ class Streams(PatchableSecurable, object):
                     namespace_id=namespace_id,
                     stream_id=self.__base_client.encode(stream_id))),
                 data=payload)
-        except SdsError as e:
-            print(f'Failed to update values for SdsStream: {stream_id}. Exception: {e}')
+        except SdsError:
+            print(f'Failed to update values for SdsStream: {stream_id}.')
+            raise
+
 
     def replaceValues(self, namespace_id: str, stream_id: str, values: list[Any]):
         """
@@ -1032,8 +1075,9 @@ class Streams(PatchableSecurable, object):
                         namespace_id=namespace_id,
                         stream_id=self.__base_client.encode(stream_id))),
                 data=payload)
-        except SdsError as e:
-            print(f'Failed to replace multiple values for SdsStream: {stream_id}. Exception: {e}')
+        except SdsError:
+            print(f'Failed to replace multiple values for SdsStream: {stream_id}.')
+            raise
 
 
     def removeValue(self, namespace_id: str, stream_id: str, key: str):
@@ -1055,8 +1099,10 @@ class Streams(PatchableSecurable, object):
                         namespace_id=namespace_id,
                         stream_id=self.__base_client.encode(stream_id))),
                 params={'index': key})
-        except SdsError as e:
-            print(f'Failed to remove values for SdsStream: {stream_id}. Exception: {e}')
+        except SdsError:
+            print(f'Failed to remove values for SdsStream: {stream_id}.')
+            raise
+
 
     def removeWindowValues(self, namespace_id: str, stream_id: str, start: str, end: str):
         """
@@ -1078,8 +1124,11 @@ class Streams(PatchableSecurable, object):
                         namespace_id=namespace_id,
                         stream_id=self.__base_client.encode(stream_id))),
                 params={'startIndex': start, 'endIndex': end})
-        except SdsError as e:
-            print(f'Failed to remove values for SdsStream: {stream_id}. Exception: {e}')
+
+        except SdsError:
+            print(f'Failed to remove values for SdsStream: {stream_id}.')
+            raise
+
 
     def getStreamsWindow(self, namespace_id: str, stream_ids: list[str], value_class: type,
                          start: str, end: str, join_mode: int = 1) -> list[Any]:
@@ -1112,10 +1161,11 @@ class Streams(PatchableSecurable, object):
                         'endIndex': end,
                         'joinMode': join_mode})
 
-        except (SdsError, json.JSONDecodeError) as e:
-            print(f'Failed to get bulk values for SdsStream: {stream_ids}. Exception: {e}')
+            return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='bulk')
+        except (SdsError, json.JSONDecodeError):
+            print(f'Failed to get bulk values for SdsStream: {stream_ids}.')
+            raise
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='bulk')
 
     # private methods
 

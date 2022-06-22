@@ -245,7 +245,7 @@ class BaseClient(AbstractBaseClient):
                     valuesInside.append(value_class.fromJson(value))
                 values.append(valuesInside)
             return values
-        else:
+        else: # content_type is None
             content = response.json()
             if value_class is None:
                 return content
