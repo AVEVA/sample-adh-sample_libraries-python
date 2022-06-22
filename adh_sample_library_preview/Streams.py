@@ -148,7 +148,7 @@ class Streams(PatchableSecurable, object):
         :return: the created or updated Stream as an SdsStream
         """
         self.__base_client.validateParameters(namespace_id, stream)
-        if stream is not isinstance(stream, SdsStream):
+        if not isinstance(stream, SdsStream):
             raise TypeError
 
         response = self.__base_client.request(

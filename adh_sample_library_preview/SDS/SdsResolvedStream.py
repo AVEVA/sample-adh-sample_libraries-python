@@ -11,7 +11,7 @@ from .SdsStream import SdsStream
 class SdsResolvedStream(object):
     """Sds resolved stream definition"""
 
-    def __init__(self, id: str, type: SdsType, name: str = None, description: str = None, resolved = None):
+    def __init__(self, id: str = None, type: SdsType = None, name: str = None, description: str = None, resolved = None):
         """
         :param id: required
         :param name: not required
@@ -145,7 +145,7 @@ class SdsResolvedStream(object):
 
     @staticmethod
     def fromJson(content: dict[str, str]):
-        result = SdsStream()
+        result = SdsResolvedStream()
 
         if not content:
             return result

@@ -1,102 +1,127 @@
 import json
+import pytest
 
 from adh_sample_library_preview.ADHClient import ADHClient
 from adh_sample_library_preview.BaseClientStub import BaseClientStub
 from adh_sample_library_preview.SDS.SdsBoundaryType import SdsBoundaryType
+from adh_sample_library_preview.SDS.SdsStream import SdsStream
+from adh_sample_library_preview.SDS.SdsType import SdsType
+from adh_sample_library_preview.SDS.SdsTypeCode import SdsTypeCode
+from adh_sample_library_preview.SDS.SdsTypeProperty import SdsTypeProperty
 from genericpath import exists
 
-def setup_module(module):
-    global adh_client
-    global namespace_id
-    global stream_id
-    global tenant_id
-    global sample_by_prop_id
-    global type_id
-    global start_ndx
-    global end_ndx
+def create_type(namespace_id, type_id, client: ADHClient):
+    double_type = SdsType('doubleType', SdsTypeCode.Double)
+    tan_property = SdsTypeProperty('Tan', True, double_type)
+    type = SdsType(type_id, SdsTypeCode.Object, [tan_property])
 
-    # If test credentials are provided run E2E tests, otherwise run Unit tests 
-    if exists('test_credentials.json'):
-        cred = get_credentials()
-        namespace_id = cred.get('NamespaceId')
-        tenant_id = cred.get('TenantId')
-        stream_id = cred.get('StreamId')
-        type_id = cred.get('TypeId')
-        sample_by_prop_id = cred.get('SampleByPropertyId')
-        start_ndx = cred.get('StartIndex')
-        end_ndx = cred.get('EndIndex')
-        
-        adh_client = ADHClient(api_version=cred.get('ApiVersion'), 
-                                tenant=tenant_id, 
-                                url=cred.get('Resource'), 
-                                client_id=cred.get('ClientId'), 
-                                client_secret=cred.get('ClientSecret'), 
-                                accept_verbosity=cred.get('AcceptVerbosity'))
-    else:
-        namespace_id = 'test'
-        stream_id = 'test'
-        tenant_id = 'test'
-        type_id = 'test'
-        sample_by_prop_id = 'test'
-        start_ndx = 1
-        end_ndx = 10
-        
-        base_client = BaseClientStub()
-        adh_client = ADHClient(base_client)
+    client.Types.getOrCreateType(namespace_id, type)
+    
+                
+def create_stream(namespace_id, stream_id, type_id, client: ADHClient):
+    stream = SdsStream(stream_id, type_id)
 
+    client.Streams.createOrUpdateStream(namespace_id, stream)
+
+    client.Streams.createOrUpdateTags(
+        namespace_id, stream_id, ['waves'])
+
+    client.Streams.createOrUpdateMetadata(
+        namespace_id, stream_id, {'Region': 'North America'})
+
+
+def delete(namespace_id, type_id, stream_id, client: ADHClient):
+    client.Streams.deleteStream(namespace_id, stream_id)
+    client.Types.deleteType(namespace_id, type_id)
 
 
 def get_credentials():
     try:
         with open(
-            'test_credentials.json',
+            'appsettings.json',
             'r',
         ) as f:
             cred = json.load(f)
     except Exception as error:
         print(f'Error: {str(error)}')
-        print(f'Could not open/read test_credentials.json')
+        print(f'Could not open/read appsettings.json')
         exit()
 
     return cred
 
 
-def test_stream_retrieval():
-    adh_client.Streams.getStreams(namespace_id)
-    adh_client.Streams.getStream(namespace_id, stream_id)
-    adh_client.Streams.getResolvedStream(namespace_id, stream_id)
+@pytest.fixture
+def data():
+    if exists('appsettings.json'):
+        return get_credentials()
+    else:
+        return {
+            "NamespaceId": "test",
+            "StreamId": "test",
+            "StartIndex": '2022-01-01',
+            "EndIndex": '2022-01-01',
+        }
+        
+
+@pytest.fixture()
+def client(data):
+    """ setup any state specific to the execution of the given module."""
+
+    # If test credentials are provided run E2E tests, otherwise run Unit tests
+    if exists('appsettings.json'):
+        adh_client = ADHClient(api_version=data.get('ApiVersion'), 
+                                tenant=data.get('TenantId'), 
+                                url=data.get('Resource'), 
+                                client_id=data.get('ClientId'), 
+                                client_secret=data.get('ClientSecret'), 
+                                accept_verbosity=data.get('AcceptVerbosity'))
+
+        create_type(data.get('NamespaceId'), data.get('TypeId'), adh_client)
+        create_stream(data.get('NamespaceId'), data.get('StreamId'), data.get('TypeId'), adh_client)
+
+        yield adh_client
+        delete(data.get('NamespaceId'), data.get('TypeId'), data.get('StreamId'), adh_client)
+    else:
+        base_client = BaseClientStub()
+        adh_client = ADHClient(base_client)
+        yield adh_client
 
 
-def test_range_values():        
-    adh_client.Streams.getRangeValues(namespace_id, stream_id, None, start_ndx, 0, 100, False, SdsBoundaryType.Exact) 
-    adh_client.Streams.getRangeValuesInterpolated(namespace_id, stream_id, None, start_ndx, end_ndx, 100) 
+def test_stream_retrieval(client, data):
+    client.Streams.getStreams(data.get('NamespaceId'))
+    client.Streams.getStream(data.get('NamespaceId'), data.get('StreamId'))
+    client.Streams.getResolvedStream(data.get('NamespaceId'), data.get('StreamId'))
+
+def test_range_values(client, data):        
+    client.Streams.getRangeValues(data.get('NamespaceId'), data.get('StreamId'), None, data.get('StartIndex'), 0, 100, False, SdsBoundaryType.Exact) 
+    client.Streams.getRangeValuesInterpolated(data.get('NamespaceId'), data.get('StreamId'), None, data.get('StartIndex'), data.get('EndIndex'), 100) 
 
 
-def test_window_values():
-    adh_client.Streams.getWindowValues(namespace_id, stream_id, start_ndx, end_ndx, None) 
-    adh_client.Streams.getWindowValuesPaged(namespace_id, stream_id, None, start_ndx, end_ndx, 100) 
-    adh_client.Streams.getWindowValuesForm(namespace_id, stream_id, None, start_ndx, end_ndx, 'tableh') 
+def test_window_values(client, data):
+    client.Streams.getWindowValues(data.get('NamespaceId'), data.get('StreamId'), data.get('StartIndex'), data.get('EndIndex'), None) 
+    client.Streams.getWindowValuesPaged(data.get('NamespaceId'), data.get('StreamId'), None, data.get('StartIndex'), data.get('EndIndex'), 100) 
+    client.Streams.getWindowValuesForm(data.get('NamespaceId'), data.get('StreamId'), None, data.get('StartIndex'), data.get('EndIndex'), 'tableh') 
 
 
-def test_sampled_values():
-    adh_client.Streams.getSampledValues(namespace_id, stream_id,  None, start_ndx, end_ndx, sample_by_prop_id, 1) 
+def test_sampled_values(client, data):
+    client.Streams.getSampledValues(data.get('NamespaceId'), data.get('StreamId'),  None, data.get('StartIndex'), data.get('EndIndex'), 'Tan', 1) 
     
 
-def test_index_collection_values():
-    adh_client.Streams.getIndexCollectionValues(namespace_id, stream_id, None, [1,2,3]) 
+def test_index_collection_values(client, data):
+    client.Streams.getIndexCollectionValues(data.get('NamespaceId'), data.get('StreamId'), None, [1,2,3]) 
 
 
-def test_value():
-    adh_client.Streams.getFirstValue(namespace_id, stream_id, None)
-    adh_client.Streams.getLastValue(namespace_id, stream_id, None)
-    adh_client.Streams.getValue(namespace_id, stream_id, 1, None)
+def test_value(client, data):
+    client.Streams.getFirstValue(data.get('NamespaceId'), data.get('StreamId'), None)
+    client.Streams.getLastValue(data.get('NamespaceId'), data.get('StreamId'), None)
+    client.Streams.getValue(data.get('NamespaceId'), data.get('StreamId'), 1, None)
 
 
-def test_summaries():
-    adh_client.Streams.getSummaries(namespace_id, stream_id, None, start_ndx, end_ndx, 10) 
+def test_summaries(client, data):
+    client.Streams.getSummaries(data.get('NamespaceId'), data.get('StreamId'), None, data.get('StartIndex'), data.get('EndIndex'), 10) 
 
 
-def test_metadata():
-    adh_client.Streams.getMetadata(namespace_id, stream_id, 'Region')
-    adh_client.Streams.getStreamType(namespace_id, stream_id) 
-    adh_client.Streams.getTags(namespace_id, stream_id)
+def test_metadata(client, data):
+    client.Streams.getMetadata(data.get('NamespaceId'), data.get('StreamId'), 'Region')
+    client.Streams.getStreamType(data.get('NamespaceId'), data.get('StreamId')) 
+    client.Streams.getTags(data.get('NamespaceId'), data.get('StreamId'))
