@@ -26,14 +26,35 @@ class AbstractBaseClient(ABC):
 
 
     @abstractmethod
-    def validateParameters(*args):
-        pass
-
-
-    @abstractmethod
     def encode(self, url: str):
         pass
+
 
     @abstractmethod
     def checkResponse(self, response, main_message: str):
         pass
+
+
+    @abstractmethod
+    def resolveBulkContent(self, response, value_class = None):
+        pass
+
+
+    @abstractmethod
+    def resolvePagedContent(response, value_class = None):
+        pass
+
+
+    @abstractmethod
+    def resolveStreamsContent(response):
+        pass
+
+
+    @abstractmethod
+    def resolveValueContent(response, value_class = None):
+        pass
+
+
+    @abstractmethod
+    def resolveContent(response, value_class = None):
+       pass

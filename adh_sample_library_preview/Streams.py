@@ -1,14 +1,13 @@
 from __future__ import annotations
 import json
+from typing import Any
 
 from .BaseClient import BaseClient
-from .SdsError import SdsError
 from .SDS.SdsBoundaryType import SdsBoundaryType
 from .SDS.SdsResultPage import SdsResultPage
 from .SDS.SdsStream import SdsStream
 from .SDS.SdsResolvedStream import SdsResolvedStream
 from .SDS.SdsType import SdsType
-from typing import Any
 from .PatchableSecurable import PatchableSecurable
 
 
@@ -114,7 +113,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get all SdsStreams.')
 
-        return self.__base_client.resolveContent(response=response, contentType='streams')
+        return self.__base_client.resolveStreamsContent(response=response)
 
     def getOrCreateStream(self, namespace_id: str, stream: SdsStream) -> SdsStream:
         """
@@ -352,7 +351,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get value for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+        return self.__base_client.resolveValueContent(response=response, value_class=value_class)
 
 
     def getFirstValue(self, namespace_id: str, stream_id: str, value_class: type = None) -> Any:
@@ -393,7 +392,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get first value for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+        return self.__base_client.resolveValueContent(response=response, value_class=value_class)
 
 
     def getLastValue(self, namespace_id: str, stream_id: str, value_class: type = None) -> Any:
@@ -434,7 +433,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get last value for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='value')
+        return self.__base_client.resolveValueContent(response=response, value_class=value_class)
 
 
     def getWindowValues(self, namespace_id: str, stream_id: str, start: str, end: str, 
@@ -545,7 +544,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get window values for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='paged')
+        return self.__base_client.resolvePagedContent(response=response, value_class=value_class)
 
 
     def getWindowValuesForm(self, namespace_id: str, stream_id: str, value_class: type, start: str,
@@ -1107,7 +1106,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get bulk values for SdsStream: {stream_ids}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class, contentType='bulk')
+        return self.__base_client.resolveBulkContent(response=response, value_class=value_class)
 
 
     # private methods

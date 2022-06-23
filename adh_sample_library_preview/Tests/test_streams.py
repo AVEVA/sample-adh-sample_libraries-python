@@ -1,5 +1,6 @@
 import json
 import pytest
+from genericpath import exists
 
 from adh_sample_library_preview.ADHClient import ADHClient
 from adh_sample_library_preview.BaseClientStub import BaseClientStub
@@ -8,7 +9,6 @@ from adh_sample_library_preview.SDS.SdsStream import SdsStream
 from adh_sample_library_preview.SDS.SdsType import SdsType
 from adh_sample_library_preview.SDS.SdsTypeCode import SdsTypeCode
 from adh_sample_library_preview.SDS.SdsTypeProperty import SdsTypeProperty
-from genericpath import exists
 
 def create_type(namespace_id, type_id, client: ADHClient):
     double_type = SdsType('doubleType', SdsTypeCode.Double)
@@ -30,7 +30,7 @@ def create_stream(namespace_id, stream_id, type_id, client: ADHClient):
         namespace_id, stream_id, {'Region': 'North America'})
 
 
-def delete(namespace_id, type_id, stream_id, client: ADHClient):
+def cleanup(namespace_id, type_id, stream_id, client: ADHClient):
     client.Streams.deleteStream(namespace_id, stream_id)
     client.Types.deleteType(namespace_id, type_id)
 
@@ -80,10 +80,12 @@ def client(data):
         create_stream(data.get('NamespaceId'), data.get('StreamId'), data.get('TypeId'), adh_client)
 
         yield adh_client
-        delete(data.get('NamespaceId'), data.get('TypeId'), data.get('StreamId'), adh_client)
+
+        # Clean up resources after tests have run
+        cleanup(data.get('NamespaceId'), data.get('TypeId'), data.get('StreamId'), adh_client)
     else:
         base_client = BaseClientStub()
-        adh_client = ADHClient(base_client)
+        adh_client = ADHClient(api_version=None, url=None, tenant=None, base_client=base_client)
         yield adh_client
 
 

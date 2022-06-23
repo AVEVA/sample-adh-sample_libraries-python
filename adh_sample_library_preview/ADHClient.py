@@ -1,5 +1,4 @@
-from adh_sample_library_preview.AbstractBaseClient import AbstractBaseClient
-from adh_sample_library_preview.BaseClientStub import BaseClientStub
+from .AbstractBaseClient import AbstractBaseClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
@@ -21,7 +20,8 @@ class ADHClient:
     A client that handles communication with AVEVA Data Hub
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
+                 client_secret: str = None, accept_verbosity: bool = False, base_client: AbstractBaseClient = None):
         """
         Use this to help in communication with ADH
         :param api_version: Version of the api you are communicating with
@@ -31,28 +31,14 @@ class ADHClient:
         :param client_secret: Your client Secret or Key
         :param accept_verbosity: Sets whether in value calls you get all values or just
             non-default values
+        :param base_client: Optional base client instance to be used
         """
 
-        # Base client provided
-        if len(args) == 1 and isinstance(args[0], AbstractBaseClient):
-            self.__base_client = args[0]
-        elif 'base_client' in kwargs:
-            self.__base_client = kwargs.get('base_client')
-        
-        # Unnamed args provided
-        elif len(args) == 6:
-            self.__base_client = BaseClient(args[0], args[1], args[2], args[3], args[4], args[5])
-        
-        # Named args provided
-        elif len(kwargs) == 6:
-            self.__base_client = BaseClient(kwargs.get('api_version'),
-                                            kwargs.get('tenant'), 
-                                            kwargs.get('url'), 
-                                            kwargs.get('client_id'),
-                                            kwargs.get('client_secret'), 
-                                            kwargs.get('accept_verbosity'))
+        if base_client:
+            self.__base_client = base_client
         else:
-            raise ValueError('Failed to create ADHClient: Incorrect arguments provided.')
+            self.__base_client = BaseClient(api_version, tenant, url, client_id,
+                                            client_secret, accept_verbosity)
 
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)

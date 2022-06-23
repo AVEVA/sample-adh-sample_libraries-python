@@ -1,22 +1,17 @@
 from __future__ import annotations
 import json
 
-from .SdsExtrapolationMode import SdsExtrapolationMode
 from .SdsType import SdsType
-from .SdsInterpolationMode import SdsInterpolationMode
-from .SdsStreamIndex import SdsStreamIndex
-from .SdsStreamPropertyOverride import SdsStreamPropertyOverride
-from .SdsStream import SdsStream
 
 class SdsResolvedStream(object):
     """Sds resolved stream definition"""
 
-    def __init__(self, id: str = None, type: SdsType = None, name: str = None, description: str = None, resolved = None):
+    def __init__(self, id: str = None, name: str = None, description: str = None, resolved = True, type: SdsType = None):
         """
         :param id: required
         :param name: not required
         :param description: not required
-        :param resolved: required
+        :param resolved: not required
         :param type: required
         """
         self.Id = id
@@ -114,33 +109,23 @@ class SdsResolvedStream(object):
         return json.dumps(self.toDictionary())
 
     def toDictionary(self):
-        # required properties
-        result = {'Id': self.Id, 'Type': self.Type}
+        result = {}
 
-        # optional properties
+        if self.Id is not None:
+            result['Id'] = self.Id
+
         if self.Name is not None:
             result['Name'] = self.Name
 
         if self.Description is not None:
             result['Description'] = self.Description
 
-        if self.Indexes is not None:
-            result['Indexes'] = []
-            for value in self.Indexes:
-                result['Indexes'].append(value.toDictionary())
-
-        if self.InterpolationMode is not None:
-            result['InterpolationMode'] = self.InterpolationMode.name
-
-        if self.ExtrapolationMode is not None:
-            result['ExtrapolationMode'] = self.ExtrapolationMode.name
-
-        if self.PropertyOverrides is not None:
-            result['PropertyOverrides'] = []
-            for value in self.PropertyOverrides:
-                result['PropertyOverrides'].append(
-                    value.toDictionary())
-
+        if self.Resolved is not None:
+            result['Resolved'] = self.Resolved
+            
+        if self.Type is not None:
+            result['Type'] = self.Type
+        
         return result
 
     @staticmethod
