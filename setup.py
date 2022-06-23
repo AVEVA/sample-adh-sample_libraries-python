@@ -21,7 +21,7 @@ setuptools.setup(
     ],
     tests_require = [
         'pytest>=7.0.1',
-    ]
+    ],
     python_requires='>=3.7',
     classifiers=[
         'Programming Language :: Python :: 3',
