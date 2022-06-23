@@ -60,7 +60,10 @@ class Streams(PatchableSecurable, object):
         :param stream_id: id of the stream
         :return:the Stream as SdsResolvedStream
         """
-        self.__base_client.validateParameters(namespace_id, stream_id)
+        if namespace_id is None:
+            raise TypeError
+        if stream_id is None:
+            raise TypeError
         
         response = self.__base_client.request(
             'GET',
