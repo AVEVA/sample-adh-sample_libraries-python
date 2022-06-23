@@ -7,6 +7,7 @@ from .BaseClient import BaseClient
 from .SDS.SdsBoundaryType import SdsBoundaryType
 from .SDS.SdsResultPage import SdsResultPage
 from .SDS.SdsStream import SdsStream
+from .SDS.SdsResolvedStream import SdsResolvedStream
 from .SDS.SdsType import SdsType
 from .PatchableSecurable import PatchableSecurable
 
@@ -51,6 +52,26 @@ class Streams(PatchableSecurable, object):
 
         result = SdsStream.fromJson(response.json())
         return result
+
+    def getResolvedStream(self, namespace_id: str, stream_id: str) -> SdsResolvedStream:
+        """
+        Retrieves a resolved stream specified by 'stream_id' from the Sds Service
+        :param namespace_id: namespace to work against
+        :param stream_id: id of the stream
+        :return:the Stream as SdsResolvedStream
+        """
+        self.__base_client.validateParameters(namespace_id, stream_id)
+        
+        response = self.__base_client.request(
+            'GET',
+            self.__resolved_stream_path.format(
+                tenant_id=self.__tenant,
+                namespace_id=namespace_id,
+                stream_id=self.__base_client.encode(stream_id)))
+        self.__base_client.checkResponse(
+            response, f'Failed to get resolved SdsStream, {stream_id}.')
+
+        return SdsResolvedStream.fromJson(response.json())
 
     def getStreamType(self, namespace_id: str, stream_id: str) -> SdsType:
         """
@@ -1360,6 +1381,7 @@ class Streams(PatchableSecurable, object):
             '/Tenants/{tenant_id}/Namespaces/{namespace_id}'
         self.__streams_path = self.__base_path + '/Streams'
         self.__stream_path = self.__streams_path + '/{stream_id}'
+        self.__resolved_stream_path = self.__stream_path + '/Resolved'
         self.__stream_type_path = self.__stream_path + '/Type'
         self.__stream_tags_path = self.__stream_path + '/Tags'
         self.__stream_metadata_path = self.__stream_path + '/Metadata'
