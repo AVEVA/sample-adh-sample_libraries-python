@@ -1,7 +1,6 @@
 # Version History
 
 ## 0.8.0_preview / 2022-07-15
-- Add Get Resolved Stream support
 - Add testing for Streams and BaseClient
 - Refactoring
 
