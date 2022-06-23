@@ -21,7 +21,16 @@ The library is not intended to show every endpoint and every option/parameter fo
 
 Other language libraries and samples are available on [GitHub](https://github.com/osisoft/OSI-Samples).
 
-Tests are done by testing the sample apps that use this.
+## Testing
+
+The library is tested using PyTest. To test locally, install PyTest and run the test classes found in the Tests directory by executing 
+```
+python -m pytest {testclass} 
+```
+
+where {testclass} is the name of a test class, for example ./test_baseclient.py. 
+
+Optionally, rename the appsettings.placeholder.json file to appsettings.json and populate the fields to enable running end to end tests. Note: This file is included in the gitignore and will not be pushed to a remote repository. 
 
 ---
 
