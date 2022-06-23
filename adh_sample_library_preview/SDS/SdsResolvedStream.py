@@ -105,8 +105,10 @@ class SdsResolvedStream(object):
         """
         self.__type = value
 
+
     def toJson(self):
         return json.dumps(self.toDictionary())
+
 
     def toDictionary(self):
         result = {}
@@ -127,6 +129,7 @@ class SdsResolvedStream(object):
             result['Type'] = self.Type
         
         return result
+
 
     @staticmethod
     def fromJson(content: dict[str, str]):
