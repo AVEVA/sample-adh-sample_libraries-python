@@ -1,5 +1,9 @@
 # Version History
 
+## 0.7.5_preview / 2022-06-17
+
+- Updated dependencies
+
 ## 0.7.4_preview / 2022-05-24
 
 - Fix typo in communities route

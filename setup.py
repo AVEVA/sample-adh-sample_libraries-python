@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='adh_sample_library_preview',
-    version='0.7.4_preview',
+    version='0.7.5_preview',
     author='OSIsoft',
     license='Apache 2.0',
     author_email='samples@osisoft.com',
@@ -15,7 +15,7 @@ setuptools.setup(
     url='https://github.com/osisoft/sample-adh-sample_libraries-python',
     packages=setuptools.find_packages(),
     install_requires=[
-        'requests>=2.27.1',
+        'requests>=2.28.0',
         'python-dateutil>=2.8.2',
         'jsonpatch>=1.32'
     ],
