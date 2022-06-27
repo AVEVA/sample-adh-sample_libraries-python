@@ -2,8 +2,10 @@ from __future__ import annotations
 from typing import Any
 
 from .BaseClient import BaseClient
+from .SDS.SdsBoundaryType import SdsBoundaryType
 from .SDS.SdsResultPage import SdsResultPage
 from .SDS.SdsStream import SdsStream
+from .SDS.SdsResolvedStream import SdsResolvedStream
 from .SDS.SdsType import SdsType
 from .PatchableSecurable import PatchableSecurable
 
@@ -52,6 +54,28 @@ class SharedStreams(PatchableSecurable, object):
 
         result = SdsStream.fromJson(response.json())
         return result
+
+    def getResolvedStream(self, tenant_id: str, namespace_id: str, community_id:str , stream_id: str) -> SdsResolvedStream:
+        """
+        Retrieves a resolved stream specified by 'stream_id' from the Sds Service
+        :param namespace_id: namespace to work against
+        :param stream_id: id of the stream
+        :return:the Stream as SdsResolvedStream
+        """
+        self.__validateParameters(tenant_id, namespace_id, community_id, stream_id)
+        additional_headers = BaseClient.getCommunityIdHeader(community_id)
+        
+        response = self.__base_client.request(
+            'GET',
+            self.__resolved_stream_path.format(
+                tenant_id=self.__tenant,
+                namespace_id=namespace_id,
+                stream_id=self.__base_client.encode(stream_id)),
+            additional_headers=additional_headers)
+        self.__base_client.checkResponse(
+            response, f'Failed to get resolved SdsStream, {stream_id}.')
+
+        return SdsResolvedStream.fromJson(response.json())
 
     def getStreams(self, tenant_id: str, namespace_id: str, community_id: str, query: str = '', skip: int = 0,
                    count: int = 100) -> list[SdsStream]:
@@ -186,7 +210,9 @@ class SharedStreams(PatchableSecurable, object):
         return self.__streams.getWindowValuesUrl(url=url, value_class=value_class, start=start, end=end, filter=filter, additional_headers=additional_headers)
 
     def getWindowValuesPaged(self, tenant_id: str, namespace_id: str, community_id: str, stream_id: str, start: str,
-                                end: str, count: int, continuation_token: str = '', value_class: type = None, filter: str = '') -> SdsResultPage:
+                             end: str, count: int, continuation_token: str = '', value_class: type = None, 
+                             filter: str = '', boundaryType: SdsBoundaryType = None, startBoundaryType: SdsBoundaryType = None,
+                             endBoundaryType: SdsBoundaryType = None) -> SdsResultPage:
         """
         Retrieves JSON object representing a window of values from the stream
             specified by 'stream_id' using paging
@@ -202,6 +228,11 @@ class SharedStreams(PatchableSecurable, object):
             Type must support .fromJson().
             If None returns a dynamic Python object from the data.
         :param filter: An optional filter.  By Default it is ''.
+        :param boundaryType: Optional SdsBoundaryType specifies handling of events at or near the start and end indexes
+        :param startBoundaryType: Optional SdsBoundaryType specifies the first value in the result in relation to the start index.
+            If startBoundaryType is specified, endBoundaryType must be specified.
+        :param endBoundaryType: Optional SdsBoundaryType specifies the last value in the result in relation to the end index.
+            If startBoundaryType is specified, endBoundaryType must be specified.
         :return: an SdsResultPage containing the results and the next continuation token.
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
@@ -213,7 +244,7 @@ class SharedStreams(PatchableSecurable, object):
             namespace_id=namespace_id,
             stream_id=self.__base_client.encode(stream_id))
 
-        return self.__streams.getWindowValuesPagedUrl(url=url, value_class=value_class, start=start, end=end, count=count, continuation_token=continuation_token, filter=filter, additional_headers=additional_headers)
+        return self.__streams.getWindowValuesPagedUrl(url=url, value_class=value_class, start=start, end=end, count=count, continuation_token=continuation_token, filter=filter, boundaryType=boundaryType, startBoundaryType=startBoundaryType, endBoundaryType=endBoundaryType, additional_headers=additional_headers)
 
     def getWindowValuesForm(self, tenant_id:str, namespace_id: str, community_id: str, stream_id: str, start: str,
                                end: str, form: str = '', value_class: type = None) -> list[Any]:
@@ -458,4 +489,5 @@ class SharedStreams(PatchableSecurable, object):
             '/Tenants/{tenant_id}/Namespaces/{namespace_id}'
         self.__streams_path = self.__base_path + '/Streams'
         self.__stream_path = self.__streams_path + '/{stream_id}'
+        self.__resolved_stream_path = self.__stream_path + '/Resolved'
         self.__bulk_join_path = self.__base_path + '/Bulk/Streams/Data/Joins'
