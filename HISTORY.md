@@ -1,6 +1,6 @@
 # Version History
 
-## 0.8.1_preview / 2022-06-29
+## 0.8.2_preview / 2022-06-29
 
 - Bump version for re-release
 
