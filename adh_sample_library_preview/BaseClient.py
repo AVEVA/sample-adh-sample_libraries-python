@@ -157,7 +157,7 @@ class BaseClient(object):
             logging.info(f'requested executed - status code: {response.status_code}')
 
             # if debug level is desired, dump the response text and all headers
-            logging.debug(response.text)
+            logging.debug(f'response text: {response.text}')
             for header,value in response.headers.items():
                 logging.debug(f'{header}: {value}')
 
