@@ -153,7 +153,14 @@ class BaseClient(object):
     def checkResponse(self, response, main_message: str):
 
         if self.__logging_enabled:
+            # Announce the status code
             logging.info(f'requested executed - status code: {response.status_code}')
+
+            # if debug level is desired, dump the response text and all headers
+            logging.debug(response.text)
+            for header,value in response.headers.items():
+                logging.debug(f'{header}: {value}')
+
 
         if response.status_code < 200 or response.status_code >= 300:
             status = response.status_code
@@ -204,7 +211,16 @@ class BaseClient(object):
             headers.update(additional_headers)
 
         if self.__logging_enabled:
+            # Announce the url and method
             logging.info(f'executing request - method: {method}, url: {url}')
+
+            # if debug level is desired, dump the payload and the headers (redacting the auth header)
+            logging.debug(f'data: {data}')
+            for header,value in headers.items():
+                if header.lower() != "authorization":
+                    logging.debug(f'{header}: {value}')
+                else:
+                    logging.debug(f'{header}: <redacted>')
 
         return self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
 
