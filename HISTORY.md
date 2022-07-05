@@ -1,5 +1,13 @@
 # Version History
 
+## 0.8.3_preview / 2022-06-29
+
+- Bump version for re-release
+
+## 0.7.6_preview / 2022-06-20
+
+- Add support for getting Resolved Stream
+
 ## 0.7.5_preview / 2022-06-17
 
 - Updated dependencies
