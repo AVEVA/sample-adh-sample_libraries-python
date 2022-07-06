@@ -55,14 +55,14 @@ class EDSClient:
         self.__base_client.RequestTimeout = value
 
     @property
-    def logging_engabled(self) -> bool:
+    def logging_enabled(self) -> bool:
         """
         :return: Whether logging is enabled (default False)
         """
         return self.__base_client.LoggingEnabled
 
-    @logging_engabled.setter
-    def logging_engabled(self, value: bool):
+    @logging_enabled.setter
+    def logging_enabled(self, value: bool):
         self.__base_client.LoggingEnabled = value
 
     @property

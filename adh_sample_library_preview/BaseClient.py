@@ -154,7 +154,7 @@ class BaseClient(object):
 
         if self.__logging_enabled:
             # Announce the status code
-            logging.info(f'requested executed - status code: {response.status_code}')
+            logging.info(f'request executed in {response.elapsed.microseconds / 1000}ms - status code: {response.status_code}')
 
             # if debug level is desired, dump the response text and all headers
             logging.debug(f'response text: {response.text}')
