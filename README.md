@@ -33,7 +33,7 @@ Every request made by the library is logged using the standard [Python logging l
 | Info | all request urls and verbs <br/> all response status codes |
 | Debug | data payload and all request headers (Authorization header value redacted) <br/> response content and all response headers |
 
-The process or creating a logger is described in the [Logging HOWTO documentation](https://docs.python.org/3/howto/logging.html).  
+The process for creating a logger is described in the [Logging HOWTO documentation](https://docs.python.org/3/howto/logging.html).  
 
 An example walkthrough is shown here:
 
