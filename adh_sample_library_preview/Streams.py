@@ -1408,9 +1408,11 @@ class Streams(PatchableSecurable, object):
         """
         self.__base_path = self.__uri_api + \
             '/Tenants/{tenant_id}/Namespaces/{namespace_id}'
+        self.__base_path_preview = self.__uri_api + \
+            '-preview/Tenants/{tenant_id}/Namespaces/{namespace_id}'
         self.__streams_path = self.__base_path + '/Streams'
         self.__stream_path = self.__streams_path + '/{stream_id}'
-        self.__resolved_stream_path = self.__stream_path + '/Resolved'
+        self.__resolved_stream_path = self.__base_path_preview  + '/Streams/{stream_id}/Resolved'
         self.__stream_type_path = self.__stream_path + '/Type'
         self.__stream_tags_path = self.__stream_path + '/Tags'
         self.__stream_metadata_path = self.__stream_path + '/Metadata'

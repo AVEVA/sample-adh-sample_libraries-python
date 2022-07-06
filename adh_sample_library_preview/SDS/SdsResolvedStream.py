@@ -287,12 +287,12 @@ class SdsResolvedStream(object):
         if 'InterpolationMode' in content:
             interpolation_mode = content['InterpolationMode']
             if interpolation_mode is not None:
-                result.InterpolationMode = SdsInterpolationMode(interpolation_mode)
+                result.InterpolationMode = SdsInterpolationMode[interpolation_mode]
 
         if 'ExtrapolationMode' in content:
             extrapolation_mode = content['ExtrapolationMode']
             if extrapolation_mode is not None:
-                result.ExtrapolationMode = SdsExtrapolationMode(extrapolation_mode)
+                result.ExtrapolationMode = SdsExtrapolationMode[extrapolation_mode]
 
         if 'PropertyOverrides' in content:
             property_overrides = content['PropertyOverrides']

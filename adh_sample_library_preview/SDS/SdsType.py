@@ -309,8 +309,10 @@ class SdsType(object):
         if 'Description' in content:
             result.Description = content['Description']
 
-        if 'SdsTypeCode' in content:
+        if 'SdsTypeCode' in content and type(content['SdsTypeCode']) == int:
             result.SdsTypeCode = SdsTypeCodeType(content['SdsTypeCode'])
+        elif 'SdsTypeCode' in content and type(content['SdsTypeCode']) == str:
+            result.SdsTypeCode = SdsTypeCodeType[content['SdsTypeCode']]
 
         if 'IsGenericType' in content:
             result.IsGenericType = content['IsGenericType']
@@ -344,14 +346,20 @@ class SdsType(object):
 
         if 'InterpolationMode' in content:
             interpolation_mode = content['InterpolationMode']
-            if interpolation_mode is not None:
+            if interpolation_mode is not None and type(interpolation_mode) == int:
                 result.InterpolationMode = SdsInterpolationMode(
                     interpolation_mode)
+            elif interpolation_mode is not None and type(interpolation_mode) == str:
+                result.InterpolationMode = SdsInterpolationMode[
+                    interpolation_mode]
 
         if 'ExtrapolationMode' in content:
             extrapolation_mode = content['ExtrapolationMode']
-            if extrapolation_mode is not None:
+            if extrapolation_mode is not None and type(extrapolation_mode) == int:
                 result.ExtrapolationMode = SdsExtrapolationMode(
                     extrapolation_mode)
+            elif extrapolation_mode is not None and type(extrapolation_mode) == str:
+                result.ExtrapolationMode = SdsExtrapolationMode[
+                    extrapolation_mode]
 
         return result

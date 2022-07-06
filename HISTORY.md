@@ -1,5 +1,9 @@
 # Version History
 
+## 0.8.4_preview / 2022-07-06
+
+- Resolved Stream improvements and bug fixes
+
 ## 0.8.3_preview / 2022-06-29
 
 - Bump version for re-release

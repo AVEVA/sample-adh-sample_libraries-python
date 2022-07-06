@@ -68,7 +68,7 @@ class SharedStreams(PatchableSecurable, object):
         response = self.__base_client.request(
             'GET',
             self.__resolved_stream_path.format(
-                tenant_id=self.__tenant,
+                tenant_id=tenant_id,
                 namespace_id=namespace_id,
                 stream_id=self.__base_client.encode(stream_id)),
             additional_headers=additional_headers)
@@ -486,7 +486,7 @@ class SharedStreams(PatchableSecurable, object):
         :return:
         """
         self.__base_path = self.__uri_api + \
-            '/Tenants/{tenant_id}/Namespaces/{namespace_id}'
+            '-preview/Tenants/{tenant_id}/Namespaces/{namespace_id}'
         self.__streams_path = self.__base_path + '/Streams'
         self.__stream_path = self.__streams_path + '/{stream_id}'
         self.__resolved_stream_path = self.__stream_path + '/Resolved'
