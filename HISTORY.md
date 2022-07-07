@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.0_preview / 2022-07-07
+
+- Added logging capabilities to the BaseClient's request and response functions
+
 ## 0.8.3_preview / 2022-06-29
 
 - Bump version for re-release
