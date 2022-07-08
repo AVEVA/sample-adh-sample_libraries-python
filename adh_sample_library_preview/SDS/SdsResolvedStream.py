@@ -1,6 +1,5 @@
 from __future__ import annotations
 import json
-from msilib import type_valid
 
 from .SdsType import SdsType
 from .SdsExtrapolationMode import SdsExtrapolationMode
