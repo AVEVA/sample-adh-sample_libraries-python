@@ -131,8 +131,15 @@ dmypy.json
 # VSCode Files
 .vscode/*
 
-# Credential Config and Testing Script Files
+# Testing Script Files
+sample_local_testing_program.py
+*test_program.py
+
+# Logging Files
+*log*file*.txt
+*log*file*.log
+
+# Credential Config
 config.ini
 product-readiness.*
 appsettings.json
-sample_local_testing_program.py
