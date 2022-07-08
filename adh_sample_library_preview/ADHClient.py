@@ -20,7 +20,7 @@ class ADHClient:
     """
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str,
-                 client_secret: str = None, accept_verbosity: bool = False):
+                 client_secret: str = None, accept_verbosity: bool = False, logging_enabled: bool = False):
         """
         Use this to help in communinication with ADH
         :param api_version: Version of the api you are communicating with
@@ -30,9 +30,10 @@ class ADHClient:
         :param client_secret: Your client Secret or Key
         :param accept_verbosity: Sets whether in value calls you get all values or just
             non-default values
+        :param logging_enabled: Sets whether Python logging is enabled
         """
         self.__base_client = BaseClient(api_version, tenant, url, client_id,
-                                        client_secret, accept_verbosity)
+                                        client_secret, accept_verbosity, logging_enabled)
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)
         self.__asset_types = AssetTypes(self.__base_client)
@@ -83,6 +84,17 @@ class ADHClient:
     @request_timeout.setter
     def request_timeout(self, value: int):
         self.__base_client.RequestTimeout = value
+
+    @property
+    def logging_enabled(self) -> bool:
+        """
+        :return: Whether logging is enabled (default False)
+        """
+        return self.__base_client.LoggingEnabled
+
+    @logging_enabled.setter
+    def logging_enabled(self, value: bool):
+        self.__base_client.LoggingEnabled = value
 
     @property
     def AssetRules(self) -> AssetRules:
