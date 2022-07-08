@@ -3,6 +3,7 @@
 ## 0.9.1_preview / 2022-07-06
 
 - Resolved Stream improvements and bug fixes
+- Added skip parameter to getCommunityStreams, which may be a breaking change for some
 
 ## 0.9.0_preview / 2022-07-07
 
