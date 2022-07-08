@@ -346,20 +346,22 @@ class SdsType(object):
 
         if 'InterpolationMode' in content:
             interpolation_mode = content['InterpolationMode']
-            if interpolation_mode is not None and type(interpolation_mode) == int:
-                result.InterpolationMode = SdsInterpolationMode(
-                    interpolation_mode)
-            elif interpolation_mode is not None and type(interpolation_mode) == str:
-                result.InterpolationMode = SdsInterpolationMode[
-                    interpolation_mode]
+            if interpolation_mode is not None:
+                if type(interpolation_mode) == int:
+                    result.InterpolationMode = SdsInterpolationMode(
+                        interpolation_mode)
+                elif type(interpolation_mode) == str:
+                    result.InterpolationMode = SdsInterpolationMode[
+                        interpolation_mode]
 
         if 'ExtrapolationMode' in content:
             extrapolation_mode = content['ExtrapolationMode']
-            if extrapolation_mode is not None and type(extrapolation_mode) == int:
-                result.ExtrapolationMode = SdsExtrapolationMode(
-                    extrapolation_mode)
-            elif extrapolation_mode is not None and type(extrapolation_mode) == str:
-                result.ExtrapolationMode = SdsExtrapolationMode[
-                    extrapolation_mode]
+            if extrapolation_mode is not None:
+                if type(extrapolation_mode) == int:
+                    result.ExtrapolationMode = SdsExtrapolationMode(
+                        extrapolation_mode)
+                elif type(extrapolation_mode) == str:
+                    result.ExtrapolationMode = SdsExtrapolationMode[
+                        extrapolation_mode]
 
         return result
