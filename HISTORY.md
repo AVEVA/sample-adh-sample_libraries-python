@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.2_preview / 2022-07-11
+
+- Remove reference to msilib
+
 ## 0.9.1_preview / 2022-07-06
 
 - Resolved Stream improvements and bug fixes
