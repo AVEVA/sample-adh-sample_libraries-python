@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.3_preview / 2022-07-18
+
+- Add cache feature to DataViews client class
+
 ## 0.9.2_preview / 2022-07-11
 
 - Remove reference to msilib
