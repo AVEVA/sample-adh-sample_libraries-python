@@ -21,40 +21,40 @@ class AbstractBaseClient(ABC):
 
 
     @abstractmethod
-    def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
+    def request():
         pass
 
 
     @abstractmethod
-    def encode(self, url: str):
+    def encode():
         pass
 
 
     @abstractmethod
-    def checkResponse(self, response, main_message: str):
+    def checkResponse():
         pass
 
 
     @abstractmethod
-    def resolveBulkContent(self, response, value_class = None):
+    def resolveBulkContent():
         pass
 
 
     @abstractmethod
-    def resolvePagedContent(response, value_class = None):
+    def resolvePagedContent():
         pass
 
 
     @abstractmethod
-    def resolveStreamsContent(response):
+    def resolveStreamsContent():
         pass
 
 
     @abstractmethod
-    def resolveValueContent(response, value_class = None):
+    def resolveValueContent():
         pass
 
 
     @abstractmethod
-    def resolveContent(response, value_class = None):
+    def resolveContent():
        pass

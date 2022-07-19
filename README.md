@@ -23,7 +23,7 @@ Other language libraries and samples are available on [GitHub](https://github.co
 
 ## Testing
 
-The library is tested using PyTest. To test locally, install PyTest and run the test classes found in the Tests directory by executing 
+The library is tested using PyTest. To test locally, navigate to the Tests directory and install PyTest. Then run the test classes by executing 
 ```
 python -m pytest {testclass} 
 ```
@@ -34,7 +34,7 @@ Optionally, rename the appsettings.placeholder.json file to appsettings.json and
 
 ---
 
-Developed using Python 3.9.5.
+Developed using Python 3.10.1
 
 [AVEVA Samples](https://github.com/osisoft/OSI-samples) are licensed under the Apache 2 license.
 

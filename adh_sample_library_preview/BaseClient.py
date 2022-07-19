@@ -9,7 +9,7 @@ from .SDS.SdsStream import SdsStream
 
 
 class BaseClient(AbstractBaseClient):
-    """Handles communication with Sds Service.  Internal Use"""
+    """Handles communication with Sds Service. Internal Use"""
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
                  client_secret: str = None, accept_verbosity: bool = False):

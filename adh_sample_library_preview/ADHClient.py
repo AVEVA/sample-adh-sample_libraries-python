@@ -21,7 +21,7 @@ class ADHClient:
     """
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
-                 client_secret: str = None, accept_verbosity: bool = False, base_client: AbstractBaseClient = None):
+                 client_secret: str = None, accept_verbosity: bool = False, **kwargs):
         """
         Use this to help in communication with ADH
         :param api_version: Version of the api you are communicating with
@@ -31,11 +31,10 @@ class ADHClient:
         :param client_secret: Your client Secret or Key
         :param accept_verbosity: Sets whether in value calls you get all values or just
             non-default values
-        :param base_client: Optional base client instance to be used
         """
 
-        if base_client:
-            self.__base_client = base_client
+        if 'base_client' in kwargs:
+            self.__base_client = kwargs.get('base_client')
         else:
             self.__base_client = BaseClient(api_version, tenant, url, client_id,
                                             client_secret, accept_verbosity)
