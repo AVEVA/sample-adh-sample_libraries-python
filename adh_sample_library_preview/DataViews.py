@@ -243,7 +243,7 @@ class DataViews(Securable, object):
     def getDataInterpolated(self, namespace_id: str = None, data_view_id: str = None,
                             count: int = None, form: str = None, start_index: str = None,
                             end_index: str = None, interval: str = None, value_class=None,
-                            url: str = None, verbose: bool = None) -> tuple[Any, str, str]:
+                            url: str = None, verbose: bool = None, cache: str = None) -> tuple[Any, str, str]:
         """
         Retrieves the interpolated data of the 'dataView_id' from Sds Service
         :param namespace_id: namespace to work against
@@ -262,6 +262,9 @@ class DataViews(Securable, object):
         :param verbose: an optional parameter that lets the user specify verbose or non-verbose results at the query level.
             By default, it will match the base client's accept_verbosity setting, but can be overridden to True or False
             without affecting the client itself.
+        :param cache: Controls when the data view backing resources are to be refreshed. 
+            Used only when requesting the first page of data.
+            Ignored if used with the continuationToken.
         :return:
         """
         if url is None:
@@ -285,6 +288,10 @@ class DataViews(Securable, object):
             'endIndex': end_index,
             'interval': interval
         }
+        
+        if cache is not None:
+            params['cache'] = cache
+
         response = {}
         if url:
             response = self.__base_client.request('get', url)
@@ -325,7 +332,7 @@ class DataViews(Securable, object):
     def getDataStored(self, namespace_id: str = None, data_view_id: str = None,
                             count: int = None, form: str = None, start_index: str = None,
                             end_index: str = None, value_class=None, url: str = None,
-                            verbose: bool = None) -> tuple[Any, str, str]:
+                            verbose: bool = None, cache: str = None) -> tuple[Any, str, str]:
         """
         Retrieves the stored data of the 'dataView_id' from Sds Service
         :param namespace_id: namespace to work against
@@ -343,6 +350,9 @@ class DataViews(Securable, object):
         :param verbose: an optional parameter that lets the user specify verbose or non-verbose results at the query level.
             By default, it will match the base client's accept_verbosity setting, but can be overridden to True or False
             without affecting the client itself.
+        :param cache: Controls when the data view backing resources are to be refreshed. 
+            Used only when requesting the first page of data.
+            Ignored if used with the continuationToken.
         :return:
         """
         if url is None:
@@ -365,6 +375,10 @@ class DataViews(Securable, object):
             'startIndex': start_index,
             'endIndex': end_index
         }
+
+        if cache is not None:
+            params['cache'] = cache
+
         response = {}
         if url:
             response = self.__base_client.request('get', url)
