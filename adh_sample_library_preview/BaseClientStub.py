@@ -50,25 +50,5 @@ class BaseClientStub(AbstractBaseClient):
         return ''
 
 
-    def resolveBulkContent(self, response, value_class = None):
-        pass
-
-
-    def resolvePagedContent(self, response, value_class = None):
-        pass
-
-
-    def resolveStreamsContent(self, response):
-        pass
-
-
-    def resolveValueContent(self, response, value_class = None):
-        pass
-
-
-    def resolveContent(self, response, value_class = None):
-       pass
-
-
     def checkResponse(self, response, main_message: str):
         pass

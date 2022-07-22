@@ -8,7 +8,7 @@ from .SDS.SdsResultPage import SdsResultPage
 from .SDS.SdsStream import SdsStream
 from .SDS.SdsType import SdsType
 from .PatchableSecurable import PatchableSecurable
-
+from .ContentResolvers import BulkContent, DataContent, PagedContent, StreamsContent, ValueContent
 
 class Streams(PatchableSecurable, object):
     """
@@ -91,7 +91,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get all SdsStreams.')
 
-        return self.__base_client.resolveStreamsContent(response=response)
+        return StreamsContent(response=response).resolve()
 
     def getOrCreateStream(self, namespace_id: str, stream: SdsStream) -> SdsStream:
         """
@@ -329,7 +329,8 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get value for SdsStream: {url}.')
 
-        return self.__base_client.resolveValueContent(response=response, value_class=value_class)
+
+        return ValueContent(response=response, value_class=value_class).resolve()
 
 
     def getFirstValue(self, namespace_id: str, stream_id: str, value_class: type = None) -> Any:
@@ -370,7 +371,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get first value for SdsStream: {url}.')
 
-        return self.__base_client.resolveValueContent(response=response, value_class=value_class)
+        return ValueContent(response=response, value_class=value_class).resolve()
 
 
     def getLastValue(self, namespace_id: str, stream_id: str, value_class: type = None) -> Any:
@@ -411,7 +412,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get last value for SdsStream: {url}.')
 
-        return self.__base_client.resolveValueContent(response=response, value_class=value_class)
+        return ValueContent(response=response, value_class=value_class).resolve()
 
 
     def getWindowValues(self, namespace_id: str, stream_id: str, start: str, end: str, 
@@ -464,7 +465,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get window values for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+        return DataContent(response=response, value_class=value_class).resolve()
 
 
     def getWindowValuesPaged(self, namespace_id: str, stream_id: str, value_class: type, start: str,
@@ -522,7 +523,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get window values for SdsStream: {url}.')
 
-        return self.__base_client.resolvePagedContent(response=response, value_class=value_class)
+        return PagedContent(response=response, value_class=value_class).resolve()
 
 
     def getWindowValuesForm(self, namespace_id: str, stream_id: str, value_class: type, start: str,
@@ -573,7 +574,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get window values for SdsStream: {url}.')
     
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+        return DataContent(response=response, value_class=value_class).resolve()
 
 
     def getRangeValues(self, namespace_id: str, stream_id: str, value_class: type, start: str,
@@ -650,7 +651,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get range values for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+        return DataContent(response=response, value_class=value_class).resolve()
 
 
     def getRangeValuesInterpolated(self, namespace_id: str, stream_id: str, value_class: type,
@@ -704,7 +705,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get range values for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+        return DataContent(response=response, value_class=value_class).resolve()
 
 
     def getIndexCollectionValues(self, namespace_id: str, stream_id: str, value_class: type,
@@ -759,7 +760,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get range values for SdsStream: {url}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+        return DataContent(response=response, value_class=value_class).resolve()
 
 
     def getSampledValues(self, namespace_id: str, stream_id: str, value_class: type, start: str,
@@ -841,7 +842,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get sampled values for SdsStream: {_path}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+        return DataContent(response=response, value_class=value_class).resolve()
 
 
     def getSummaries(self, namespace_id: str, stream_id: str, value_class: type, start: str,
@@ -907,7 +908,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get summaries for SdsStream: {_path}.')
 
-        return self.__base_client.resolveContent(response=response, value_class=value_class)
+        return DataContent(response=response, value_class=value_class).resolve()
 
 
     def insertValues(self, namespace_id: str, stream_id: str, values: list[Any]):
@@ -1084,7 +1085,7 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get bulk values for SdsStream: {stream_ids}.')
 
-        return self.__base_client.resolveBulkContent(response=response, value_class=value_class)
+        return BulkContent(response=response, value_class=value_class).resolve()
 
 
     # private methods

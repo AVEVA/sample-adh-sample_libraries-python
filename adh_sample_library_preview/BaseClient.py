@@ -203,56 +203,6 @@ class BaseClient(AbstractBaseClient):
             raise SdsError(message)
 
 
-    def resolveBulkContent(self, response, value_class = None):
-        content = response.json()
-
-        if value_class is None:
-            return content
-
-        values = []
-        for valueArray in content:
-            valuesInside = []
-            for value in valueArray:
-                valuesInside.append(value_class.fromJson(value))
-            values.append(valuesInside)
-        return values
-
-    def resolvePagedContent(self, response, value_class = None):
-        content = SdsResultPage.fromJson(response.json())
-
-        if value_class is None:
-            return content
-
-        results = SdsResultPage(continuation_token=content.ContinuationToken)
-        for r in content.Results:
-            results.Results.append(value_class.fromJson(r))
-        return results
-
-    def resolveStreamsContent(self, response):
-        content = response.json()
-
-        results: list[SdsStream] = []
-        for item in content:
-            results.append(SdsStream.fromJson(item))
-        return results
-
-    def resolveValueContent(self, response, value_class = None):
-        result = response.json()
-        if value_class is None:
-            return result
-        return value_class.fromJson(result)
-
-    def resolveContent(self, response, value_class = None):
-        content = response.json()
-        if value_class is None:
-            return content
-        
-        results = []
-        for c in content:
-            results.append(value_class.fromJson(c))
-        return results
-
-
     def validateParameters(*args):
         for arg in args:
             if arg is None:

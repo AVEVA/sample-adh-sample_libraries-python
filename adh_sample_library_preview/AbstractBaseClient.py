@@ -33,28 +33,3 @@ class AbstractBaseClient(ABC):
     @abstractmethod
     def checkResponse():
         pass
-
-
-    @abstractmethod
-    def resolveBulkContent():
-        pass
-
-
-    @abstractmethod
-    def resolvePagedContent():
-        pass
-
-
-    @abstractmethod
-    def resolveStreamsContent():
-        pass
-
-
-    @abstractmethod
-    def resolveValueContent():
-        pass
-
-
-    @abstractmethod
-    def resolveContent():
-       pass
