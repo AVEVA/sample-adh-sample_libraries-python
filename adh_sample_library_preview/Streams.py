@@ -6,6 +6,7 @@ from .BaseClient import BaseClient
 from .SDS.SdsBoundaryType import SdsBoundaryType
 from .SDS.SdsResultPage import SdsResultPage
 from .SDS.SdsStream import SdsStream
+from .SDS.SdsResolvedStream import SdsResolvedStream
 from .SDS.SdsType import SdsType
 from .PatchableSecurable import PatchableSecurable
 from .ContentResolvers import BulkContent, DataContent, PagedContent, StreamsContent, ValueContent
@@ -48,6 +49,29 @@ class Streams(PatchableSecurable, object):
 
         return SdsStream.fromJson(response.json())
 
+
+    def getResolvedStream(self, namespace_id: str, stream_id: str) -> SdsResolvedStream:
+        """
+        Retrieves a resolved stream specified by 'stream_id' from the Sds Service
+        :param namespace_id: namespace to work against
+        :param stream_id: id of the stream
+        :return:the Stream as SdsResolvedStream
+        """
+        if namespace_id is None:
+            raise TypeError
+        if stream_id is None:
+            raise TypeError
+        
+        response = self.__base_client.request(
+            'GET',
+            self.__resolved_stream_path.format(
+                tenant_id=self.__tenant,
+                namespace_id=namespace_id,
+                stream_id=self.__base_client.encode(stream_id)))
+        self.__base_client.checkResponse(
+            response, f'Failed to get resolved SdsStream, {stream_id}.')
+
+        return SdsResolvedStream.fromJson(response.json())
 
     def getStreamType(self, namespace_id: str, stream_id: str) -> SdsType:
         """
@@ -468,21 +492,28 @@ class Streams(PatchableSecurable, object):
         return DataContent(response=response, value_class=value_class).resolve()
 
 
-    def getWindowValuesPaged(self, namespace_id: str, stream_id: str, value_class: type, start: str,
-                             end: str, count: int, continuation_token: str = '', filter: str = '') -> SdsResultPage:
+    def getWindowValuesPaged(self, namespace_id: str, stream_id: str, start: str,
+                             end: str, count: int, continuation_token: str = '', value_class: type = None, 
+                             filter: str = '', boundaryType: SdsBoundaryType = None, startBoundaryType: SdsBoundaryType = None,
+                             endBoundaryType: SdsBoundaryType = None) -> SdsResultPage:
         """
         Retrieves JSON object representing a window of values from the stream
             specified by 'stream_id' using paging
         :param namespace_id: id of namespace to work against
         :param stream_id: id of the stream to get the data of
-        :param value_class: use this to cast the value into a given type.
-            Type must support .fromJson().
-            If None returns a dynamic Python object from the data.
         :param start: Starting index
         :param end: Ending index
         :param count: maximum number of events to return.
         :param continuationToken: token used to retrieve the next page of data.
+        :param value_class: use this to cast the value into a given type.
+            Type must support .fromJson().
+            If None returns a dynamic Python object from the data.
         :param filter: An optional filter.  By Default it is ''.
+        :param boundaryType: Optional SdsBoundaryType specifies handling of events at or near the start and end indexes
+        :param startBoundaryType: Optional SdsBoundaryType specifies the first value in the result in relation to the start index.
+            If startBoundaryType is specified, endBoundaryType must be specified.
+        :param endBoundaryType: Optional SdsBoundaryType specifies the last value in the result in relation to the end index.
+            If startBoundaryType is specified, endBoundaryType must be specified.
         :return: an SdsResultPage containing the results and the next continuation token.
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
@@ -492,10 +523,12 @@ class Streams(PatchableSecurable, object):
         return self.getWindowValuesPagedUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
             namespace_id=namespace_id,
-            stream_id=self.__base_client.encode(stream_id)), value_class, start, end, count, continuation_token, filter)
+            stream_id=self.__base_client.encode(stream_id)), start, end, count, continuation_token, 
+            value_class, filter, boundaryType, startBoundaryType, endBoundaryType)
 
-    def getWindowValuesPagedUrl(self, url: str, value_class: type, start: str,
-                                end: str, count: int, continuation_token: str = '', filter: str = '', additional_headers = None) -> SdsResultPage:
+    def getWindowValuesPagedUrl(self, url: str, start: str,end: str, count: int, continuation_token: str = '', value_class: type = None, 
+                             filter: str = '', boundaryType: SdsBoundaryType = None, startBoundaryType: SdsBoundaryType = None,
+                             endBoundaryType: SdsBoundaryType = None, additional_headers = None) -> SdsResultPage:
         """
         Retrieves JSON object representing a window of values from the stream
             specified by 'url' using paging
@@ -507,18 +540,35 @@ class Streams(PatchableSecurable, object):
         :param end: Ending index
         :param count: maximum number of events to return.
         :param continuationToken: token used to retrieve the next page of data.
+        :param value_class: use this to cast the value into a given type.
+            Type must support .fromJson().
+            If None returns a dynamic Python object from the data.
         :param filter: An optional filter.  By Default it is ''.
+        :param boundaryType: Optional SdsBoundaryType specifies handling of events at or near the start and end indexes
+        :param startBoundaryType: Optional SdsBoundaryType specifies the first value in the result in relation to the start index.
+            If startBoundaryType is specified, endBoundaryType must be specified.
+        :param endBoundaryType: Optional SdsBoundaryType specifies the last value in the result in relation to the end index.
+            If startBoundaryType is specified, endBoundaryType must be specified.
         :param additional_headers: headers to add, or override if key is already present
         :return: an SdsResultPage containing the results and the next continuation token.
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
         self.__base_client.validateParameters(url, start, end, count, continuation_token)
-        
+
+        params = {'startIndex': start, 'endIndex': end, 'filter': filter,
+                'count': count, 'continuationToken': continuation_token}
+
+        if boundaryType is not None:
+            params['boundaryType'] = boundaryType.value
+        if startBoundaryType is not None:
+            params['startBoundaryType'] = startBoundaryType.value
+        if endBoundaryType is not None:
+            params['endBoundaryType'] =  endBoundaryType.value
+
         response = self.__base_client.request(
-            'GET', self.__data_path.format(stream=url),
-            params={'startIndex': start, 'endIndex': end, 'filter': filter,
-                    'count': count, 'continuationToken': continuation_token},
+            'get', self.__data_path.format(stream=url),
+            params=params,
             additional_headers=additional_headers)
         self.__base_client.checkResponse(
             response, f'Failed to get window values for SdsStream: {url}.')
@@ -1097,8 +1147,11 @@ class Streams(PatchableSecurable, object):
         """
         self.__base_path = self.__uri_api + \
             '/Tenants/{tenant_id}/Namespaces/{namespace_id}'
+        self.__base_path_preview = self.__uri_api + \
+            '-preview/Tenants/{tenant_id}/Namespaces/{namespace_id}'
         self.__streams_path = self.__base_path + '/Streams'
         self.__stream_path = self.__streams_path + '/{stream_id}'
+        self.__resolved_stream_path = self.__base_path_preview  + '/Streams/{stream_id}/Resolved'
         self.__stream_type_path = self.__stream_path + '/Type'
         self.__stream_tags_path = self.__stream_path + '/Tags'
         self.__stream_metadata_path = self.__stream_path + '/Metadata'

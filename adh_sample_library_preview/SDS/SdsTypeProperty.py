@@ -281,8 +281,12 @@ class SdsTypeProperty(object):
 
         if 'InterpolationMode' in content:
             interpolation_mode = content['InterpolationMode']
-            if interpolation_mode is not None:
-                result.InterpolationMode = SdsInterpolationMode(
-                    interpolation_mode)
+            if interpolation_mode is not None: 
+                if type(interpolation_mode) == int:
+                    result.InterpolationMode = SdsInterpolationMode(
+                        interpolation_mode)
+                elif type(interpolation_mode) == str:
+                    result.InterpolationMode = SdsInterpolationMode[
+                        interpolation_mode]
 
         return result

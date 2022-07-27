@@ -1,8 +1,38 @@
 # Version History
 
-## 0.8.0_preview / 2022-07-15
+## 0.9.4_preview / 2022-07-30
+
 - Add testing for Streams and BaseClient
 - Refactoring
+
+## 0.9.3_preview / 2022-07-18
+
+- Add cache feature to DataViews client class
+
+## 0.9.2_preview / 2022-07-11
+
+- Remove reference to msilib
+
+## 0.9.1_preview / 2022-07-06
+
+- Resolved Stream improvements and bug fixes
+- Added skip parameter to getCommunityStreams, which may be a breaking change for some
+
+## 0.9.0_preview / 2022-07-07
+
+- Added logging capabilities to the BaseClient's request and response functions
+
+## 0.8.3_preview / 2022-06-29
+
+- Bump version for re-release
+
+## 0.7.6_preview / 2022-06-20
+
+- Add support for getting Resolved Stream
+
+## 0.7.5_preview / 2022-06-17
+
+- Updated dependencies
 
 ## 0.7.4_preview / 2022-05-24
 

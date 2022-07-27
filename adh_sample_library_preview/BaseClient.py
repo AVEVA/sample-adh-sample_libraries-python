@@ -1,4 +1,5 @@
 from __future__ import annotations
+import logging
 import requests
 
 from .AbstractBaseClient import AbstractBaseClient
@@ -12,7 +13,7 @@ class BaseClient(AbstractBaseClient):
     """Handles communication with Sds Service. Internal Use"""
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
-                 client_secret: str = None, accept_verbosity: bool = False):
+                 client_secret: str = None, accept_verbosity: bool = False, logging_enabled: bool = False):
         self.__api_version = api_version
         self.__tenant = tenant
         self.__url = url  # if resource.endswith("/")  else resource + "/"
@@ -27,6 +28,7 @@ class BaseClient(AbstractBaseClient):
 
         self.__uri_api = url + '/api/' + api_version
         self.__session = requests.Session()
+        self.__logging_enabled = logging_enabled
 
     @property
     def uri(self) -> str:
@@ -76,6 +78,13 @@ class BaseClient(AbstractBaseClient):
     def RequestTimeout(self, value: int):
         self.__request_timeout = value
 
+    @property
+    def LoggingEnabled(self) -> bool:
+        return self.__logging_enabled
+
+    @LoggingEnabled.setter
+    def LoggingEnabled(self, value: bool):
+        self.__logging_enabled = value
 
     def _getToken(self) -> str:
         """
@@ -161,12 +170,33 @@ class BaseClient(AbstractBaseClient):
         if additional_headers:
             headers.update(additional_headers)
 
-        response = self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
+        if self.__logging_enabled:
+            # Announce the url and method
+            logging.info(f'executing request - method: {method}, url: {url}')
 
-        return response;
+            # if debug level is desired, dump the payload and the headers (redacting the auth header)
+            logging.debug(f'data: {data}')
+            for header,value in headers.items():
+                if header.lower() != "authorization":
+                    logging.debug(f'{header}: {value}')
+                else:
+                    logging.debug(f'{header}: <redacted>')
+
+        return self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
 
 
     def checkResponse(self, response, main_message: str):
+
+        if self.__logging_enabled:
+            # Announce the status code
+            logging.info(f'request executed in {response.elapsed.microseconds / 1000}ms - status code: {response.status_code}')
+
+            # if debug level is desired, dump the response text and all headers
+            logging.debug(f'response text: {response.text}')
+            for header,value in response.headers.items():
+                logging.debug(f'{header}: {value}')
+
+
         if response.status_code < 200 or response.status_code >= 300:
             status = response.status_code
             reason = response.text
@@ -181,6 +211,8 @@ class BaseClient(AbstractBaseClient):
             response.close()
 
             message = main_message + error
+            if self.__logging_enabled:
+                logging.error(message)
             raise SdsError(message)
 
         # this happens on a collection return that is partially successful

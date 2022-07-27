@@ -112,19 +112,20 @@ class Communities(object):
         result = CommunitySummaryInformation.fromJson(response.json())
         return result
 
-    def getCommunityStreams(self, community_id: str, query: str = '', count: int = 100,
+    def getCommunityStreams(self, community_id: str, query: str = '', skip: int = 0, count: int = 100,
                             search_tenant_id: str = None) -> list[StreamSearchResult]:
         """
         Searches for streams within a community by query
         :param community_id: The community identifier
         :param query: An optional query string to search for matching streams.
+        :param skip: number of streams to skip for paging
         :param count: An optional parameter that represents the maximum number of retrieved streams.
         If not specified, the default is 100.
         """
         if community_id is None:
             raise TypeError
 
-        params = {'query': query, 'count': count}
+        params = {'query': query, 'skip': skip, 'count': count}
 
         if search_tenant_id is not None:
             params['searchTenantId'] = search_tenant_id
