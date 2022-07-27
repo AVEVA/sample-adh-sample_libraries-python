@@ -45,3 +45,21 @@ jobs:
             call python setup.py sdist bdist_wheel
             echo Complete
           displayName: 'Build'
+
+  - job: Tests
+    steps:
+      - template: '/miscellaneous/build_templates/appsettings.yml@templates'
+        parameters:
+          secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, Resource'
+
+      - script: |
+          echo Install test tools  
+          pip install pytest
+          echo Install requirements
+          pip install -r requirements.txt
+          echo Run tests
+          cd ./adh_sample_library_preview/Tests
+          python -m pytest test_baseclient.py --e2e True
+          python -m pytest test_streams.py --e2e True
+          echo Complete
+        displayName: 'Run tests'
