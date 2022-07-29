@@ -173,7 +173,7 @@ def test_range_values(client, data):
 
 def test_window_values(client, data):
     client.Streams.getWindowValues(data.get('NamespaceId'), data.get('StreamId'), data.get('StartIndex'), data.get('EndIndex'), Value) 
-    client.Streams.getWindowValuesPaged(data.get('NamespaceId'), data.get('StreamId'), data.get('StartIndex'), data.get('EndIndex'), 100, value_class=Value) 
+    client.Streams.getWindowValuesPaged(data.get('NamespaceId'), data.get('StreamId'), data.get('StartIndex'), data.get('EndIndex'), 100, None, Value) 
     client.Streams.getWindowValuesForm(data.get('NamespaceId'), data.get('StreamId'), Value, data.get('StartIndex'), data.get('EndIndex'), 'tableh') 
 
 
