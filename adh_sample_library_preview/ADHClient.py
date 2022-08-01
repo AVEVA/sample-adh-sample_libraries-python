@@ -1,3 +1,4 @@
+from .AbstractBaseClient import AbstractBaseClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
@@ -20,9 +21,9 @@ class ADHClient:
     """
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str,
-                 client_secret: str = None, accept_verbosity: bool = False, logging_enabled: bool = False):
+                 client_secret: str = None, accept_verbosity: bool = False, logging_enabled: bool = False, **kwargs):
         """
-        Use this to help in communinication with ADH
+        Use this to help in communication with ADH
         :param api_version: Version of the api you are communicating with
         :param tenant: Your tenant ID
         :param url: The base URL for your ADH instance
@@ -32,8 +33,13 @@ class ADHClient:
             non-default values
         :param logging_enabled: Sets whether Python logging is enabled
         """
-        self.__base_client = BaseClient(api_version, tenant, url, client_id,
-                                        client_secret, accept_verbosity, logging_enabled)
+
+        if 'base_client' in kwargs:
+            self.__base_client = kwargs.get('base_client')
+        else:
+            self.__base_client = BaseClient(api_version, tenant, url, client_id,
+                                            client_secret, accept_verbosity, logging_enabled)
+
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)
         self.__asset_types = AssetTypes(self.__base_client)

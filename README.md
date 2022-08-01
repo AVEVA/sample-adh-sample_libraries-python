@@ -3,7 +3,7 @@
 | :loudspeaker: **Notice**: This library is an AVEVA Data Hub targeted version of the ocs_sample_library_preview. The ocs_sample_library_preview library is being deprecated and this library should be used moving forward. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-**Version:** 0.9.3_preview
+**Version:** 0.9.4_preview
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-sample_libraries-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=4674&branchName=main)
 
@@ -21,7 +21,16 @@ The library is not intended to show every endpoint and every option/parameter fo
 
 Other language libraries and samples are available on [GitHub](https://github.com/osisoft/OSI-Samples).
 
-Tests are done by testing the sample apps that use this.
+## Testing
+
+The library is tested using PyTest. To test locally, navigate to the Tests directory and install PyTest. Then run the test classes by executing 
+```
+python -m pytest {testclass} 
+```
+
+where {testclass} is the name of a test class, for example ./test_baseclient.py. 
+
+Optionally, rename the appsettings.placeholder.json file to appsettings.json and populate the fields to enable running end to end tests. Note: This file is included in the gitignore and will not be pushed to a remote repository. 
 
 ## Logging
 
@@ -80,7 +89,7 @@ Note that the original level was recorded, logging was set to debug, the `getDat
 
 ---
 
-Developed using Python 3.9.5.
+Developed using Python 3.10.1
 
 [AVEVA Samples](https://github.com/osisoft/OSI-samples) are licensed under the Apache 2 license.
 

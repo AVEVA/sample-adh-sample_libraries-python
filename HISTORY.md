@@ -1,5 +1,10 @@
 # Version History
 
+## 0.9.4_preview / 2022-07-30
+
+- Add testing for Streams and BaseClient
+- Refactoring
+
 ## 0.9.3_preview / 2022-07-18
 
 - Add cache feature to DataViews client class

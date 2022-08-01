@@ -1,14 +1,16 @@
 from __future__ import annotations
 import logging
 import requests
-from urllib.parse import urlsplit
 
+from .AbstractBaseClient import AbstractBaseClient
 from .Authentication import Authentication
 from .SdsError import SdsError
+from .SDS.SdsResultPage import SdsResultPage
+from .SDS.SdsStream import SdsStream
 
 
-class BaseClient(object):
-    """Handles communication with Sds Service.  Internal Use"""
+class BaseClient(AbstractBaseClient):
+    """Handles communication with Sds Service. Internal Use"""
 
     def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
                  client_secret: str = None, accept_verbosity: bool = False, logging_enabled: bool = False):
@@ -91,12 +93,14 @@ class BaseClient(object):
         """
         return self.__auth_object.getToken()
 
+
     def encode(self, url: str):
         """
         Url encodes a provided url string
         :return:
         """
         return requests.utils.quote(url, safe=':')
+
 
     def sdsHeaders(self) -> dict[str, str]:
         """
@@ -116,6 +120,7 @@ class BaseClient(object):
 
         return headers
 
+
     def communityHeaders(self, community_id: str):
         """
         DEPRECATED - Use the additional_headers parameter on the BaseClient.request method 
@@ -129,6 +134,7 @@ class BaseClient(object):
 
         return headers
 
+
     def sdsNonVerboseHeader(self):
         """
         DEPRECATED - Use the additional_headers parameter on the BaseClient.request method 
@@ -141,14 +147,43 @@ class BaseClient(object):
 
         return headers
 
+
     @staticmethod
     def getCommunityIdHeader(community_id: str) -> dict[str, str]:
         return { 'Community-id': community_id }
+
 
     @staticmethod
     def getVerbosityHeader(verbose: bool) -> dict[str, str]:
         verbosity_string = 'verbose' if verbose else 'non-verbose'
         return { 'Accept-Verbosity': verbosity_string } 
+
+
+    def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
+        
+        # Start with the necessary headers for SDS calls, such as authorization and content-type
+        if not headers:
+            headers = self.sdsHeaders()
+        
+        # Extend this with the additional headers provided that either suppliment or override the default values
+        # This allows additional headers to be added to the HTTP call without blocking the base header call
+        if additional_headers:
+            headers.update(additional_headers)
+
+        if self.__logging_enabled:
+            # Announce the url and method
+            logging.info(f'executing request - method: {method}, url: {url}')
+
+            # if debug level is desired, dump the payload and the headers (redacting the auth header)
+            logging.debug(f'data: {data}')
+            for header,value in headers.items():
+                if header.lower() != "authorization":
+                    logging.debug(f'{header}: {value}')
+                else:
+                    logging.debug(f'{header}: <redacted>')
+
+        return self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
+
 
     def checkResponse(self, response, main_message: str):
 
@@ -199,30 +234,15 @@ class BaseClient(object):
             message = main_message + errorToWrite
             raise SdsError(message)
 
-    def request(self, method: str, url: str, params=None, data=None, headers=None, additional_headers=None, **kwargs):
-        
-        # Start with the necessary headers for SDS calls, such as authorization and content-type
-        if not headers:
-            headers = self.sdsHeaders()
-        
-        # Extend this with the additional headers provided that either suppliment or override the default values
-        # This allows additional headers to be added to the HTTP call without blocking the base header call
-        if additional_headers:
-            headers.update(additional_headers)
 
-        if self.__logging_enabled:
-            # Announce the url and method
-            logging.info(f'executing request - method: {method}, url: {url}')
+    def validateParameters(*args):
+        for arg in args:
+            if arg is None:
+                raise TypeError
+            if type(arg) is list and not arg:
+                raise TypeError
 
-            # if debug level is desired, dump the payload and the headers (redacting the auth header)
-            logging.debug(f'data: {data}')
-            for header,value in headers.items():
-                if header.lower() != "authorization":
-                    logging.debug(f'{header}: {value}')
-                else:
-                    logging.debug(f'{header}: <redacted>')
-
-        return self.__session.request(method, url, params=params, data=data, headers=headers, **kwargs)
 
     def __del__(self):
-        self.__session.close()
+        if hasattr(self, '__session'):
+            self.__session.close()
