@@ -8,7 +8,6 @@ from .SDS.SdsStream import SdsStream
 from .SDS.SdsResolvedStream import SdsResolvedStream
 from .SDS.SdsType import SdsType
 from .PatchableSecurable import PatchableSecurable
-
 from .Streams import Streams
 
 class SharedStreams(PatchableSecurable, object):
@@ -102,7 +101,11 @@ class SharedStreams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, 'Failed to get all SdsStreams.')
         
-        return self.__base_client.resolveStreamsContent(response=response)
+        content = response.json()
+        results: list[SdsStream] = []
+        for item in content:
+            results.append(SdsStream.fromJson(item))
+        return results
 
     # The following section provides functionality to interact with Data
     #  We assume the value(s) passed follow the Sds object patterns
@@ -459,7 +462,13 @@ class SharedStreams(PatchableSecurable, object):
         if value_class is None:
             return content
 
-        return self.__base_client.resolveBulkContent(response=response, value_class=value_class)
+        values = []
+        for valueArray in content:
+            valuesInside = []
+            for value in valueArray:
+                valuesInside.append(value_class.fromJson(value))
+            values.append(valuesInside)
+        return values
 
     # private methods
 

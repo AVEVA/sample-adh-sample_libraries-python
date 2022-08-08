@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.5_preview / 2022-08-09
+
+- Address content resolving bug in SharedStreams
+
 ## 0.9.4_preview / 2022-07-30
 
 - Add testing for Streams and BaseClient

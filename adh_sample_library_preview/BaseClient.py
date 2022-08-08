@@ -5,8 +5,6 @@ import requests
 from .AbstractBaseClient import AbstractBaseClient
 from .Authentication import Authentication
 from .SdsError import SdsError
-from .SDS.SdsResultPage import SdsResultPage
-from .SDS.SdsStream import SdsStream
 
 
 class BaseClient(AbstractBaseClient):

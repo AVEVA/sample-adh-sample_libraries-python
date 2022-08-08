@@ -3,7 +3,7 @@
 | :loudspeaker: **Notice**: This library is an AVEVA Data Hub targeted version of the ocs_sample_library_preview. The ocs_sample_library_preview library is being deprecated and this library should be used moving forward. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-**Version:** 0.9.4_preview
+**Version:** 0.9.5_preview
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-sample_libraries-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=4674&branchName=main)
 
@@ -23,14 +23,17 @@ Other language libraries and samples are available on [GitHub](https://github.co
 
 ## Testing
 
-The library is tested using PyTest. To test locally, navigate to the Tests directory and install PyTest. Then run the test classes by executing 
+The library is tested using PyTest. To test locally, make sure that PyTest is installed, then navigate to the Tests directory and run the test classes by executing 
 ```
 python -m pytest {testclass} 
 ```
 
 where {testclass} is the name of a test class, for example ./test_baseclient.py. 
 
-Optionally, rename the appsettings.placeholder.json file to appsettings.json and populate the fields to enable running end to end tests. Note: This file is included in the gitignore and will not be pushed to a remote repository. 
+Optionally to run end to end tests, rename the appsettings.placeholder.json file to appsettings.json and populate the fields, (This file is included in the gitignore and will not be pushed to a remote repository), then run 
+```
+python -m pytest {testclass} --e2e True
+```
 
 ## Logging
 
