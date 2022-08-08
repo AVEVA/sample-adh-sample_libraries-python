@@ -353,7 +353,6 @@ class Streams(PatchableSecurable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get value for SdsStream: {url}.')
 
-
         return ValueContent(response=response, value_class=value_class).resolve()
 
 
