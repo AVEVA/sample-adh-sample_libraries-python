@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.6_preview / 2022-08-10
+
+- Add dependabot.yml to automate dependency checks
+
 ## 0.9.5_preview / 2022-08-09
 
 - Address content resolving bug in SharedStreams

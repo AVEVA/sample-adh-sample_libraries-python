@@ -47,6 +47,7 @@ jobs:
           displayName: 'Build'
 
   - job: Tests
+    condition: ne(variables['Build.Reason'], 'Schedule')
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
