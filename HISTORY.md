@@ -1,6 +1,6 @@
 # Version History
 
-## 0.9.7_preview / 2022-09-17
+## 0.9.7_preview / 2022-08-17
 
 - Automate dependabot approval and automerge
 
