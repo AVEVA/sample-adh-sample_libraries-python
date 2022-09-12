@@ -200,19 +200,27 @@ class Assets(Securable, object):
             results.append(ResolvedAsset.fromJson(i))
         return results
 
-    def getAssetLastData(self, namespace_id: str, asset_id: str) -> DataResults:
+    def getAssetLastData(self, namespace_id: str, asset_id: str, stream: list[str] = []) -> DataResults:
         """
         Returns the last stored value for SDS streams in the resolved asset
         :param namespace_id: The namespace identifier
         :param asset_id: The asset identifier
+        :param stream: optional parameter consisting of a list of stream reference names for each stream 
+        you are interested in. By default, all data calls return data for all stream references.
         """
         if namespace_id is None:
             raise TypeError
         if asset_id is None:
             raise TypeError
 
+        paramsToUse = {}
+
+        if len(stream):
+            paramsToUse['stream'] = ','.join(stream)
+
         response = self.__base_client.request('get', self.__last_path.format(
-            namespace_id=namespace_id, asset_id=self.__base_client.encode(asset_id)))
+            namespace_id=namespace_id, asset_id=self.__base_client.encode(asset_id)),
+            params=paramsToUse)
         self.__base_client.checkResponse(
             response, f'Failed to get last data for resolved asset, {asset_id}.')
 
@@ -220,7 +228,7 @@ class Assets(Securable, object):
         return result
 
     def getAssetSampledData(self, namespace_id: str, asset_id: str, start_index: str,
-                            end_index: str, intervals: int) -> DataResults:
+                            end_index: str, intervals: int, stream: list[str] = []) -> DataResults:
         """
         Returns sampled data for referenced SDS streams in the resolved asset
         :param namespace_id: The namespace identifier
@@ -228,6 +236,8 @@ class Assets(Securable, object):
         :param start_index: The start index for the intervals
         :param end_index: The end index for the intervals
         :param intervals: The number of requested intervals
+        :param stream: optional parameter consisting of a list of stream reference names for each stream 
+        you are interested in. By default, all data calls return data for all stream references.
         """
         if namespace_id is None:
             raise TypeError
@@ -240,9 +250,15 @@ class Assets(Securable, object):
         if intervals is None:
             raise TypeError
 
+        paramsToUse = {}
+
+        if len(stream):
+            paramsToUse['stream'] = ','.join(stream)
+
         response = self.__base_client.request('get', self.__sampled_path.format(
             namespace_id=namespace_id, asset_id=self.__base_client.encode(asset_id), start_index=start_index,
-            end_index=end_index, intervals=intervals))
+            end_index=end_index, intervals=intervals),
+            params=paramsToUse)
         self.__base_client.checkResponse(
             response, f'Failed to get sampled data for resolved asset, {asset_id}.')
 
@@ -250,7 +266,7 @@ class Assets(Securable, object):
         return result
 
     def getAssetSummaryData(self, namespace_id: str, asset_id: str, start_index: str,
-                            end_index: str, count: int) -> DataResults:
+                            end_index: str, count: int, stream: list[str] = []) -> DataResults:
         """
         Returns summary data for referenced SDS streams in the resolved asset
         :param namespace_id: The namespace identifier
@@ -258,6 +274,8 @@ class Assets(Securable, object):
         :param start_index: The start index for the intervals
         :param end_index: The end index for the intervals
         :param count: The number of requested intervals
+        :param stream: optional parameter consisting of a list of stream reference names for each stream 
+        you are interested in. By default, all data calls return data for all stream references.
         """
         if namespace_id is None:
             raise TypeError
@@ -270,9 +288,15 @@ class Assets(Securable, object):
         if count is None:
             raise TypeError
 
+        paramsToUse = {}
+
+        if len(stream):
+            paramsToUse['stream'] = ','.join(stream)
+
         response = self.__base_client.request('get', self.__summaries_path.format(
             namespace_id=namespace_id, asset_id=self.__base_client.encode(asset_id), start_index=start_index,
-            end_index=end_index, count=count))
+            end_index=end_index, count=count),
+            params=paramsToUse)
         self.__base_client.checkResponse(
             response, f'Failed to get summary data for resolved asset, {asset_id}.')
 
@@ -280,13 +304,15 @@ class Assets(Securable, object):
         return result
 
     def getAssetWindowData(self, namespace_id: str, asset_id: str, start_index: str,
-                           end_index: str) -> DataResults:
+                           end_index: str, stream: list[str] = []) -> DataResults:
         """
         Returns window data for referenced SDS streams in the resolved asset
         :param namespace_id: The namespace identifier
         :param asset_id: The asset identifier
         :param start_index: The start index for the window
         :param end_index: The end index for the window
+        :param stream: optional parameter consisting of a list of stream reference names for each stream 
+        you are interested in. By default, all data calls return data for all stream references.
         """
         if namespace_id is None:
             raise TypeError
@@ -296,10 +322,16 @@ class Assets(Securable, object):
             raise TypeError
         if end_index is None:
             raise TypeError
+        
+        paramsToUse = {}
+
+        if len(stream):
+            paramsToUse['stream'] = ','.join(stream)
 
         response = self.__base_client.request('get', self.__window_path.format(
             namespace_id=namespace_id, asset_id=self.__base_client.encode(asset_id), start_index=start_index,
-            end_index=end_index))
+            end_index=end_index),
+            params=paramsToUse)
         self.__base_client.checkResponse(
             response, f'Failed to get window data for resolved asset, {asset_id}.')
 
@@ -307,7 +339,7 @@ class Assets(Securable, object):
         return result
 
     def getAssetInterpolatedData(self, namespace_id: str, asset_id: str, start_index: str,
-                                 end_index: str, count: int) -> DataResults:
+                                 end_index: str, count: int, stream: list[str] = []) -> DataResults:
         """
         Returns interpolated data for referenced SDS streams in the resolved asset
         :param namespace_id: The namespace identifier
@@ -315,6 +347,8 @@ class Assets(Securable, object):
         :param start_index: The start index for the intervals
         :param end_index: The end index for the intervals
         :param count: The number of requested intervals
+        :param stream: optional parameter consisting of a list of stream reference names for each stream 
+        you are interested in. By default, all data calls return data for all stream references.
         """
         if namespace_id is None:
             raise TypeError
@@ -327,9 +361,15 @@ class Assets(Securable, object):
         if count is None:
             raise TypeError
 
+        paramsToUse = {}
+
+        if len(stream):
+            paramsToUse['stream'] = ','.join(stream)
+
         response = self.__base_client.request('get', self.__interpolated_path.format(
             namespace_id=namespace_id, asset_id=self.__base_client.encode(asset_id), start_index=start_index,
-            end_index=end_index, count=count))
+            end_index=end_index, count=count),
+            params=paramsToUse)
         self.__base_client.checkResponse(
             response, f'Failed to get interpolated data for resolved asset, {asset_id}.')
 
