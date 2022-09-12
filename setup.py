@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='adh_sample_library_preview',
-    version='0.9.7_preview',
+    version='0.9.8_preview',
     author='OSIsoft',
     license='Apache 2.0',
     author_email='samples@osisoft.com',
