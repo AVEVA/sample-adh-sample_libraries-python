@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.8_preview / 2022-09-12
+
+- Add stream parameter to Assets data calls
+
 ## 0.9.7_preview / 2022-08-17
 
 - Automate dependabot approval and automerge
