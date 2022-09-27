@@ -7,7 +7,7 @@ class ContentResolver(ABC):
     def __init__(self, response, value_class = None, content = None) -> None:
         self.value_class = value_class
         self.response = response
-        self.content = content if not None else self.response.json()
+        self.content = content if content else self.response.json()
 
 
     def resolve(self):

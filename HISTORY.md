@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.9_preview / 2022-09-27
+
+- Resolve bug in content resolver logic
+
 ## 0.9.8_preview / 2022-09-12
 
 - Add stream parameter to Assets data calls
