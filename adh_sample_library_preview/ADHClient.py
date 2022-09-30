@@ -14,6 +14,7 @@ from .Subscriptions import Subscriptions
 from .Topics import Topics
 from .Types import Types
 from .Users import Users
+from .PItoDataHubConnections import PItoDataHubConnections
 
 class ADHClient:
     """
@@ -54,6 +55,7 @@ class ADHClient:
         self.__types = Types(self.__base_client)
         self.__topics = Topics(self.__base_client)
         self.__users = Users(self.__base_client)
+        self.__pitodatahubconnections = PItoDataHubConnections(self.__base_client)
 
     @property
     def uri(self) -> str:
@@ -199,6 +201,13 @@ class ADHClient:
         :return: A client for interacting with Users
         """
         return self.__users
+
+    @property
+    def PItoDataHubConnections(self) -> PItoDataHubConnections:
+        """
+        :return: A client for interacting with Users
+        """
+        return self.__pitodatahubconnections
 
     @property
     def baseClient(self) -> BaseClient:

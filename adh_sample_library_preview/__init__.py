@@ -25,3 +25,5 @@ from .OMF import *
 from .SDS import *
 from .Security import *
 from .Tenant import *
+from .PItoDataHubConnections import *
+from .PItoDataHub import *
