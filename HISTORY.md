@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.10_preview / 2022-09-30
+
+- Resolve bug in Stream.getOrCreateStream
+
 ## 0.9.9_preview / 2022-09-27
 
 - Resolve bug in content resolver logic
