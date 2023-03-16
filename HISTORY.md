@@ -5,7 +5,6 @@
 - Fixed pipeline misconfiguration
 - Bump version of requests library
 
-
 ## 0.9.10_preview / 2022-09-30
 
 - Resolve bug in Stream.getOrCreateStream
