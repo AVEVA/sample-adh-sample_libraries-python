@@ -15,7 +15,7 @@ setuptools.setup(
     url='https://github.com/osisoft/sample-adh-sample_libraries-python',
     packages=setuptools.find_packages(),
     install_requires=[
-        'requests>=2.28.0',
+        'requests>=2.28.2',
         'python-dateutil>=2.8.2',
         'jsonpatch>=1.32'
     ],
