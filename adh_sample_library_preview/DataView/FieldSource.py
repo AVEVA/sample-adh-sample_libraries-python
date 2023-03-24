@@ -3,7 +3,7 @@ from enum import Enum
 
 class FieldSource(Enum):
     """
-    enum 0-6 fully inclusive
+    enum 0-12 fully inclusive
     """
     NotApplicable = 0
     Id = 1
