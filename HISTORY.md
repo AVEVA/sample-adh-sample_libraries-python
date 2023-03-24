@@ -4,6 +4,11 @@
 
 - Added new enumeration in FieldSource for DataViews
 
+## 0.9.11_preview / 2023-13-16
+
+- Fixed pipeline misconfiguration
+- Bump version of requests library
+
 ## 0.9.10_preview / 2022-09-30
 
 - Resolve bug in Stream.getOrCreateStream
