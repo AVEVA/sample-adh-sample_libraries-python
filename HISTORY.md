@@ -4,7 +4,7 @@
 
 - Added new enumeration in FieldSource for DataViews
 
-## 0.9.11_preview / 2023-13-16
+## 0.9.11_preview / 2023-03-16
 
 - Fixed pipeline misconfiguration
 - Bump version of requests library
