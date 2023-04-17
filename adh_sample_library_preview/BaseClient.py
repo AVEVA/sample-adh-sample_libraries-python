@@ -194,43 +194,14 @@ class BaseClient(AbstractBaseClient):
             for header,value in response.headers.items():
                 logging.debug(f'{header}: {value}')
 
-
-        if response.status_code < 200 or response.status_code >= 300:
-            status = response.status_code
-            reason = response.text
-            url = response.url
-
-            if 'Operation-Id' in response.headers:
-                opId = response.headers['Operation-Id']
-                error = f'  {status}:{reason}.  URL {url}  OperationId {opId}'
-            else:
-                error = f'  {status}:{reason}.  URL {url}'
-
+        # 207 only happens on a collection return that is partially successful
+        if response.status_code < 200 or response.status_code >= 300 or response.status_code == 207:
+            error = SdsError.fromResponse(response, main_message)
             response.close()
 
-            message = main_message + error
             if self.__logging_enabled:
-                logging.error(message)
-            raise SdsError(message)
-
-        # this happens on a collection return that is partially successful
-        if response.status_code == 207:
-            status = response.status_code
-            error = response.json['Error']
-            reason = response.json['Reason']
-            errors = str(response.json['ChildErrors'])
-            url = response.url
-
-            if 'Operation-Id' in response.headers:
-                opId = response.headers['Operation-Id']
-                errorToWrite = f'  {status}:{error}:{reason}. \n\n{errors}\n\n  URL {url}  OperationId {opId}'
-            else:
-                errorToWrite = f'  {status}:{error}:{reason}. \n\n{errors}\n\n  URL {url}'
-
-            response.close()
-
-            message = main_message + errorToWrite
-            raise SdsError(message)
+                logging.error(str(error))
+            raise SdsError(error)
 
 
     def validateParameters(*args):
