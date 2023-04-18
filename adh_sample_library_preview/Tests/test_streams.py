@@ -158,7 +158,7 @@ def client(data, e2e):
         cleanup(data.get('NamespaceId'), data.get('TypeId'), data.get('StreamId'), adh_client)
     else:
         base_client = BaseClientStub()
-        adh_client = ADHClient(api_version=None, url=None, tenant=None, base_client=base_client)
+        adh_client = ADHClient(api_version=None, url=None, tenant=None, client_id=None, base_client=base_client)
         yield adh_client
 
 

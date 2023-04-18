@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import requests
 
 
 @dataclass
@@ -16,18 +17,21 @@ class SdsError(Exception):
     StatusCode: int = None
     OperationId: str = None
     Url: str = None
-    Response: any = None
+    Response: requests.Response = None
 
     @classmethod
-    def fromResponse(cls, response: str, main_message: str = None):
-        error = response.json().get('Error', None)
-        reason = response.json().get('Reason', None)
-        resolution = response.json().get('Resolution', None)
-        child_errors = response.json().get('ChildErrors', None)
-        child_errors = str(child_errors) if child_errors else None
+    def fromResponse(cls, response: requests.Response, main_message: str = None):
         operation_id = response.headers['Operation-Id'] if 'Operation-Id' in response.headers else None
 
-        return cls(response.text, main_message, error, reason, resolution, child_errors, response.status_code, operation_id, response.url, response)
+        if response.headers.get('content-type') == 'application/json':
+            error = response.json().get('Error', None)
+            reason = response.json().get('Reason', None)
+            resolution = response.json().get('Resolution', None)
+            child_errors = response.json().get('ChildErrors', None)
+            child_errors = str(child_errors) if child_errors else None
+            return cls(response.text, main_message, error, reason, resolution, child_errors, response.status_code, operation_id, response.url, response)
+
+        return cls(response.text, main_message, StatusCode=response.status_code, OperationId=operation_id, Url=response.url, Response=response)
 
     def __str__(self) -> str:
         """
