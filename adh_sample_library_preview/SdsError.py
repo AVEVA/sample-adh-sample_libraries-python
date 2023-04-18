@@ -7,7 +7,7 @@ class SdsError(Exception):
     Helper class to hold exceptions
     """
 
-    Text: str
+    value: str
     MainMessage: str = None
     Error: str = None
     Reason: str = None
@@ -16,6 +16,7 @@ class SdsError(Exception):
     StatusCode: int = None
     OperationId: str = None
     Url: str = None
+    Response: any = None
 
     @classmethod
     def fromResponse(cls, response: str, main_message: str = None):
@@ -26,7 +27,7 @@ class SdsError(Exception):
         child_errors = str(child_errors) if child_errors else None
         operation_id = response.headers['Operation-Id'] if 'Operation-Id' in response.headers else None
 
-        return cls(response.text, main_message, error, reason, resolution, child_errors, response.status_code, operation_id, response.url)
+        return cls(response.text, main_message, error, reason, resolution, child_errors, response.status_code, operation_id, response.url, response)
 
     def __str__(self) -> str:
         """

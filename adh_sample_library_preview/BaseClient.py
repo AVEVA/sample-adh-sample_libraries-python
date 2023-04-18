@@ -201,7 +201,7 @@ class BaseClient(AbstractBaseClient):
 
             if self.__logging_enabled:
                 logging.error(str(error))
-            raise SdsError(error)
+            raise error
 
 
     def validateParameters(*args):
