@@ -49,7 +49,7 @@ class SdsError(Exception):
         if self.Error and self.Reason and self.Resolution:
             output += f'{self.Error}:{self.Reason}:{self.Resolution}'
         else:
-            output += f'{self.Text}.'
+            output += f'{self.value}.'
 
         if self.ChildErrors:
             output += f'  \n\n{self.ChildErrors}\n\n'
