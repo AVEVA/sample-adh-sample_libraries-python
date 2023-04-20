@@ -22,10 +22,12 @@ def test_check_response_error_response(baseClient):
     response = Response()
 
     response.status_code = 300
+    response._content = b"Error"
     with pytest.raises(SdsError):
         baseClient.checkResponse(response=response, main_message='Testing')
 
     response.status_code = 199
+    response._content = b"Error"
     with pytest.raises(SdsError):
         baseClient.checkResponse(response=response, main_message='Testing')
 

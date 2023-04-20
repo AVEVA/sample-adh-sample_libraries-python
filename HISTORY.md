@@ -1,5 +1,9 @@
 # Version History
 
+## 0.9.13_preview / 2023-04-17
+
+- Improved SdsError class
+
 ## 0.9.12_preview / 2023-03-24
 
 - Added new enumeration in FieldSource for DataViews
