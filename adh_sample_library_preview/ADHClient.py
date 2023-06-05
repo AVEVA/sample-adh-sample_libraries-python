@@ -5,6 +5,7 @@ from .AssetTypes import AssetTypes
 from .BaseClient import BaseClient
 from .Communities import Communities
 from .DataViews import DataViews
+from .Events import Events
 from .Namespaces import Namespaces
 from .Roles import Roles
 from .SharedStreams import SharedStreams
@@ -45,6 +46,7 @@ class ADHClient:
         self.__asset_types = AssetTypes(self.__base_client)
         self.__communities = Communities(self.__base_client)
         self.__data_views = DataViews(self.__base_client)
+        self.__events = Events(self.__base_client)
         self.__namespaces = Namespaces(self.__base_client)
         self.__roles = Roles(self.__base_client)
         self.__sharedStreams = SharedStreams(self.__base_client)
@@ -136,6 +138,13 @@ class ADHClient:
         :return: A client for interacting with Data Views
         """
         return self.__data_views
+
+    @property
+    def Events(self) -> Events:
+        """
+        :return: A client for interacting with Data Views
+        """
+        return self.__events
 
     @property
     def Streams(self) -> Streams:

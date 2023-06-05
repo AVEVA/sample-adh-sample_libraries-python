@@ -5,6 +5,7 @@ from .EDSClient import EDSClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
+from .Events import Events
 from .Types import Types
 from .Streams import Streams
 from .StreamViews import StreamViews
@@ -21,6 +22,7 @@ from .Users import Users
 from .Asset import *
 from .Community import *
 from .DataView import *
+from .Event import *
 from .OMF import *
 from .SDS import *
 from .Security import *
