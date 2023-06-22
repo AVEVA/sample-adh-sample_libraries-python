@@ -2,13 +2,18 @@
 import json
 from typing import Any
 
+from .EnumerationState import EnumerationState
 from .LifeCycleState import LifeCycleState
 
 
-class AuthorizationTag(object):
+class EventGraphEnumeration(object):
 
-    def __init__(self, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
+    def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_q_l_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
         """
+        :param list[EnumerationState] members: 
+        :param str name: 
+        :param str graph_q_l_name: 
+        :param int version: 
         :param str id: 
         :param LifeCycleState state: 
         :param str created_date: 
@@ -16,11 +21,47 @@ class AuthorizationTag(object):
         :param str description: 
         """
 
+        self.__members = members
+        self.__name = name
+        self.__graph_q_l_name = graph_q_l_name
+        self.__version = version
         self.__id = id
         self.__state = state
         self.__created_date = created_date
         self.__modified_date = modified_date
         self.__description = description
+
+    @property
+    def members(self) -> list[EnumerationState]:
+        return self.__members
+
+    @members.setter
+    def members(self, value: list[EnumerationState]):
+        self.__members = value
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        self.__name = value
+
+    @property
+    def graph_q_l_name(self) -> str:
+        return self.__graph_q_l_name
+
+    @graph_q_l_name.setter
+    def graph_q_l_name(self, value: str):
+        self.__graph_q_l_name = value
+
+    @property
+    def version(self) -> int:
+        return self.__version
+
+    @version.setter
+    def version(self, value: int):
+        self.__version = value
 
     @property
     def id(self) -> str:
@@ -68,6 +109,20 @@ class AuthorizationTag(object):
     def to_dictionary(self) -> dict[str, Any]:
         result = {}
 
+        if self.members is not None:
+            result['Members'] = []
+            for value in self.members:
+                result['Members'].append(value.to_dictionary())
+
+        if self.name is not None:
+            result['Name'] = self.name
+
+        if self.graph_q_l_name is not None:
+            result['GraphQLName'] = self.graph_q_l_name
+
+        if self.version is not None:
+            result['Version'] = self.version
+
         if self.id is not None:
             result['Id'] = self.id
 
@@ -86,11 +141,27 @@ class AuthorizationTag(object):
         return result
 
     @staticmethod
-    def from_json(content: dict[str, Any]) -> AuthorizationTag:
-        result = AuthorizationTag()
+    def from_json(content: dict[str, Any]) -> EventGraphEnumeration:
+        result = EventGraphEnumeration()
 
         if not content:
             return result
+
+        if 'Members' in content:
+            values = content['Members']
+            if values is not None:
+                result.members = []
+                for value in values:
+                    result.members.append(EnumerationState.from_json(value))
+
+        if 'Name' in content:
+            result.name = content['Name']
+
+        if 'GraphQLName' in content:
+            result.graph_q_l_name = content['GraphQLName']
+
+        if 'Version' in content:
+            result.version = content['Version']
 
         if 'Id' in content:
             result.id = content['Id']
