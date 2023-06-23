@@ -8,6 +8,7 @@ from .AssetTypes import AssetTypes
 from .AuthorizationTags import AuthorizationTags
 from .Enumerations import Enumerations
 from .Events import Events
+from .GraphQL import GraphQL
 from .Types import Types
 from .Streams import Streams
 from .StreamViews import StreamViews

@@ -8,6 +8,8 @@ from .Communities import Communities
 from .DataViews import DataViews
 from .Enumerations import Enumerations
 from .Events import Events
+from .EventTypes import EventTypes
+from .GraphQL import GraphQL
 from .Namespaces import Namespaces
 from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
@@ -50,12 +52,14 @@ class ADHClient:
         self.__authorization_tags = AuthorizationTags(self.__base_client)
         self.__communities = Communities(self.__base_client)
         self.__data_views = DataViews(self.__base_client)
-        self.__enumerations = Enumerations(self.__enumerations)
+        self.__enumerations = Enumerations(self.__base_client)
         self.__events = Events(self.__base_client)
+        self.__event_types = EventTypes(self.__base_client)
+        self.__graph_ql = GraphQL(self.__base_client)
         self.__namespaces = Namespaces(self.__base_client)
         self.__reference_data_types = ReferenceDataTypes(self.__base_client)
         self.__roles = Roles(self.__base_client)
-        self.__sharedStreams = SharedStreams(self.__base_client)
+        self.__shared_streams = SharedStreams(self.__base_client)
         self.__streams = Streams(self.__base_client)
         self.__stream_views = StreamViews(self.__base_client)
         self.__subscriptions = Subscriptions(self.__base_client)
@@ -143,7 +147,7 @@ class ADHClient:
         """
         :return: A client for interacting with Streams shared in a Community
         """
-        return self.__sharedStreams
+        return self.__shared_streams
 
     @property
     def DataViews(self) -> DataViews:
@@ -165,6 +169,20 @@ class ADHClient:
         :return: A client for interacting with Events
         """
         return self.__events
+    
+    @property
+    def EventTypes(self) -> EventTypes:
+        """
+        :return: A client for interacting with Events
+        """
+        return self.__event_types
+    
+    @property
+    def GraphQL(self) -> GraphQL:
+        """
+        :return: A client for interacting with GraphQL
+        """
+        return self.__graph_ql
 
     @property
     def Streams(self) -> Streams:
