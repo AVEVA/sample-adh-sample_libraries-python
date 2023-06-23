@@ -19,7 +19,7 @@ class Events(Securable, object):
 
     def getEvents(self, namespace_id: str, event_type_id: str, id: str = None, fields: str = None,
                   filter: str = None, order_by: str = None, count: int = None, continuation_token: str = None,
-                  value_class: type = None) -> list[Any]:
+                  event_class: type = None) -> list[Any]:
         """
         """
 
@@ -45,14 +45,38 @@ class Events(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get events, {event_type_id}.')
 
-        return DataContent(response=response, value_class=value_class).resolve()
+        return DataContent(response=response, event_class=event_class).resolve()
 
-    def deleteEvent(self, namespace_id: str, values: list[Any], event_type_id: str, event_id: str = None):
+    def getOrCreateEvents(self, namespace_id: str, event_type_id: str, events: list[Any], event_class: type = None) -> list[Any]:
+        """
+        """
+        self.__base_client.validateParameters(
+            namespace_id, event_type_id, events)
+
+        params = {}
+        params['event_type_id'] = self.__base_client.encode(event_type_id)
+
+        if callable(getattr(events[0], 'toJson', None)):
+            events = []
+            for event in events:
+                events.append(event.toDictionary())
+            payload = json.dumps(events)
+        else:
+            payload = events
+
+        response = self.__base_client.request('post', self.__events_path.format(
+            namespace_id=namespace_id), data=payload, params=params)
+        self.__base_client.checkResponse(
+            response, f'Failed to create events, {event_type_id}.')
+
+        return DataContent(response=response, event_class=event_class).resolve()
+
+    def deleteEvent(self, namespace_id: str, event_type_id: str, event_id: str = None):
         """
         """
         self.__base_client.validateParameters(
             namespace_id, event_type_id, event_id)
-        
+
         params = {}
         params['event_type_id'] = self.__base_client.encode(event_type_id)
         params['event_id'] = self.__base_client.encode(event_id)

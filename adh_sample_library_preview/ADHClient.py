@@ -2,11 +2,14 @@ from .AbstractBaseClient import AbstractBaseClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
+from .AuthorizationTags import AuthorizationTags
 from .BaseClient import BaseClient
 from .Communities import Communities
 from .DataViews import DataViews
+from .Enumerations import Enumerations
 from .Events import Events
 from .Namespaces import Namespaces
+from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .SharedStreams import SharedStreams
 from .Streams import Streams
@@ -44,10 +47,13 @@ class ADHClient:
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)
         self.__asset_types = AssetTypes(self.__base_client)
+        self.__authorization_tags = AuthorizationTags(self.__base_client)
         self.__communities = Communities(self.__base_client)
         self.__data_views = DataViews(self.__base_client)
+        self.__enumerations = Enumerations(self.__enumerations)
         self.__events = Events(self.__base_client)
         self.__namespaces = Namespaces(self.__base_client)
+        self.__reference_data_types = ReferenceDataTypes(self.__base_client)
         self.__roles = Roles(self.__base_client)
         self.__sharedStreams = SharedStreams(self.__base_client)
         self.__streams = Streams(self.__base_client)
@@ -124,6 +130,13 @@ class ADHClient:
         :return: A client for interacting with Asset Types
         """
         return self.__asset_types
+    
+    @property
+    def AuthorizationTags(self) -> AuthorizationTags:
+        """
+        :return: A client for interacting with AuthorizationTags
+        """
+        return self.__authorization_tags
 
     @property
     def SharedStreams(self) -> SharedStreams:
@@ -138,11 +151,18 @@ class ADHClient:
         :return: A client for interacting with Data Views
         """
         return self.__data_views
+    
+    @property
+    def Enumerations(self) -> Enumerations:
+        """
+        :return: A client for interacting with Enumerations
+        """
+        return self.__enumerations
 
     @property
     def Events(self) -> Events:
         """
-        :return: A client for interacting with Data Views
+        :return: A client for interacting with Events
         """
         return self.__events
 
@@ -180,6 +200,13 @@ class ADHClient:
         :return: A client for interacting with Namespaces
         """
         return self.__namespaces
+    
+    @property
+    def ReferenceDataTypes(self) -> ReferenceDataTypes:
+        """
+        :return: A client for interacting with ReferenceDataTypes
+        """
+        return self.__reference_data_types
 
     @property
     def Roles(self) -> Roles:

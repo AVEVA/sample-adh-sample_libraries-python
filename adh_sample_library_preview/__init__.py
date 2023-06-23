@@ -5,6 +5,8 @@ from .EDSClient import EDSClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
+from .AuthorizationTags import AuthorizationTags
+from .Enumerations import Enumerations
 from .Events import Events
 from .Types import Types
 from .Streams import Streams
@@ -14,6 +16,7 @@ from .Namespaces import Namespaces
 from .SdsError import SdsError
 from .Communities import Communities
 from .PatchableSecurable import PatchableSecurable
+from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .Securable import Securable
 from .Subscriptions import Subscriptions
