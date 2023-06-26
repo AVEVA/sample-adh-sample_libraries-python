@@ -54,10 +54,10 @@ class EventTypes(Securable, object):
             results.append(EventGraphEventType.from_json(i))
         return results
 
-    def getOrCreateEventType(self, namespace_id: str,
-                             event_type: EventGraphEventType = None) -> EventGraphEventType:
+    def createEventType(self, namespace_id: str,
+                        event_type: EventGraphEventType = None) -> EventGraphEventType:
         """
-        Creates a new `EventType` object. 
+        Creates a new `EventType` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
         :param EventGraphEventType event_type: 
@@ -116,7 +116,7 @@ class EventTypes(Securable, object):
         if not isinstance(event_type, EventGraphEventType):
             raise TypeError
 
-        response = self.__base_client.request('post', self.__event_types_path.format(
+        response = self.__base_client.request('post', self.__event_type_path.format(
             namespace_id=namespace_id, event_type_id=event_type_id), data=event_type.to_json())
 
         self.__base_client.checkResponse(
@@ -140,7 +140,7 @@ class EventTypes(Securable, object):
         if not isinstance(event_type, EventGraphEventType):
             raise TypeError
 
-        response = self.__base_client.request('put', self.__event_types_path.format(
+        response = self.__base_client.request('put', self.__event_type_path.format(
             namespace_id=namespace_id, event_type_id=event_type_id), data=event_type.to_json())
 
         self.__base_client.checkResponse(
@@ -159,7 +159,7 @@ class EventTypes(Securable, object):
 
         self.__base_client.validateParameters(namespace_id, event_type_id)
 
-        response = self.__base_client.request('delete', self.__event_types_path.format(
+        response = self.__base_client.request('delete', self.__event_type_path.format(
             namespace_id=namespace_id, event_type_id=event_type_id))
 
         self.__base_client.checkResponse(

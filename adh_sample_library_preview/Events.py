@@ -26,7 +26,7 @@ class Events(Securable, object):
         self.__base_client.validateParameters(namespace_id, event_type_id)
 
         params = {}
-        params['event_type_id'] = self.__base_client.encode(event_type_id)
+        params['typeId'] = self.__base_client.encode(event_type_id)
         if id is not None:
             params['id'] = id
         if fields is not None:
@@ -45,7 +45,7 @@ class Events(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get events, {event_type_id}.')
 
-        return DataContent(response=response, event_class=event_class).resolve()
+        return DataContent(response=response, value_class=event_class).resolve()
 
     def getOrCreateEvents(self, namespace_id: str, event_type_id: str, events: list[Any], event_class: type = None) -> list[Any]:
         """
@@ -54,7 +54,7 @@ class Events(Securable, object):
             namespace_id, event_type_id, events)
 
         params = {}
-        params['event_type_id'] = self.__base_client.encode(event_type_id)
+        params['typeId'] = self.__base_client.encode(event_type_id)
 
         if callable(getattr(events[0], 'toJson', None)):
             events = []
@@ -69,7 +69,7 @@ class Events(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to create events, {event_type_id}.')
 
-        return DataContent(response=response, event_class=event_class).resolve()
+        return DataContent(response=response, value_class=event_class).resolve()
 
     def deleteEvent(self, namespace_id: str, event_type_id: str, event_id: str = None):
         """
@@ -78,8 +78,8 @@ class Events(Securable, object):
             namespace_id, event_type_id, event_id)
 
         params = {}
-        params['event_type_id'] = self.__base_client.encode(event_type_id)
-        params['event_id'] = self.__base_client.encode(event_id)
+        params['typeId'] = self.__base_client.encode(event_type_id)
+        params['id'] = self.__base_client.encode(event_id)
 
         response = self.__base_client.request('delete', self.__events_path.format(
             namespace_id=namespace_id), params=params)

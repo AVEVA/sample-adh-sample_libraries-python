@@ -54,10 +54,10 @@ class ReferenceDataTypes(Securable, object):
             results.append(EventGraphReferenceDataType.from_json(i))
         return results
 
-    def getOrCreateReferenceDataType(self, namespace_id: str,
+    def createReferenceDataType(self, namespace_id: str,
                              reference_data_type: EventGraphReferenceDataType = None) -> EventGraphReferenceDataType:
         """
-        Creates a new `ReferenceDataType` object. 
+        Creates a new `ReferenceDataType` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
         :param EventGraphReferenceDataType reference_data_type: 
@@ -116,7 +116,7 @@ class ReferenceDataTypes(Securable, object):
         if not isinstance(reference_data_type, EventGraphReferenceDataType):
             raise TypeError
 
-        response = self.__base_client.request('post', self.__reference_data_types_path.format(
+        response = self.__base_client.request('post', self.__reference_data_type_path.format(
             namespace_id=namespace_id, reference_data_type_id=reference_data_type_id), data=reference_data_type.to_json())
 
         self.__base_client.checkResponse(
@@ -140,7 +140,7 @@ class ReferenceDataTypes(Securable, object):
         if not isinstance(reference_data_type, EventGraphReferenceDataType):
             raise TypeError
 
-        response = self.__base_client.request('put', self.__reference_data_types_path.format(
+        response = self.__base_client.request('put', self.__reference_data_type_path.format(
             namespace_id=namespace_id, reference_data_type_id=reference_data_type_id), data=reference_data_type.to_json())
 
         self.__base_client.checkResponse(
@@ -159,7 +159,7 @@ class ReferenceDataTypes(Securable, object):
 
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)
 
-        response = self.__base_client.request('delete', self.__reference_data_types_path.format(
+        response = self.__base_client.request('delete', self.__reference_data_type_path.format(
             namespace_id=namespace_id, reference_data_type_id=reference_data_type_id))
 
         self.__base_client.checkResponse(

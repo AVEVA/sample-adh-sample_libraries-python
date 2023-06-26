@@ -54,10 +54,10 @@ class AuthorizationTags(Securable, object):
             results.append(AuthorizationTag.from_json(i))
         return results
 
-    def getOrCreateAuthorizationTag(self, namespace_id: str,
+    def createAuthorizationTag(self, namespace_id: str,
                              authorization_tag: AuthorizationTag = None) -> AuthorizationTag:
         """
-        Creates a new `AuthorizationTag` object. 
+        Creates a new `AuthorizationTag` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
         :param AuthorizationTag authorization_tag: 
@@ -116,7 +116,7 @@ class AuthorizationTags(Securable, object):
         if not isinstance(authorization_tag, AuthorizationTag):
             raise TypeError
 
-        response = self.__base_client.request('post', self.__authorization_tags_path.format(
+        response = self.__base_client.request('post', self.__authorization_tag_path.format(
             namespace_id=namespace_id, authorization_tag_id=authorization_tag_id), data=authorization_tag.to_json())
 
         self.__base_client.checkResponse(
@@ -140,7 +140,7 @@ class AuthorizationTags(Securable, object):
         if not isinstance(authorization_tag, AuthorizationTag):
             raise TypeError
 
-        response = self.__base_client.request('put', self.__authorization_tags_path.format(
+        response = self.__base_client.request('put', self.__authorization_tag_path.format(
             namespace_id=namespace_id, authorization_tag_id=authorization_tag_id), data=authorization_tag.to_json())
 
         self.__base_client.checkResponse(
@@ -159,7 +159,7 @@ class AuthorizationTags(Securable, object):
 
         self.__base_client.validateParameters(namespace_id, authorization_tag_id)
 
-        response = self.__base_client.request('delete', self.__authorization_tags_path.format(
+        response = self.__base_client.request('delete', self.__authorization_tag_path.format(
             namespace_id=namespace_id, authorization_tag_id=authorization_tag_id))
 
         self.__base_client.checkResponse(

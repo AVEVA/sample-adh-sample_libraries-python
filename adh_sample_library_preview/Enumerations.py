@@ -54,10 +54,10 @@ class Enumerations(Securable, object):
             results.append(EventGraphEnumeration.from_json(i))
         return results
 
-    def getOrCreateEnumeration(self, namespace_id: str,
+    def createEnumeration(self, namespace_id: str,
                              enumeration: EventGraphEnumeration = None) -> EventGraphEnumeration:
         """
-        Creates a new `Enumeration` object. 
+        Creates a new `Enumeration` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
         :param EventGraphEnumeration enumeration: 
@@ -116,7 +116,7 @@ class Enumerations(Securable, object):
         if not isinstance(enumeration, EventGraphEnumeration):
             raise TypeError
 
-        response = self.__base_client.request('post', self.__enumerations_path.format(
+        response = self.__base_client.request('post', self.__enumeration_path.format(
             namespace_id=namespace_id, enumeration_id=enumeration_id), data=enumeration.to_json())
 
         self.__base_client.checkResponse(
@@ -140,7 +140,7 @@ class Enumerations(Securable, object):
         if not isinstance(enumeration, EventGraphEnumeration):
             raise TypeError
 
-        response = self.__base_client.request('put', self.__enumerations_path.format(
+        response = self.__base_client.request('put', self.__enumeration_path.format(
             namespace_id=namespace_id, enumeration_id=enumeration_id), data=enumeration.to_json())
 
         self.__base_client.checkResponse(
@@ -159,7 +159,7 @@ class Enumerations(Securable, object):
 
         self.__base_client.validateParameters(namespace_id, enumeration_id)
 
-        response = self.__base_client.request('delete', self.__enumerations_path.format(
+        response = self.__base_client.request('delete', self.__enumeration_path.format(
             namespace_id=namespace_id, enumeration_id=enumeration_id))
 
         self.__base_client.checkResponse(
