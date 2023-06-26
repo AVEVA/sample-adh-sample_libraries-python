@@ -54,28 +54,6 @@ class AuthorizationTags(Securable, object):
             results.append(AuthorizationTag.from_json(i))
         return results
 
-    def createAuthorizationTag(self, namespace_id: str,
-                             authorization_tag: AuthorizationTag = None) -> AuthorizationTag:
-        """
-        Creates a new `AuthorizationTag` object with server generated Id. 
-
-        :param namespace_id: id of namespace to work against
-        :param AuthorizationTag authorization_tag: 
-        """
-
-        self.__base_client.validateParameters(namespace_id)
-
-        if not isinstance(authorization_tag, AuthorizationTag):
-            raise TypeError
-
-        response = self.__base_client.request('post', self.__authorization_tags_path.format(
-            namespace_id=namespace_id), data=authorization_tag.to_json())
-
-        self.__base_client.checkResponse(
-            response, f'Failed to create Authorization Tag.')
-
-        return AuthorizationTag.from_json(response.json())
-
     def getAuthorizationTag(self, namespace_id: str,
                      authorization_tag_id: str,
                      include_deleted: bool = None) -> AuthorizationTag:

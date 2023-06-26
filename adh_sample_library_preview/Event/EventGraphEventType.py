@@ -8,113 +8,110 @@ from .TypeProperty import TypeProperty
 
 class EventGraphEventType(object):
 
-    def __init__(self, properties: list[TypeProperty] = None, default_authorization_tag: str = None,
-                 name: str = None, graph_q_l_name: str = None, version: int = None, id: str = None,
-                 state: LifeCycleState = None, created_date: str = None, modified_date: str = None,
-                 description: str = None):
+    def __init__(self, Properties: list[TypeProperty] = None, DefaultAuthorizationTag: str = None, Name: str = None, GraphQLName: str = None, Version: int = None, Id: str = None, State: LifeCycleState = None, CreatedDate: str = None, ModifiedDate: str = None, Description: str = None):
         """
-        :param list[TypeProperty] properties: 
-        :param str default_authorization_tag: 
-        :param str name: 
-        :param str graph_q_l_name: 
-        :param int version: 
-        :param str id: 
-        :param LifeCycleState state: 
-        :param str created_date: 
-        :param str modified_date: 
-        :param str description: 
+        :param list[TypeProperty] Properties: 
+        :param str DefaultAuthorizationTag: 
+        :param str Name: 
+        :param str GraphQLName: 
+        :param int Version: 
+        :param str Id: 
+        :param LifeCycleState State: 
+        :param str CreatedDate: 
+        :param str ModifiedDate: 
+        :param str Description: 
         """
 
-        self.__properties = properties
-        self.__default_authorization_tag = default_authorization_tag
-        self.__name = name
-        self.__graph_q_l_name = graph_q_l_name
-        self.__version = version
-        self.__id = id
-        self.__state = state
-        self.__created_date = created_date
-        self.__modified_date = modified_date
-        self.__description = description
+        self.__Properties = Properties
+        self.__DefaultAuthorizationTag = DefaultAuthorizationTag
+        self.__Name = Name
+        self.__GraphQLName = GraphQLName
+        self.__Version = Version
+        self.__Id = Id
+        self.__State = State
+        self.__CreatedDate = CreatedDate
+        self.__ModifiedDate = ModifiedDate
+        self.__Description = Description
 
     @property
-    def properties(self) -> list[TypeProperty]:
-        return self.__properties
+    def Properties(self) -> list[TypeProperty]:
+        return self.__Properties
 
-    @properties.setter
-    def properties(self, value: list[TypeProperty]):
-        self.__properties = value
-
-    @property
-    def default_authorization_tag(self) -> str:
-        return self.__default_authorization_tag
-
-    @default_authorization_tag.setter
-    def default_authorization_tag(self, value: str):
-        self.__default_authorization_tag = value
+    @Properties.setter
+    def Properties(self, value: list[TypeProperty]):
+        self.__Properties = value
 
     @property
-    def name(self) -> str:
-        return self.__name
+    def DefaultAuthorizationTag(self) -> str:
+        return self.__DefaultAuthorizationTag
 
-    @name.setter
-    def name(self, value: str):
-        self.__name = value
-
-    @property
-    def graph_q_l_name(self) -> str:
-        return self.__graph_q_l_name
-
-    @graph_q_l_name.setter
-    def graph_q_l_name(self, value: str):
-        self.__graph_q_l_name = value
+    @DefaultAuthorizationTag.setter
+    def DefaultAuthorizationTag(self, value: str):
+        self.__DefaultAuthorizationTag = value
 
     @property
-    def version(self) -> int:
-        return self.__version
+    def Name(self) -> str:
+        return self.__Name
 
-    @version.setter
-    def version(self, value: int):
-        self.__version = value
-
-    @property
-    def id(self) -> str:
-        return self.__id
-
-    @id.setter
-    def id(self, value: str):
-        self.__id = value
+    @Name.setter
+    def Name(self, value: str):
+        self.__Name = value
 
     @property
-    def state(self) -> LifeCycleState:
-        return self.__state
+    def GraphQLName(self) -> str:
+        return self.__GraphQLName
 
-    @state.setter
-    def state(self, value: LifeCycleState):
-        self.__state = value
-
-    @property
-    def created_date(self) -> str:
-        return self.__created_date
-
-    @created_date.setter
-    def created_date(self, value: str):
-        self.__created_date = value
+    @GraphQLName.setter
+    def GraphQLName(self, value: str):
+        self.__GraphQLName = value
 
     @property
-    def modified_date(self) -> str:
-        return self.__modified_date
+    def Version(self) -> int:
+        return self.__Version
 
-    @modified_date.setter
-    def modified_date(self, value: str):
-        self.__modified_date = value
+    @Version.setter
+    def Version(self, value: int):
+        self.__Version = value
 
     @property
-    def description(self) -> str:
-        return self.__description
+    def Id(self) -> str:
+        return self.__Id
 
-    @description.setter
-    def description(self, value: str):
-        self.__description = value
+    @Id.setter
+    def Id(self, value: str):
+        self.__Id = value
+
+    @property
+    def State(self) -> LifeCycleState:
+        return self.__State
+
+    @State.setter
+    def State(self, value: LifeCycleState):
+        self.__State = value
+
+    @property
+    def CreatedDate(self) -> str:
+        return self.__CreatedDate
+
+    @CreatedDate.setter
+    def CreatedDate(self, value: str):
+        self.__CreatedDate = value
+
+    @property
+    def ModifiedDate(self) -> str:
+        return self.__ModifiedDate
+
+    @ModifiedDate.setter
+    def ModifiedDate(self, value: str):
+        self.__ModifiedDate = value
+
+    @property
+    def Description(self) -> str:
+        return self.__Description
+
+    @Description.setter
+    def Description(self, value: str):
+        self.__Description = value
 
     def to_json(self) -> str:
         return json.dumps(self.to_dictionary())
@@ -122,37 +119,37 @@ class EventGraphEventType(object):
     def to_dictionary(self) -> dict[str, Any]:
         result = {}
 
-        if self.properties is not None:
+        if self.Properties is not None:
             result['Properties'] = []
-            for value in self.properties:
+            for value in self.Properties:
                 result['Properties'].append(value.to_dictionary())
 
-        if self.default_authorization_tag is not None:
-            result['DefaultAuthorizationTag'] = self.default_authorization_tag
+        if self.DefaultAuthorizationTag is not None:
+            result['DefaultAuthorizationTag'] = self.DefaultAuthorizationTag
 
-        if self.name is not None:
-            result['Name'] = self.name
+        if self.Name is not None:
+            result['Name'] = self.Name
 
-        if self.graph_q_l_name is not None:
-            result['GraphQLName'] = self.graph_q_l_name
+        if self.GraphQLName is not None:
+            result['GraphQLName'] = self.GraphQLName
 
-        if self.version is not None:
-            result['Version'] = self.version
+        if self.Version is not None:
+            result['Version'] = self.Version
 
-        if self.id is not None:
-            result['Id'] = self.id
+        if self.Id is not None:
+            result['Id'] = self.Id
 
-        if self.state is not None:
-            result['State'] = self.state.value
+        if self.State is not None:
+            result['State'] = self.State.value
 
-        if self.created_date is not None:
-            result['CreatedDate'] = self.created_date
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = self.CreatedDate
 
-        if self.modified_date is not None:
-            result['ModifiedDate'] = self.modified_date
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = self.ModifiedDate
 
-        if self.description is not None:
-            result['Description'] = self.description
+        if self.Description is not None:
+            result['Description'] = self.Description
 
         return result
 
@@ -166,35 +163,35 @@ class EventGraphEventType(object):
         if 'Properties' in content:
             values = content['Properties']
             if values is not None:
-                result.properties = []
+                result.Properties = []
                 for value in values:
-                    result.properties.append(TypeProperty.from_json(value))
+                    result.Properties.append(TypeProperty.from_json(value))
 
         if 'DefaultAuthorizationTag' in content:
-            result.default_authorization_tag = content['DefaultAuthorizationTag']
+            result.DefaultAuthorizationTag = content['DefaultAuthorizationTag']
 
         if 'Name' in content:
-            result.name = content['Name']
+            result.Name = content['Name']
 
         if 'GraphQLName' in content:
-            result.graph_q_l_name = content['GraphQLName']
+            result.GraphQLName = content['GraphQLName']
 
         if 'Version' in content:
-            result.version = content['Version']
+            result.Version = content['Version']
 
         if 'Id' in content:
-            result.id = content['Id']
+            result.Id = content['Id']
 
         if 'State' in content:
-            result.state = LifeCycleState(content['State'])
+            result.State = LifeCycleState(content['State'])
 
         if 'CreatedDate' in content:
-            result.created_date = content['CreatedDate']
+            result.CreatedDate = content['CreatedDate']
 
         if 'ModifiedDate' in content:
-            result.modified_date = content['ModifiedDate']
+            result.ModifiedDate = content['ModifiedDate']
 
         if 'Description' in content:
-            result.description = content['Description']
+            result.Description = content['Description']
 
         return result

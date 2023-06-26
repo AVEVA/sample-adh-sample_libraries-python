@@ -7,60 +7,60 @@ from .LifeCycleState import LifeCycleState
 
 class EnumerationState(object):
 
-    def __init__(self, name: str = None, graph_q_l_name: str = None, code: int = None, state: LifeCycleState = None, description: str = None):
+    def __init__(self, Name: str = None, GraphQLName: str = None, Code: int = None, State: LifeCycleState = None, Description: str = None):
         """
-        :param str name: 
-        :param str graph_q_l_name: 
-        :param int code: 
-        :param LifeCycleState state: 
-        :param str description: 
+        :param str Name: 
+        :param str GraphQLName: 
+        :param int Code: 
+        :param LifeCycleState State: 
+        :param str Description: 
         """
 
-        self.__name = name
-        self.__graph_q_l_name = graph_q_l_name
-        self.__code = code
-        self.__state = state
-        self.__description = description
+        self.__Name = Name
+        self.__GraphQLName = GraphQLName
+        self.__Code = Code
+        self.__State = State
+        self.__Description = Description
 
     @property
-    def name(self) -> str:
-        return self.__name
+    def Name(self) -> str:
+        return self.__Name
 
-    @name.setter
-    def name(self, value: str):
-        self.__name = value
-
-    @property
-    def graph_q_l_name(self) -> str:
-        return self.__graph_q_l_name
-
-    @graph_q_l_name.setter
-    def graph_q_l_name(self, value: str):
-        self.__graph_q_l_name = value
+    @Name.setter
+    def Name(self, value: str):
+        self.__Name = value
 
     @property
-    def code(self) -> int:
-        return self.__code
+    def GraphQLName(self) -> str:
+        return self.__GraphQLName
 
-    @code.setter
-    def code(self, value: int):
-        self.__code = value
-
-    @property
-    def state(self) -> LifeCycleState:
-        return self.__state
-
-    @state.setter
-    def state(self, value: LifeCycleState):
-        self.__state = value
+    @GraphQLName.setter
+    def GraphQLName(self, value: str):
+        self.__GraphQLName = value
 
     @property
-    def description(self) -> str:
-        return self.__description
+    def Code(self) -> int:
+        return self.__Code
 
-    @description.setter
-    def description(self, value: str):
-        self.__description = value
+    @Code.setter
+    def Code(self, value: int):
+        self.__Code = value
+
+    @property
+    def State(self) -> LifeCycleState:
+        return self.__State
+
+    @State.setter
+    def State(self, value: LifeCycleState):
+        self.__State = value
+
+    @property
+    def Description(self) -> str:
+        return self.__Description
+
+    @Description.setter
+    def Description(self, value: str):
+        self.__Description = value
 
     def to_json(self) -> str:
         return json.dumps(self.to_dictionary())
@@ -68,20 +68,20 @@ class EnumerationState(object):
     def to_dictionary(self) -> dict[str, Any]:
         result = {}
 
-        if self.name is not None:
-            result['Name'] = self.name
+        if self.Name is not None:
+            result['Name'] = self.Name
 
-        if self.graph_q_l_name is not None:
-            result['GraphQLName'] = self.graph_q_l_name
+        if self.GraphQLName is not None:
+            result['GraphQLName'] = self.GraphQLName
 
-        if self.code is not None:
-            result['Code'] = self.code
+        if self.Code is not None:
+            result['Code'] = self.Code
 
-        if self.state is not None:
-            result['State'] = self.state.value
+        if self.State is not None:
+            result['State'] = self.State.value
 
-        if self.description is not None:
-            result['Description'] = self.description
+        if self.Description is not None:
+            result['Description'] = self.Description
 
         return result
 
@@ -93,18 +93,18 @@ class EnumerationState(object):
             return result
 
         if 'Name' in content:
-            result.name = content['Name']
+            result.Name = content['Name']
 
         if 'GraphQLName' in content:
-            result.graph_q_l_name = content['GraphQLName']
+            result.GraphQLName = content['GraphQLName']
 
         if 'Code' in content:
-            result.code = content['Code']
+            result.Code = content['Code']
 
         if 'State' in content:
-            result.state = LifeCycleState(content['State'])
+            result.State = LifeCycleState(content['State'])
 
         if 'Description' in content:
-            result.description = content['Description']
+            result.Description = content['Description']
 
         return result

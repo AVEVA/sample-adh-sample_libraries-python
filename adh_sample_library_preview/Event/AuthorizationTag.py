@@ -7,60 +7,60 @@ from .LifeCycleState import LifeCycleState
 
 class AuthorizationTag(object):
 
-    def __init__(self, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
+    def __init__(self, Id: str = None, State: LifeCycleState = None, CreatedDate: str = None, ModifiedDate: str = None, Description: str = None):
         """
-        :param str id: 
-        :param LifeCycleState state: 
-        :param str created_date: 
-        :param str modified_date: 
-        :param str description: 
+        :param str Id: 
+        :param LifeCycleState State: 
+        :param str CreatedDate: 
+        :param str ModifiedDate: 
+        :param str Description: 
         """
 
-        self.__id = id
-        self.__state = state
-        self.__created_date = created_date
-        self.__modified_date = modified_date
-        self.__description = description
+        self.__Id = Id
+        self.__State = State
+        self.__CreatedDate = CreatedDate
+        self.__ModifiedDate = ModifiedDate
+        self.__Description = Description
 
     @property
-    def id(self) -> str:
-        return self.__id
+    def Id(self) -> str:
+        return self.__Id
 
-    @id.setter
-    def id(self, value: str):
-        self.__id = value
-
-    @property
-    def state(self) -> LifeCycleState:
-        return self.__state
-
-    @state.setter
-    def state(self, value: LifeCycleState):
-        self.__state = value
+    @Id.setter
+    def Id(self, value: str):
+        self.__Id = value
 
     @property
-    def created_date(self) -> str:
-        return self.__created_date
+    def State(self) -> LifeCycleState:
+        return self.__State
 
-    @created_date.setter
-    def created_date(self, value: str):
-        self.__created_date = value
-
-    @property
-    def modified_date(self) -> str:
-        return self.__modified_date
-
-    @modified_date.setter
-    def modified_date(self, value: str):
-        self.__modified_date = value
+    @State.setter
+    def State(self, value: LifeCycleState):
+        self.__State = value
 
     @property
-    def description(self) -> str:
-        return self.__description
+    def CreatedDate(self) -> str:
+        return self.__CreatedDate
 
-    @description.setter
-    def description(self, value: str):
-        self.__description = value
+    @CreatedDate.setter
+    def CreatedDate(self, value: str):
+        self.__CreatedDate = value
+
+    @property
+    def ModifiedDate(self) -> str:
+        return self.__ModifiedDate
+
+    @ModifiedDate.setter
+    def ModifiedDate(self, value: str):
+        self.__ModifiedDate = value
+
+    @property
+    def Description(self) -> str:
+        return self.__Description
+
+    @Description.setter
+    def Description(self, value: str):
+        self.__Description = value
 
     def to_json(self) -> str:
         return json.dumps(self.to_dictionary())
@@ -68,20 +68,20 @@ class AuthorizationTag(object):
     def to_dictionary(self) -> dict[str, Any]:
         result = {}
 
-        if self.id is not None:
-            result['Id'] = self.id
+        if self.Id is not None:
+            result['Id'] = self.Id
 
-        if self.state is not None:
-            result['State'] = self.state.value
+        if self.State is not None:
+            result['State'] = self.State.value
 
-        if self.created_date is not None:
-            result['CreatedDate'] = self.created_date
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = self.CreatedDate
 
-        if self.modified_date is not None:
-            result['ModifiedDate'] = self.modified_date
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = self.ModifiedDate
 
-        if self.description is not None:
-            result['Description'] = self.description
+        if self.Description is not None:
+            result['Description'] = self.Description
 
         return result
 
@@ -93,18 +93,18 @@ class AuthorizationTag(object):
             return result
 
         if 'Id' in content:
-            result.id = content['Id']
+            result.Id = content['Id']
 
         if 'State' in content:
-            result.state = LifeCycleState(content['State'])
+            result.State = LifeCycleState(content['State'])
 
         if 'CreatedDate' in content:
-            result.created_date = content['CreatedDate']
+            result.CreatedDate = content['CreatedDate']
 
         if 'ModifiedDate' in content:
-            result.modified_date = content['ModifiedDate']
+            result.ModifiedDate = content['ModifiedDate']
 
         if 'Description' in content:
-            result.description = content['Description']
+            result.Description = content['Description']
 
         return result
