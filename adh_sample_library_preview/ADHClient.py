@@ -11,6 +11,7 @@ from .Events import Events
 from .EventTypes import EventTypes
 from .GraphQL import GraphQL
 from .Namespaces import Namespaces
+from .ReferenceData import ReferenceData
 from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .SharedStreams import SharedStreams
@@ -58,6 +59,7 @@ class ADHClient:
         self.__graph_ql = GraphQL(self.__base_client)
         self.__namespaces = Namespaces(self.__base_client)
         self.__reference_data_types = ReferenceDataTypes(self.__base_client)
+        self.__reference_data = ReferenceData(self.__base_client)
         self.__roles = Roles(self.__base_client)
         self.__shared_streams = SharedStreams(self.__base_client)
         self.__streams = Streams(self.__base_client)
@@ -225,6 +227,13 @@ class ADHClient:
         :return: A client for interacting with ReferenceDataTypes
         """
         return self.__reference_data_types
+    
+    @property
+    def ReferenceData(self) -> ReferenceData:
+        """
+        :return: A client for interacting with ReferenceData
+        """
+        return self.__reference_data
 
     @property
     def Roles(self) -> Roles:

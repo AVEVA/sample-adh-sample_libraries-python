@@ -17,6 +17,7 @@ from .Namespaces import Namespaces
 from .SdsError import SdsError
 from .Communities import Communities
 from .PatchableSecurable import PatchableSecurable
+from .ReferenceData import ReferenceData
 from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .Securable import Securable
