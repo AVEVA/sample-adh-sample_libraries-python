@@ -7,60 +7,60 @@ from .LifeCycleState import LifeCycleState
 
 class AuthorizationTag(object):
 
-    def __init__(self, Id: str = None, State: LifeCycleState = None, CreatedDate: str = None, ModifiedDate: str = None, Description: str = None):
+    def __init__(self, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
         """
-        :param str Id: 
-        :param LifeCycleState State: 
-        :param str CreatedDate: 
-        :param str ModifiedDate: 
-        :param str Description: 
+        :param str id: 
+        :param LifeCycleState state: 
+        :param str created_date: 
+        :param str modified_date: 
+        :param str description: 
         """
 
-        self.__Id = Id
-        self.__State = State
-        self.__CreatedDate = CreatedDate
-        self.__ModifiedDate = ModifiedDate
-        self.__Description = Description
+        self.__id = id
+        self.__state = state
+        self.__created_date = created_date
+        self.__modified_date = modified_date
+        self.__description = description
 
     @property
     def Id(self) -> str:
-        return self.__Id
+        return self.__id
 
     @Id.setter
     def Id(self, value: str):
-        self.__Id = value
+        self.__id = value
 
     @property
     def State(self) -> LifeCycleState:
-        return self.__State
+        return self.__state
 
     @State.setter
     def State(self, value: LifeCycleState):
-        self.__State = value
+        self.__state = value
 
     @property
     def CreatedDate(self) -> str:
-        return self.__CreatedDate
+        return self.__created_date
 
     @CreatedDate.setter
     def CreatedDate(self, value: str):
-        self.__CreatedDate = value
+        self.__created_date = value
 
     @property
     def ModifiedDate(self) -> str:
-        return self.__ModifiedDate
+        return self.__modified_date
 
     @ModifiedDate.setter
     def ModifiedDate(self, value: str):
-        self.__ModifiedDate = value
+        self.__modified_date = value
 
     @property
     def Description(self) -> str:
-        return self.__Description
+        return self.__description
 
     @Description.setter
     def Description(self, value: str):
-        self.__Description = value
+        self.__description = value
 
     def to_json(self) -> str:
         return json.dumps(self.to_dictionary())

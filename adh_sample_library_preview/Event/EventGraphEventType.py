@@ -8,110 +8,110 @@ from .TypeProperty import TypeProperty
 
 class EventGraphEventType(object):
 
-    def __init__(self, Properties: list[TypeProperty] = None, DefaultAuthorizationTag: str = None, Name: str = None, GraphQLName: str = None, Version: int = None, Id: str = None, State: LifeCycleState = None, CreatedDate: str = None, ModifiedDate: str = None, Description: str = None):
+    def __init__(self, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
         """
-        :param list[TypeProperty] Properties: 
-        :param str DefaultAuthorizationTag: 
-        :param str Name: 
-        :param str GraphQLName: 
-        :param int Version: 
-        :param str Id: 
-        :param LifeCycleState State: 
-        :param str CreatedDate: 
-        :param str ModifiedDate: 
-        :param str Description: 
+        :param list[TypeProperty] properties: 
+        :param str default_authorization_tag: 
+        :param str name: 
+        :param str graph_ql_name: 
+        :param int version: 
+        :param str id: 
+        :param LifeCycleState state: 
+        :param str created_date: 
+        :param str modified_date: 
+        :param str description: 
         """
 
-        self.__Properties = Properties
-        self.__DefaultAuthorizationTag = DefaultAuthorizationTag
-        self.__Name = Name
-        self.__GraphQLName = GraphQLName
-        self.__Version = Version
-        self.__Id = Id
-        self.__State = State
-        self.__CreatedDate = CreatedDate
-        self.__ModifiedDate = ModifiedDate
-        self.__Description = Description
+        self.__properties = properties
+        self.__default_authorization_tag = default_authorization_tag
+        self.__name = name
+        self.__graph_ql_name = graph_ql_name
+        self.__version = version
+        self.__id = id
+        self.__state = state
+        self.__created_date = created_date
+        self.__modified_date = modified_date
+        self.__description = description
 
     @property
     def Properties(self) -> list[TypeProperty]:
-        return self.__Properties
+        return self.__properties
 
     @Properties.setter
     def Properties(self, value: list[TypeProperty]):
-        self.__Properties = value
+        self.__properties = value
 
     @property
     def DefaultAuthorizationTag(self) -> str:
-        return self.__DefaultAuthorizationTag
+        return self.__default_authorization_tag
 
     @DefaultAuthorizationTag.setter
     def DefaultAuthorizationTag(self, value: str):
-        self.__DefaultAuthorizationTag = value
+        self.__default_authorization_tag = value
 
     @property
     def Name(self) -> str:
-        return self.__Name
+        return self.__name
 
     @Name.setter
     def Name(self, value: str):
-        self.__Name = value
+        self.__name = value
 
     @property
     def GraphQLName(self) -> str:
-        return self.__GraphQLName
+        return self.__graph_ql_name
 
     @GraphQLName.setter
     def GraphQLName(self, value: str):
-        self.__GraphQLName = value
+        self.__graph_ql_name = value
 
     @property
     def Version(self) -> int:
-        return self.__Version
+        return self.__version
 
     @Version.setter
     def Version(self, value: int):
-        self.__Version = value
+        self.__version = value
 
     @property
     def Id(self) -> str:
-        return self.__Id
+        return self.__id
 
     @Id.setter
     def Id(self, value: str):
-        self.__Id = value
+        self.__id = value
 
     @property
     def State(self) -> LifeCycleState:
-        return self.__State
+        return self.__state
 
     @State.setter
     def State(self, value: LifeCycleState):
-        self.__State = value
+        self.__state = value
 
     @property
     def CreatedDate(self) -> str:
-        return self.__CreatedDate
+        return self.__created_date
 
     @CreatedDate.setter
     def CreatedDate(self, value: str):
-        self.__CreatedDate = value
+        self.__created_date = value
 
     @property
     def ModifiedDate(self) -> str:
-        return self.__ModifiedDate
+        return self.__modified_date
 
     @ModifiedDate.setter
     def ModifiedDate(self, value: str):
-        self.__ModifiedDate = value
+        self.__modified_date = value
 
     @property
     def Description(self) -> str:
-        return self.__Description
+        return self.__description
 
     @Description.setter
     def Description(self, value: str):
-        self.__Description = value
+        self.__description = value
 
     def to_json(self) -> str:
         return json.dumps(self.to_dictionary())

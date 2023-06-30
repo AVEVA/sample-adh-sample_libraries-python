@@ -7,60 +7,60 @@ from .LifeCycleState import LifeCycleState
 
 class EnumerationState(object):
 
-    def __init__(self, Name: str = None, GraphQLName: str = None, Code: int = None, State: LifeCycleState = None, Description: str = None):
+    def __init__(self, name: str = None, graph_ql_name: str = None, code: int = None, state: LifeCycleState = None, description: str = None):
         """
-        :param str Name: 
-        :param str GraphQLName: 
-        :param int Code: 
-        :param LifeCycleState State: 
-        :param str Description: 
+        :param str name: 
+        :param str graph_ql_name: 
+        :param int code: 
+        :param LifeCycleState state: 
+        :param str description: 
         """
 
-        self.__Name = Name
-        self.__GraphQLName = GraphQLName
-        self.__Code = Code
-        self.__State = State
-        self.__Description = Description
+        self.__name = name
+        self.__graph_ql_name = graph_ql_name
+        self.__code = code
+        self.__state = state
+        self.__description = description
 
     @property
     def Name(self) -> str:
-        return self.__Name
+        return self.__name
 
     @Name.setter
     def Name(self, value: str):
-        self.__Name = value
+        self.__name = value
 
     @property
     def GraphQLName(self) -> str:
-        return self.__GraphQLName
+        return self.__graph_ql_name
 
     @GraphQLName.setter
     def GraphQLName(self, value: str):
-        self.__GraphQLName = value
+        self.__graph_ql_name = value
 
     @property
     def Code(self) -> int:
-        return self.__Code
+        return self.__code
 
     @Code.setter
     def Code(self, value: int):
-        self.__Code = value
+        self.__code = value
 
     @property
     def State(self) -> LifeCycleState:
-        return self.__State
+        return self.__state
 
     @State.setter
     def State(self, value: LifeCycleState):
-        self.__State = value
+        self.__state = value
 
     @property
     def Description(self) -> str:
-        return self.__Description
+        return self.__description
 
     @Description.setter
     def Description(self, value: str):
-        self.__Description = value
+        self.__description = value
 
     def to_json(self) -> str:
         return json.dumps(self.to_dictionary())

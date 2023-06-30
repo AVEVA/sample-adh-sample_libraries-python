@@ -9,100 +9,100 @@ from .PropertyTypeFlags import PropertyTypeFlags
 
 class TypeProperty(object):
 
-    def __init__(self, PropertyTypeCode: PropertyTypeCode = None, Id: str = None, Name: str = None, GraphQLName: str = None, Flags: PropertyTypeFlags = None, State: LifeCycleState = None, PropertyTypeId: str = None, RemoteReferenceName: str = None, Description: str = None):
+    def __init__(self, property_type_code: PropertyTypeCode = None, id: str = None, name: str = None, graph_ql_name: str = None, flags: PropertyTypeFlags = None, state: LifeCycleState = None, property_type_id: str = None, remote_reference_name: str = None, description: str = None):
         """
-        :param PropertyTypeCode PropertyTypeCode: 
-        :param str Id: 
-        :param str Name: 
-        :param str GraphQLName: 
-        :param PropertyTypeFlags Flags: 
-        :param LifeCycleState State: 
-        :param str PropertyTypeId: 
-        :param str RemoteReferenceName: 
-        :param str Description: 
+        :param PropertyTypeCode property_type_code: 
+        :param str id: 
+        :param str name: 
+        :param str graph_ql_name: 
+        :param PropertyTypeFlags flags: 
+        :param LifeCycleState state: 
+        :param str property_type_id: 
+        :param str remote_reference_name: 
+        :param str description: 
         """
 
-        self.__PropertyTypeCode = PropertyTypeCode
-        self.__Id = Id
-        self.__Name = Name
-        self.__GraphQLName = GraphQLName
-        self.__Flags = Flags
-        self.__State = State
-        self.__PropertyTypeId = PropertyTypeId
-        self.__RemoteReferenceName = RemoteReferenceName
-        self.__Description = Description
+        self.__property_type_code = property_type_code
+        self.__id = id
+        self.__name = name
+        self.__graph_ql_name = graph_ql_name
+        self.__flags = flags
+        self.__state = state
+        self.__property_type_id = property_type_id
+        self.__remote_reference_name = remote_reference_name
+        self.__description = description
 
     @property
     def PropertyTypeCode(self) -> PropertyTypeCode:
-        return self.__PropertyTypeCode
+        return self.__property_type_code
 
     @PropertyTypeCode.setter
     def PropertyTypeCode(self, value: PropertyTypeCode):
-        self.__PropertyTypeCode = value
+        self.__property_type_code = value
 
     @property
     def Id(self) -> str:
-        return self.__Id
+        return self.__id
 
     @Id.setter
     def Id(self, value: str):
-        self.__Id = value
+        self.__id = value
 
     @property
     def Name(self) -> str:
-        return self.__Name
+        return self.__name
 
     @Name.setter
     def Name(self, value: str):
-        self.__Name = value
+        self.__name = value
 
     @property
     def GraphQLName(self) -> str:
-        return self.__GraphQLName
+        return self.__graph_ql_name
 
     @GraphQLName.setter
     def GraphQLName(self, value: str):
-        self.__GraphQLName = value
+        self.__graph_ql_name = value
 
     @property
     def Flags(self) -> PropertyTypeFlags:
-        return self.__Flags
+        return self.__flags
 
     @Flags.setter
     def Flags(self, value: PropertyTypeFlags):
-        self.__Flags = value
+        self.__flags = value
 
     @property
     def State(self) -> LifeCycleState:
-        return self.__State
+        return self.__state
 
     @State.setter
     def State(self, value: LifeCycleState):
-        self.__State = value
+        self.__state = value
 
     @property
     def PropertyTypeId(self) -> str:
-        return self.__PropertyTypeId
+        return self.__property_type_id
 
     @PropertyTypeId.setter
     def PropertyTypeId(self, value: str):
-        self.__PropertyTypeId = value
+        self.__property_type_id = value
 
     @property
     def RemoteReferenceName(self) -> str:
-        return self.__RemoteReferenceName
+        return self.__remote_reference_name
 
     @RemoteReferenceName.setter
     def RemoteReferenceName(self, value: str):
-        self.__RemoteReferenceName = value
+        self.__remote_reference_name = value
 
     @property
     def Description(self) -> str:
-        return self.__Description
+        return self.__description
 
     @Description.setter
     def Description(self, value: str):
-        self.__Description = value
+        self.__description = value
 
     def to_json(self) -> str:
         return json.dumps(self.to_dictionary())
