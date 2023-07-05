@@ -55,6 +55,7 @@ for enumeration in enumerations:
 authorization_tag = AuthorizationTag('TestAuthorizationTag')
 authorization_tag = client.AuthorizationTags.getOrCreateAuthorizationTag(
     namespace_id, authorization_tag.Id, authorization_tag)
+client.GraphQL.checkForSchemaChanges(namespace_id)
 
 # create enumeration
 members = [EnumerationState(name='on', code=1),
@@ -63,6 +64,7 @@ enumeration = EventGraphEnumeration(
     members, 'TestEnumeration', 'TestEnumeration', id='TestEnumeration')  # why is a description required here?
 enumeration = client.Enumerations.getOrCreateEnumeration(
     namespace_id, enumeration.Id, enumeration)
+client.GraphQL.checkForSchemaChanges(namespace_id)
 
 # create reference data type
 reference_data_type_name = 'TestReferenceDataType'
@@ -74,6 +76,7 @@ reference_data_type = EventGraphReferenceDataType(
     EventGraphReferenceDataCategory.REFERENCE_DATA, reference_data_type_properties, authorization_tag.Id, reference_data_type_name, id=reference_data_type_name)
 reference_data_type = client.ReferenceDataTypes.getOrCreateReferenceDataType(
     namespace_id, reference_data_type.Id, reference_data_type)
+client.GraphQL.checkForSchemaChanges(namespace_id)
 
 # create reference data
 reference_data_id = "TestReferenceData"
@@ -101,6 +104,7 @@ event_type = EventGraphEventType(
     event_type_properties, authorization_tag.Id, event_type_name, id=event_type_name, version=1)
 event_type = client.EventTypes.getOrCreateEventType(
     namespace_id, event_type_name, event_type)
+client.GraphQL.checkForSchemaChanges(namespace_id)
 
 # create events
 event_id = "TestEvent"

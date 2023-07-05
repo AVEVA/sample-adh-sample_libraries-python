@@ -43,6 +43,16 @@ class GraphQL(object):
             'data': data_class.fromJson(result['data']),
             'extensions': result['extension']}
 
+    def checkForSchemaChanges(self, namespace_id: str, body:str = 'force') -> Any:
+        """
+        """
+
+        self.__base_client.validateParameters(namespace_id)
+        response = self.__base_client.request('post', self.__graph_ql_schema_path.format(
+            namespace_id=namespace_id), data=body, additional_headers={'Content-type': 'text/plain'})
+        self.__base_client.checkResponse(
+            response, f'Failed to force schema change.')
+
     # private methods
 
     def __setPathAndQueryTemplates(self):
@@ -55,3 +65,4 @@ class GraphQL(object):
             '/Namespaces/{namespace_id}'
 
         self.__graph_ql_path = self.__base_path_preview + '/GraphQL'
+        self.__graph_ql_schema_path = self.__graph_ql_path + '/schema'
