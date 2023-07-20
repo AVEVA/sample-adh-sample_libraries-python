@@ -1,10 +1,12 @@
-﻿from enum import Enum
+﻿from enum import Flag
 
 
-class PropertyTypeFlags(Enum):
-
-    NONE = 'None'
-    INDEXED = 'Indexed'
-    REQUIRED = 'Required'
-    IS_COLLECTION = 'IsCollection'
-    REVERSE_LOOKUP = 'ReverseLookup'
+class PropertyTypeFlags(Flag):
+    """
+    flag 0-16 not fully inclusive
+    """
+    none = 0
+    Indexed = 2
+    Required = 4
+    IsCollection = 8
+    ReverseLookup = 16

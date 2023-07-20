@@ -98,7 +98,7 @@ reference_data = client.ReferenceData.getOrCreateReferenceData(
 event_type_name = 'TestEventType3'
 event_type_properties = [
     TypeProperty(PropertyTypeCode.ASSET, 'ReferenceAssets', 'ReferenceAssets', 'ReferenceAssets',
-                 PropertyTypeFlags.REVERSE_LOOKUP_IS_COLLECTION, property_type_id="none", remote_reference_name=event_type_name),
+                 PropertyTypeFlags.ReverseLookup + PropertyTypeFlags.IsCollection, property_type_id="none", remote_reference_name=event_type_name),
     TypeProperty(PropertyTypeCode.DOUBLE, 'SomeValue')]
 event_type = EventGraphEventType(
     event_type_properties, authorization_tag.Id, event_type_name, id=event_type_name, version=1)
