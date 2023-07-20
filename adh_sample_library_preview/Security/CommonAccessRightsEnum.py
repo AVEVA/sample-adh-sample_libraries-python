@@ -3,7 +3,7 @@ from enum import Flag
 
 class CommonAccessRightsEnum(Flag):
     """
-    flag 0-8 not fully inclusive
+    flag 0-16 not fully inclusive
     """
     none = 0
     Read = 1
