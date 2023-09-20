@@ -25,10 +25,10 @@ class ReferenceDataTypes(Securable, object):
         Gets a list of `ReferenceDataType` objects. 
 
         :param namespace_id: id of namespace to work against
-        :param int skip: 
-        :param int count: 
-        :param bool include_deleted: 
-        :param str filter: 
+        :param int skip: Parameter representing the zero-based offset of the first object to retrieve. If unspecified, a default value of 0 is used.
+        :param int count: Parameter representing the maximum number of objects to retrieve. If unspecified, a default value of 100 is used.
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted ReferenceDataTypes. If unspecified, a default value of false is used.
+        :param str filter: Parameter representing the condition for results to be filtered by. If unspecified, results are not filtered.
         """
         self.__base_client.validateParameters(namespace_id)
 
@@ -60,7 +60,7 @@ class ReferenceDataTypes(Securable, object):
         Creates a new `ReferenceDataType` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
-        :param EventGraphReferenceDataType reference_data_type: 
+        :param EventGraphReferenceDataType reference_data_type: A reference data type object
         """
 
         self.__base_client.validateParameters(namespace_id)
@@ -83,8 +83,8 @@ class ReferenceDataTypes(Securable, object):
         Gets the specified `ReferenceDataType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str reference_data_type_id: 
-        :param bool include_deleted: 
+        :param str reference_data_type_id: The id of the ReferenceDataType. 
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted ReferenceDataTypes. If unspecified, a default value of false is used.
         """
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)
 
@@ -107,8 +107,8 @@ class ReferenceDataTypes(Securable, object):
         Creates the specified `ReferenceDataType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str reference_data_type_id: 
-        :param EventGraphReferenceDataType reference_data_type: 
+        :param str reference_data_type_id: The id of the ReferenceDataType. 
+        :param EventGraphReferenceDataType reference_data_type: A reference data type object
         """
 
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)
@@ -131,8 +131,8 @@ class ReferenceDataTypes(Securable, object):
         Updates the specified `ReferenceDataType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str id: 
-        :param EventGraphReferenceDataType reference_data_type: 
+        :param str reference_data_type_id: The id of the ReferenceDataType. 
+        :param EventGraphReferenceDataType reference_data_type: A reference data type object
         """
 
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)
@@ -154,7 +154,7 @@ class ReferenceDataTypes(Securable, object):
         Deletes the specified `ReferenceDataType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str reference_data_type_id: 
+        :param str reference_data_type_id: The id of the ReferenceDataType. 
         """
 
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)

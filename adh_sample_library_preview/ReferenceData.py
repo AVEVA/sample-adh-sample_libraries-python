@@ -21,6 +21,19 @@ class ReferenceData(Securable, object):
                   filter: str = None, order_by: str = None, count: int = None, continuation_token: str = None,
                   reference_data_class: type = None) -> list[Any]:
         """
+        Queries one or many reference data of a specified TypeId from the Graph Storage.
+        The response will vary based on the TypeId and if you query for a single reference data (by id), or for many reference data, or for many reference data with paging.
+        :param namespace_id: The namespace identifier
+        :param reference_data_type_id: The reference data TypeId to query
+        :param id: The The id of the reference data to get. If id is specified, then only the fields optional argument will be processed. Also the response JSON will be a single object and not an array.
+        :param fields: The names of the fields to be returned separated by spaces. You can specify simple GraphQL syntax for relationships (ex: asset{id}}. If not specified, it defaults to all non-collection properties.
+        :param filter: The filter to apply to the query.
+        :param order_by: The order by directive specifies the field name and either ascending (asc) or descending (desc). The default is asc.
+        :param count: The number of reference data to return.
+        :param continuation_token: Specifies you want a page of data with count reference data. You must pass an empty token to get the 1st page. The response is different when using paging.
+        :param reference_data_class: use this to cast the reference data into a given type.
+            Type must support .fromJson()  Default is None.
+            If None returns a dynamic Python object from the data.
         """
 
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)
@@ -49,6 +62,14 @@ class ReferenceData(Securable, object):
 
     def getOrCreateReferenceData(self, namespace_id: str, reference_data_type_id: str, reference_data: list[Any], reference_data_class: type = None) -> list[Any]:
         """
+        Upserts one or many reference data of a specified TypeId to the Graph Storage.
+        If the body contains a JSON array, it upserts many reference data. If the body contains a single JSON object it upserts one reference data.
+        :param namespace_id: The namespace identifier
+        :param reference_data_type_id: The reference data TypeId being added or updated
+        :param reference_data: A list of reference data objects
+        :param reference_data_class: use this to cast the reference data into a given type.
+            Type must support .fromJson()  Default is None.
+            If None returns a dynamic Python object from the data.
         """
         self.__base_client.validateParameters(
             namespace_id, reference_data_type_id, reference_data)
@@ -73,6 +94,10 @@ class ReferenceData(Securable, object):
 
     def deleteReferenceData(self, namespace_id: str, reference_data_type_id: str, reference_data_id: str = None):
         """
+        Deletes one reference data of a specified TypeId from the Graph Storage.
+        :param namespace_id: The namespace identifier
+        :param reference_data_type_id: The reference data TypeId being deleted.
+        :param reference_data_id: The reference data id to delete.
         """
         self.__base_client.validateParameters(
             namespace_id, reference_data_type_id, reference_data_id)

@@ -21,6 +21,19 @@ class Events(Securable, object):
                   filter: str = None, order_by: str = None, count: int = None, continuation_token: str = None,
                   event_class: type = None) -> list[Any]:
         """
+        Queries one or many events of a specified TypeId from the Graph Storage.
+        The response will vary based on the TypeId and if you query for a single event (by id), or for many events, or for many events with paging.
+        :param namespace_id: The namespace identifier
+        :param event_type_id: The event TypeId to query
+        :param id: The The id of the event to get. If id is specified, then only the fields optional argument will be processed. Also the response JSON will be a single object and not an array.
+        :param fields: The names of the fields to be returned separated by spaces. You can specify simple GraphQL syntax for relationships (ex: asset{id}}. If not specified, it defaults to all non-collection properties.
+        :param filter: The filter to apply to the query.
+        :param order_by: The order by directive specifies the field name and either ascending (asc) or descending (desc). The default is asc.
+        :param count: The number of events to return.
+        :param continuation_token: Specifies you want a page of data with count events. You must pass an empty token to get the 1st page. The response is different when using paging.
+        :param event_class: use this to cast the event into a given type.
+            Type must support .fromJson()  Default is None.
+            If None returns a dynamic Python object from the data.
         """
 
         self.__base_client.validateParameters(namespace_id, event_type_id)
@@ -49,6 +62,14 @@ class Events(Securable, object):
 
     def getOrCreateEvents(self, namespace_id: str, event_type_id: str, events: list[Any], event_class: type = None) -> list[Any]:
         """
+        Upserts one or many events of a specified TypeId to the Graph Storage.
+        If the body contains a JSON array, it upserts many events. If the body contains a single JSON object it upserts one event.
+        :param namespace_id: The namespace identifier
+        :param event_type_id: The event TypeId being added or updated
+        :param events: A list of event objects
+        :param event_class: use this to cast the event into a given type.
+            Type must support .fromJson()  Default is None.
+            If None returns a dynamic Python object from the data.
         """
         self.__base_client.validateParameters(
             namespace_id, event_type_id, events)
@@ -73,6 +94,10 @@ class Events(Securable, object):
 
     def deleteEvent(self, namespace_id: str, event_type_id: str, event_id: str = None):
         """
+        Deletes one event of a specified TypeId from the Graph Storage.
+        :param namespace_id: The namespace identifier
+        :param event_type_id: The event TypeId being deleted.
+        :param event_id: The event id to delete.
         """
         self.__base_client.validateParameters(
             namespace_id, event_type_id, event_id)

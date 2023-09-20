@@ -25,9 +25,9 @@ class AuthorizationTags(Securable, object):
         Gets a list of `AuthorizationTag` objects. 
 
         :param namespace_id: id of namespace to work against
-        :param int skip: 
-        :param int count: 
-        :param bool include_deleted: 
+        :param int skip: Parameter representing the zero-based offset of the first object to retrieve. If unspecified, a default value of 0 is used.
+        :param int count: Parameter representing the maximum number of objects to retrieve. If unspecified, a default value of 100 is used.
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted Authorization Tags. If unspecified, a default value of false is used.
         :param str filter: 
         """
         self.__base_client.validateParameters(namespace_id)
@@ -61,8 +61,8 @@ class AuthorizationTags(Securable, object):
         Gets the specified `AuthorizationTag`. 
 
         :param namespace_id: id of namespace to work against
-        :param str authorization_tag_id: 
-        :param bool include_deleted: 
+        :param str authorization_tag_id: The authorization tag identifier
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted Authorization Tags. If unspecified, a default value of false is used.
         """
         self.__base_client.validateParameters(namespace_id, authorization_tag_id)
 
@@ -85,8 +85,8 @@ class AuthorizationTags(Securable, object):
         Creates the specified `AuthorizationTag`. 
 
         :param namespace_id: id of namespace to work against
-        :param str authorization_tag_id: 
-        :param AuthorizationTag authorization_tag: 
+        :param str authorization_tag_id: The authorization tag identifier
+        :param AuthorizationTag authorization_tag: An authorization tag object
         """
 
         self.__base_client.validateParameters(namespace_id, authorization_tag_id)
@@ -109,8 +109,8 @@ class AuthorizationTags(Securable, object):
         Updates the specified `AuthorizationTag`. 
 
         :param namespace_id: id of namespace to work against
-        :param str id: 
-        :param AuthorizationTag authorization_tag: 
+        :param str authorization_tag_id: The authorization tag identifier
+        :param AuthorizationTag authorization_tag: An authorization tag object
         """
 
         self.__base_client.validateParameters(namespace_id, authorization_tag_id)
@@ -132,7 +132,7 @@ class AuthorizationTags(Securable, object):
         Deletes the specified `AuthorizationTag`. 
 
         :param namespace_id: id of namespace to work against
-        :param str authorization_tag_id: 
+        :param str authorization_tag_id: The authorization tag identifier
         """
 
         self.__base_client.validateParameters(namespace_id, authorization_tag_id)
@@ -149,7 +149,7 @@ class AuthorizationTags(Securable, object):
         Creates Authorization Tags in bulk. 
 
         :param namespace_id: id of namespace to work against
-        :param list[AuthorizationTag] authorization_tags: 
+        :param list[AuthorizationTag] authorization_tags: A list of authorization tag objects
         """
 
         self.__base_client.validateParameters(namespace_id)

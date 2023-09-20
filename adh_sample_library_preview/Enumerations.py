@@ -25,10 +25,10 @@ class Enumerations(Securable, object):
         Gets a list of `Enumeration` objects. 
 
         :param namespace_id: id of namespace to work against
-        :param int skip: 
-        :param int count: 
-        :param bool include_deleted: 
-        :param str filter: 
+        :param int skip: Parameter representing the zero-based offset of the first object to retrieve. If unspecified, a default value of 0 is used.
+        :param int count: Parameter representing the maximum number of objects to retrieve. If unspecified, a default value of 100 is used.
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted Enumerations. If unspecified, a default value of false is used.
+        :param str filter: Parameter representing the condition for results to be filtered by. If unspecified, results are not filtered.
         """
         self.__base_client.validateParameters(namespace_id)
 
@@ -60,7 +60,7 @@ class Enumerations(Securable, object):
         Creates a new `Enumeration` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
-        :param EventGraphEnumeration enumeration: 
+        :param EventGraphEnumeration enumeration: An enumeration object
         """
 
         self.__base_client.validateParameters(namespace_id)
@@ -83,8 +83,8 @@ class Enumerations(Securable, object):
         Gets the specified `Enumeration`. 
 
         :param namespace_id: id of namespace to work against
-        :param str enumeration_id: 
-        :param bool include_deleted: 
+        :param str enumeration_id: The enumeration identifier
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted Enumerations. If unspecified, a default value of false is used.
         """
         self.__base_client.validateParameters(namespace_id, enumeration_id)
 
@@ -107,8 +107,8 @@ class Enumerations(Securable, object):
         Creates the specified `Enumeration`. 
 
         :param namespace_id: id of namespace to work against
-        :param str enumeration_id: 
-        :param EventGraphEnumeration enumeration: 
+        :param str enumeration_id: The enumeration identifier
+        :param EventGraphEnumeration enumeration: An enumeration object
         """
 
         self.__base_client.validateParameters(namespace_id, enumeration_id)
@@ -131,8 +131,8 @@ class Enumerations(Securable, object):
         Updates the specified `Enumeration`. 
 
         :param namespace_id: id of namespace to work against
-        :param str id: 
-        :param EventGraphEnumeration enumeration: 
+        :param str enumeration_id: The enumeration identifier
+        :param EventGraphEnumeration enumeration: An enumeration object
         """
 
         self.__base_client.validateParameters(namespace_id, enumeration_id)
@@ -154,7 +154,7 @@ class Enumerations(Securable, object):
         Deletes the specified `Enumeration`. 
 
         :param namespace_id: id of namespace to work against
-        :param str enumeration_id: 
+        :param str enumeration_id: The enumeration identifier
         """
 
         self.__base_client.validateParameters(namespace_id, enumeration_id)
@@ -171,7 +171,7 @@ class Enumerations(Securable, object):
         Creates Enumerations in bulk. 
 
         :param namespace_id: id of namespace to work against
-        :param list[EventGraphEnumeration] enumerations: 
+        :param list[EventGraphEnumeration] enumerations: A list of enumeration objects
         """
 
         self.__base_client.validateParameters(namespace_id)

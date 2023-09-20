@@ -22,13 +22,13 @@ class EventTypes(Securable, object):
                       include_deleted: bool = None,
                       filter: str = None) -> list[EventGraphEventType]:
         """
-        Gets a list of `EventType` objects. 
+        Returns an array of EventTypes in a given namespace and the version ETag in the HTTP response header. The If-Match and If-None-Match headers are supported.
 
         :param namespace_id: id of namespace to work against
-        :param int skip: 
-        :param int count: 
-        :param bool include_deleted: 
-        :param str filter: 
+        :param int skip: Parameter representing the zero-based offset of the first object to retrieve. If unspecified, a default value of 0 is used.
+        :param int count: Parameter representing the maximum number of objects to retrieve. If unspecified, a default value of 100 is used.
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted EventTypes. If unspecified, a default value of false is used.
+        :param str filter: Parameter representing the condition for results to be filtered by. If unspecified, results are not filtered.
         """
         self.__base_client.validateParameters(namespace_id)
 
@@ -60,7 +60,7 @@ class EventTypes(Securable, object):
         Creates a new `EventType` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
-        :param EventGraphEventType event_type: 
+        :param EventGraphEventType event_type: An event type object
         """
 
         self.__base_client.validateParameters(namespace_id)
@@ -83,8 +83,8 @@ class EventTypes(Securable, object):
         Gets the specified `EventType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str event_type_id: 
-        :param bool include_deleted: 
+        :param str event_type_id: The id of the EventType.
+        :param bool include_deleted: Parameter indicating whether to include soft-deleted EventTypes. If unspecified, a default value of false is used.
         """
         self.__base_client.validateParameters(namespace_id, event_type_id)
 
@@ -107,8 +107,8 @@ class EventTypes(Securable, object):
         Creates the specified `EventType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str event_type_id: 
-        :param EventGraphEventType event_type: 
+        :param str event_type_id: The id of the EventType.
+        :param EventGraphEventType event_type:  An event type object
         """
 
         self.__base_client.validateParameters(namespace_id, event_type_id)
@@ -131,8 +131,8 @@ class EventTypes(Securable, object):
         Updates the specified `EventType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str id: 
-        :param EventGraphEventType event_type: 
+        :param str event_type_id: The id of the EventType.
+        :param EventGraphEventType event_type:  An event type object
         """
 
         self.__base_client.validateParameters(namespace_id, event_type_id)
@@ -154,7 +154,7 @@ class EventTypes(Securable, object):
         Deletes the specified `EventType`. 
 
         :param namespace_id: id of namespace to work against
-        :param str event_type_id: 
+        :param str event_type_id: The id of the EventType.
         """
 
         self.__base_client.validateParameters(namespace_id, event_type_id)
@@ -171,7 +171,7 @@ class EventTypes(Securable, object):
         Creates Event Types in bulk. 
 
         :param namespace_id: id of namespace to work against
-        :param list[EventGraphEventType] event_types: 
+        :param list[EventGraphEventType] event_types: A list list event type objects
         """
 
         self.__base_client.validateParameters(namespace_id)
