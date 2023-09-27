@@ -11,7 +11,7 @@ from .StreamingUpdates.Update import Update
 from .StreamingUpdates.UpdateSignupInput import UpdateSignupInput
 
 
-class SignupManagerService(object):
+class StreamingUpdates(object):
     """
     Client for interacting with Signups
     """
