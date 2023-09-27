@@ -2,13 +2,13 @@
 from typing import Any
 
 from .BaseClient import BaseClient
-from .StreamingUpdates.CreateSignupInput import CreateSignupInput
-from .StreamingUpdates.Signup import Signup
-from .StreamingUpdates.SignupResourceIds import SignupResourceIds
-from .StreamingUpdates.SignupResourcesInput import SignupResourcesInput
-from .StreamingUpdates.Trustee import Trustee
-from .StreamingUpdates.Update import Update
-from .StreamingUpdates.UpdateSignupInput import UpdateSignupInput
+from .StreamingUpdate.CreateSignupInput import CreateSignupInput
+from .StreamingUpdate.Signup import Signup
+from .StreamingUpdate.SignupResourceIds import SignupResourceIds
+from .StreamingUpdate.SignupResourcesInput import SignupResourcesInput
+from .StreamingUpdate.Trustee import Trustee
+from .StreamingUpdate.Update import Update
+from .StreamingUpdate.UpdateSignupInput import UpdateSignupInput
 
 
 class StreamingUpdates(object):
@@ -53,15 +53,15 @@ class StreamingUpdates(object):
         return results
 
     def createSignup(self,
-                     body: CreateSignupInput = None,
                      namespace_id: str = None,
-                     community_id: str = None) -> Signup:
+                     community_id: str = None,
+                     body: CreateSignupInput = None) -> Signup:
         """
         Creates a signup for the list of resource identifiers provided. 
 
-        :param CreateSignupInput body: Input of the signup to be created.
         :param str namespace_id: id of namespace to work against
         :param str community_id: Community unique identifier. Represents a signup for resources shared to the specified Community Id.
+        :param CreateSignupInput body: Input of the signup to be created.
         """
 
         self.__base_client.validateParameters(namespace_id)
@@ -102,15 +102,15 @@ class StreamingUpdates(object):
         return result
 
     def updateSignup(self,
-                     body: UpdateSignupInput = None,
                      namespace_id: str = None,
-                     signup_id: str = None) -> Signup:
+                     signup_id: str = None,
+                     body: UpdateSignupInput = None,) -> Signup:
         """
         Updates the properties (for example, name) of a signup. 
 
-        :param UpdateSignupInput body: Signup input object to replace the existing signup's properties.
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup Identifier.
+        :param UpdateSignupInput body: Signup input object to replace the existing signup's properties.
         """
 
         self.__base_client.validateParameters(namespace_id, signup_id, body)
@@ -179,17 +179,17 @@ class StreamingUpdates(object):
         return result
 
     def updateSignupResources(self,
-                              body: SignupResourcesInput = None,
                               namespace_id: str = None,
                               signup_id: str = None,
-                              community_id: str = None):
+                              community_id: str = None,
+                              body: SignupResourcesInput = None):
         """
         Update Signup Resources. 
 
-        :param SignupResourcesInput body: Signup resources input object to replace signup's resources.
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Unique Signup Identifier.
         :param str community_id: Unique Community Identifier.
+        :param SignupResourcesInput body: Signup resources input object to replace signup's resources.
         """
 
         self.__base_client.validateParameters(namespace_id, signup_id, body)
