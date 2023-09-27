@@ -31,4 +31,5 @@ from .Event import *
 from .OMF import *
 from .SDS import *
 from .Security import *
+from .StreamingUpdates import *
 from .Tenant import *
