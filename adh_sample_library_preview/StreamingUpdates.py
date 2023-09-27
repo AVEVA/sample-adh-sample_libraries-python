@@ -74,12 +74,12 @@ class SignupManagerService(object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__signups_path.format(
-            namespace_id=namespace_id), data=body.to_json(), params=params)
+            namespace_id=namespace_id), data=body.toJson(), params=params)
 
         self.__base_client.checkResponse(
             response, f'Failed to create Signup.')
 
-        return Signup.from_json(response.json())
+        return Signup.fromJson(response.json())
 
     def getSignupById(self,
                       namespace_id: str = None,
