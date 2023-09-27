@@ -103,16 +103,16 @@ class EventGraphEnumeration(object):
     def Description(self, value: str):
         self.__description = value
 
-    def to_json(self) -> str:
-        return json.dumps(self.to_dictionary())
+    def toJson(self) -> str:
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self) -> dict[str, Any]:
+    def toDictionary(self) -> dict[str, Any]:
         result = {}
 
         if self.Members is not None:
             result['Members'] = []
             for value in self.Members:
-                result['Members'].append(value.to_dictionary())
+                result['Members'].append(value.toDictionary())
 
         if self.Name is not None:
             result['Name'] = self.Name
@@ -141,7 +141,7 @@ class EventGraphEnumeration(object):
         return result
 
     @staticmethod
-    def from_json(content: dict[str, Any]) -> EventGraphEnumeration:
+    def fromJson(content: dict[str, Any]) -> EventGraphEnumeration:
         result = EventGraphEnumeration()
 
         if not content:
@@ -152,7 +152,7 @@ class EventGraphEnumeration(object):
             if values is not None:
                 result.Members = []
                 for value in values:
-                    result.Members.append(EnumerationState.from_json(value))
+                    result.Members.append(EnumerationState.fromJson(value))
 
         if 'Name' in content:
             result.Name = content['Name']

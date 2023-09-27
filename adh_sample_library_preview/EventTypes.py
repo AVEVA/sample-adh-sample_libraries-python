@@ -51,7 +51,7 @@ class EventTypes(Securable, object):
         serialized = response.json()
         results: list[EventGraphEventType] = []
         for i in serialized:
-            results.append(EventGraphEventType.from_json(i))
+            results.append(EventGraphEventType.fromJson(i))
         return results
 
     def createEventType(self, namespace_id: str,
@@ -69,12 +69,12 @@ class EventTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__event_types_path.format(
-            namespace_id=namespace_id), data=event_type.to_json())
+            namespace_id=namespace_id), data=event_type.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to create Event Type.')
 
-        return EventGraphEventType.from_json(response.json())
+        return EventGraphEventType.fromJson(response.json())
 
     def getEventType(self, namespace_id: str,
                      event_type_id: str,
@@ -98,7 +98,7 @@ class EventTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get Event Type, {event_type_id}.')
 
-        return EventGraphEventType.from_json(response.json())
+        return EventGraphEventType.fromJson(response.json())
 
     def getOrCreateEventType(self, namespace_id: str,
                              event_type_id: str,
@@ -117,12 +117,12 @@ class EventTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__event_type_path.format(
-            namespace_id=namespace_id, event_type_id=event_type_id), data=event_type.to_json())
+            namespace_id=namespace_id, event_type_id=event_type_id), data=event_type.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to create Event Type, {event_type_id}.')
 
-        return EventGraphEventType.from_json(response.json())
+        return EventGraphEventType.fromJson(response.json())
 
     def updateEventType(self, namespace_id: str,
                         event_type_id: str,
@@ -141,12 +141,12 @@ class EventTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('put', self.__event_type_path.format(
-            namespace_id=namespace_id, event_type_id=event_type_id), data=event_type.to_json())
+            namespace_id=namespace_id, event_type_id=event_type_id), data=event_type.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to update Event Type, {event_type_id}.')
 
-        return EventGraphEventType.from_json(response.json())
+        return EventGraphEventType.fromJson(response.json())
 
     def deleteEventType(self, namespace_id: str,
                         event_type_id: str):
@@ -180,11 +180,11 @@ class EventTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__event_types_bulk_path.format(
-            namespace_id=namespace_id), data=event_types.to_json())
+            namespace_id=namespace_id), data=event_types.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create Event Types.')
-        return EventGraphEventType.from_json(response.json())
+        return EventGraphEventType.fromJson(response.json())
 
     # private methods
 

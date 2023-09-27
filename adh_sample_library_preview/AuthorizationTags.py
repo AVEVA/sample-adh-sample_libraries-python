@@ -51,7 +51,7 @@ class AuthorizationTags(Securable, object):
         serialized = response.json()
         results: list[AuthorizationTag] = []
         for i in serialized:
-            results.append(AuthorizationTag.from_json(i))
+            results.append(AuthorizationTag.fromJson(i))
         return results
 
     def getAuthorizationTag(self, namespace_id: str,
@@ -76,7 +76,7 @@ class AuthorizationTags(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get Authorization Tag, {authorization_tag_id}.')
 
-        return AuthorizationTag.from_json(response.json())
+        return AuthorizationTag.fromJson(response.json())
 
     def getOrCreateAuthorizationTag(self, namespace_id: str,
                              authorization_tag_id: str,
@@ -95,12 +95,12 @@ class AuthorizationTags(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__authorization_tag_path.format(
-            namespace_id=namespace_id, authorization_tag_id=authorization_tag_id), data=authorization_tag.to_json())
+            namespace_id=namespace_id, authorization_tag_id=authorization_tag_id), data=authorization_tag.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to create Authorization Tag, {authorization_tag_id}.')
 
-        return AuthorizationTag.from_json(response.json())
+        return AuthorizationTag.fromJson(response.json())
 
     def updateAuthorizationTag(self, namespace_id: str,
                         authorization_tag_id: str,
@@ -119,12 +119,12 @@ class AuthorizationTags(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('put', self.__authorization_tag_path.format(
-            namespace_id=namespace_id, authorization_tag_id=authorization_tag_id), data=authorization_tag.to_json())
+            namespace_id=namespace_id, authorization_tag_id=authorization_tag_id), data=authorization_tag.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to update Authorization Tag, {authorization_tag_id}.')
 
-        return AuthorizationTag.from_json(response.json())
+        return AuthorizationTag.fromJson(response.json())
 
     def deleteAuthorizationTag(self, namespace_id: str,
                         authorization_tag_id: str):
@@ -158,11 +158,11 @@ class AuthorizationTags(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__authorization_tags_bulk_path.format(
-            namespace_id=namespace_id), data=authorization_tags.to_json())
+            namespace_id=namespace_id), data=authorization_tags.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create Authorization Tags.')
-        return AuthorizationTag.from_json(response.json())
+        return AuthorizationTag.fromJson(response.json())
 
     # private methods
 

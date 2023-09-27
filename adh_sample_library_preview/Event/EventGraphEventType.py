@@ -113,16 +113,16 @@ class EventGraphEventType(object):
     def Description(self, value: str):
         self.__description = value
 
-    def to_json(self) -> str:
-        return json.dumps(self.to_dictionary())
+    def toJson(self) -> str:
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self) -> dict[str, Any]:
+    def toDictionary(self) -> dict[str, Any]:
         result = {}
 
         if self.Properties is not None:
             result['Properties'] = []
             for value in self.Properties:
-                result['Properties'].append(value.to_dictionary())
+                result['Properties'].append(value.toDictionary())
 
         if self.DefaultAuthorizationTag is not None:
             result['DefaultAuthorizationTag'] = self.DefaultAuthorizationTag
@@ -154,7 +154,7 @@ class EventGraphEventType(object):
         return result
 
     @staticmethod
-    def from_json(content: dict[str, Any]) -> EventGraphEventType:
+    def fromJson(content: dict[str, Any]) -> EventGraphEventType:
         result = EventGraphEventType()
 
         if not content:
@@ -165,7 +165,7 @@ class EventGraphEventType(object):
             if values is not None:
                 result.Properties = []
                 for value in values:
-                    result.Properties.append(TypeProperty.from_json(value))
+                    result.Properties.append(TypeProperty.fromJson(value))
 
         if 'DefaultAuthorizationTag' in content:
             result.DefaultAuthorizationTag = content['DefaultAuthorizationTag']

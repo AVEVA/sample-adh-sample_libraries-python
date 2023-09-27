@@ -104,10 +104,10 @@ class TypeProperty(object):
     def Description(self, value: str):
         self.__description = value
 
-    def to_json(self) -> str:
-        return json.dumps(self.to_dictionary())
+    def toJson(self) -> str:
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self) -> dict[str, Any]:
+    def toDictionary(self) -> dict[str, Any]:
         result = {}
 
         if self.PropertyTypeCode is not None:
@@ -140,7 +140,7 @@ class TypeProperty(object):
         return result
 
     @staticmethod
-    def from_json(content: dict[str, Any]) -> TypeProperty:
+    def fromJson(content: dict[str, Any]) -> TypeProperty:
         result = TypeProperty()
 
         if not content:
