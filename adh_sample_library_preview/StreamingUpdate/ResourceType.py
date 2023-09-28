@@ -6,4 +6,4 @@ class ResourceType(Enum):
     Type of resource whose access is being bulk updated.
     """
 
-    STREAM = 0
+    STREAM = 'Stream'

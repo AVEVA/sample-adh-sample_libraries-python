@@ -2,6 +2,7 @@
 import json
 from typing import Any
 
+from .ResourceType import ResourceType
 
 
 class CreateSignupInput(object):
@@ -29,11 +30,11 @@ class CreateSignupInput(object):
         self.__name = value
 
     @property
-    def ResourceType(self) -> Any:
+    def ResourceType(self) -> ResourceType:
         return self.__resource_type
 
     @ResourceType.setter
-    def ResourceType(self, value: Any):
+    def ResourceType(self, value: ResourceType):
         self.__resource_type = value
 
     @property
@@ -54,7 +55,7 @@ class CreateSignupInput(object):
             result['Name'] = self.Name
 
         if self.ResourceType is not None:
-            result['ResourceType'] = self.ResourceType
+            result['ResourceType'] = self.ResourceType.name
 
         if self.ResourceIds is not None:
             result['ResourceIds'] = []
@@ -74,7 +75,7 @@ class CreateSignupInput(object):
             result.Name = content['Name']
 
         if 'ResourceType' in content:
-            result.ResourceType = content['ResourceType']
+            result.ResourceType = ResourceType(content['ResourceType'])
 
         if 'ResourceIds' in content:
             values = content['ResourceIds']

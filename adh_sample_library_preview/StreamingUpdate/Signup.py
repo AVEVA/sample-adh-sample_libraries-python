@@ -2,6 +2,8 @@
 import json
 from typing import Any
 
+from .ResourceType import ResourceType
+from .SignupState import SignupState
 
 
 class Signup(object):
@@ -69,11 +71,11 @@ class Signup(object):
         self.__community_id = value
 
     @property
-    def Type(self) -> Any:
+    def Type(self) -> ResourceType:
         return self.__type
 
     @Type.setter
-    def Type(self, value: Any):
+    def Type(self, value: ResourceType):
         self.__type = value
 
     @property
@@ -117,11 +119,11 @@ class Signup(object):
         self.__resources_deleted = value
 
     @property
-    def SignupState(self) -> Any:
+    def SignupState(self) -> SignupState:
         return self.__signup_state
 
     @SignupState.setter
-    def SignupState(self, value: Any):
+    def SignupState(self, value: SignupState):
         self.__signup_state = value
 
     def toJson(self) -> str:
@@ -143,7 +145,7 @@ class Signup(object):
             result['CommunityId'] = self.CommunityId
 
         if self.Type is not None:
-            result['Type'] = self.Type
+            result['Type'] = self.Type.name
 
         if self.CreatedDate is not None:
             result['CreatedDate'] = self.CreatedDate
@@ -161,7 +163,7 @@ class Signup(object):
             result['ResourcesDeleted'] = self.ResourcesDeleted
 
         if self.SignupState is not None:
-            result['SignupState'] = self.SignupState
+            result['SignupState'] = self.SignupState.name
 
         return result
 
@@ -185,7 +187,7 @@ class Signup(object):
             result.CommunityId = content['CommunityId']
 
         if 'Type' in content:
-            result.Type = content['Type']
+            result.Type = ResourceType(content['Type'])
 
         if 'CreatedDate' in content:
             result.CreatedDate = content['CreatedDate']
@@ -203,6 +205,6 @@ class Signup(object):
             result.ResourcesDeleted = content['ResourcesDeleted']
 
         if 'SignupState' in content:
-            result.SignupState = content['SignupState']
+            result.SignupState = SignupState(content['SignupState'])
 
         return result

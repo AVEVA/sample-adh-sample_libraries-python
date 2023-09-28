@@ -37,11 +37,11 @@ class Update(Generic[T]):
         self.__operation = value
 
     @property
-    def Events(self) -> list[Any]:
+    def Events(self) -> list[T]:
         return self.__events
 
     @Events.setter
-    def Events(self, value: list[Any]):
+    def Events(self, value: list[T]):
         self.__events = value
 
     def toJson(self) -> str:
@@ -57,8 +57,12 @@ class Update(Generic[T]):
             result['Operation'] = self.Operation
 
         if self.Events is not None:
-            for event in self.Events:
-                result['Events'].append(event.toDictionary())
+            if T is None:
+                for event in self.Events:
+                    result['Events'].append(event)
+            else:
+                for event in self.Events:
+                    result['Events'].append(event.toDictionary())
 
         return result
 
@@ -68,20 +72,20 @@ class Update(Generic[T]):
 
         if not content:
             return result
+        
+        if 'resourceId' in content:
+            result.ResourceId = content['resourceId']
 
-        if 'ResourceId' in content:
-            result.ResourceId = content['ResourceId']
+        if 'operation' in content:
+            result.Operation = content['operation']
 
-        if 'Operation' in content:
-            result.Operation = content['Operation']
-
-        if 'Events' in content:
-            events = content['Events']
+        if 'events' in content:
+            events = content['events']
             if events is not None and len(events) > 0:
                 result.Events = []
-                if T is None:
+                if True:#if T is None:
                     for event in events:
-                        result.Events.append(event.content)
+                        result.Events.append(event)
                 else:
                     for event in events:
                         result.Events.append(T.fromJson(event))

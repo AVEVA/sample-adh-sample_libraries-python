@@ -83,7 +83,7 @@ class StreamingUpdates(object):
 
     def getSignupById(self,
                       namespace_id: str = None,
-                      signup_id: str = None) -> Signup:
+                      signup_id: str = None) -> tuple[Signup, str]:
         """
         Retrieves a signup by signup identifier. 
 
@@ -99,7 +99,12 @@ class StreamingUpdates(object):
             response, f'Failed to get Signup, {signup_id}.')
 
         result = Signup.fromJson(response.json())
-        return result
+
+        bookmark = response.headers.get('Get-Updates')
+        if bookmark is not None:
+            bookmark = bookmark.split('?bookmark=')[1]
+
+        return result, bookmark
 
     def updateSignup(self,
                      namespace_id: str = None,
@@ -176,6 +181,7 @@ class StreamingUpdates(object):
             response, f'Failed to get Signup resources, {signup_id}.')
 
         result = SignupResourceIds.fromJson(response.json())
+
         return result
 
     def updateSignupResources(self,
@@ -210,7 +216,7 @@ class StreamingUpdates(object):
                    namespace_id: str = None,
                    signup_id: str = None,
                    bookmark: str = None,
-                   value_class: type = None) -> Any:
+                   value_class: type = None) -> tuple[list[Update], str]:
         """
         Returns a sequence of updates for all resources within the Signup, starting from the sequential marker represented by a provided `Bookmark`. 
 
@@ -223,7 +229,7 @@ class StreamingUpdates(object):
         """
 
         self.__base_client.validateParameters(
-            namespace_id, signup_id, bookmark)
+            namespace_id, signup_id)
 
         params = {}
         if bookmark is not None:
@@ -234,8 +240,14 @@ class StreamingUpdates(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup updates, {signup_id}.')
 
-        result = Update[value_class].fromJson(response.json())
-        return result
+        data = response.json()['data']
+        updates = [Update[value_class].fromJson(datum) for datum in data]
+
+        bookmark = response.headers.get('Next-Request')
+        if bookmark is not None:
+            bookmark = bookmark.split('?bookmark=')[1]
+        
+        return updates, bookmark
 
     def __setPathAndQueryTemplates(self):
         """
