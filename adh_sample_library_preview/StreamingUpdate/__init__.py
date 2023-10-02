@@ -1,4 +1,5 @@
 from .CreateSignupInput import CreateSignupInput
+from .Operation import Operation
 from .ResourceType import ResourceType
 from .Signup import Signup
 from .SignupInvalidResources import SignupInvalidResources

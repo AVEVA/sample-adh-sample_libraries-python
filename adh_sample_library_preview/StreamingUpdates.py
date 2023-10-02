@@ -1,5 +1,4 @@
 ﻿from __future__ import annotations
-from typing import Any
 
 from .BaseClient import BaseClient
 from .StreamingUpdate.CreateSignupInput import CreateSignupInput
@@ -241,7 +240,7 @@ class StreamingUpdates(object):
             response, f'Failed to get Signup updates, {signup_id}.')
 
         data = response.json()['data']
-        updates = [Update[value_class].fromJson(datum) for datum in data]
+        updates = [Update[value_class].fromJson(datum, value_class) for datum in data]
 
         bookmark = response.headers.get('Next-Request')
         if bookmark is not None:
