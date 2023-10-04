@@ -5,6 +5,10 @@ from .EDSClient import EDSClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
+from .AuthorizationTags import AuthorizationTags
+from .Enumerations import Enumerations
+from .Events import Events
+from .GraphQL import GraphQL
 from .Types import Types
 from .Streams import Streams
 from .StreamViews import StreamViews
@@ -13,6 +17,8 @@ from .Namespaces import Namespaces
 from .SdsError import SdsError
 from .Communities import Communities
 from .PatchableSecurable import PatchableSecurable
+from .ReferenceData import ReferenceData
+from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .Securable import Securable
 from .Subscriptions import Subscriptions
@@ -21,6 +27,7 @@ from .Users import Users
 from .Asset import *
 from .Community import *
 from .DataView import *
+from .Event import *
 from .OMF import *
 from .SDS import *
 from .Security import *
