@@ -2,10 +2,17 @@ from .AbstractBaseClient import AbstractBaseClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
+from .AuthorizationTags import AuthorizationTags
 from .BaseClient import BaseClient
 from .Communities import Communities
 from .DataViews import DataViews
+from .Enumerations import Enumerations
+from .Events import Events
+from .EventTypes import EventTypes
+from .GraphQL import GraphQL
 from .Namespaces import Namespaces
+from .ReferenceData import ReferenceData
+from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .SharedStreams import SharedStreams
 from .Streams import Streams
@@ -43,11 +50,18 @@ class ADHClient:
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)
         self.__asset_types = AssetTypes(self.__base_client)
+        self.__authorization_tags = AuthorizationTags(self.__base_client)
         self.__communities = Communities(self.__base_client)
         self.__data_views = DataViews(self.__base_client)
+        self.__enumerations = Enumerations(self.__base_client)
+        self.__events = Events(self.__base_client)
+        self.__event_types = EventTypes(self.__base_client)
+        self.__graph_ql = GraphQL(self.__base_client)
         self.__namespaces = Namespaces(self.__base_client)
+        self.__reference_data_types = ReferenceDataTypes(self.__base_client)
+        self.__reference_data = ReferenceData(self.__base_client)
         self.__roles = Roles(self.__base_client)
-        self.__sharedStreams = SharedStreams(self.__base_client)
+        self.__shared_streams = SharedStreams(self.__base_client)
         self.__streams = Streams(self.__base_client)
         self.__stream_views = StreamViews(self.__base_client)
         self.__subscriptions = Subscriptions(self.__base_client)
@@ -122,13 +136,20 @@ class ADHClient:
         :return: A client for interacting with Asset Types
         """
         return self.__asset_types
+    
+    @property
+    def AuthorizationTags(self) -> AuthorizationTags:
+        """
+        :return: A client for interacting with AuthorizationTags
+        """
+        return self.__authorization_tags
 
     @property
     def SharedStreams(self) -> SharedStreams:
         """
         :return: A client for interacting with Streams shared in a Community
         """
-        return self.__sharedStreams
+        return self.__shared_streams
 
     @property
     def DataViews(self) -> DataViews:
@@ -136,6 +157,34 @@ class ADHClient:
         :return: A client for interacting with Data Views
         """
         return self.__data_views
+    
+    @property
+    def Enumerations(self) -> Enumerations:
+        """
+        :return: A client for interacting with Enumerations
+        """
+        return self.__enumerations
+
+    @property
+    def Events(self) -> Events:
+        """
+        :return: A client for interacting with Events
+        """
+        return self.__events
+    
+    @property
+    def EventTypes(self) -> EventTypes:
+        """
+        :return: A client for interacting with Events
+        """
+        return self.__event_types
+    
+    @property
+    def GraphQL(self) -> GraphQL:
+        """
+        :return: A client for interacting with GraphQL
+        """
+        return self.__graph_ql
 
     @property
     def Streams(self) -> Streams:
@@ -171,6 +220,20 @@ class ADHClient:
         :return: A client for interacting with Namespaces
         """
         return self.__namespaces
+    
+    @property
+    def ReferenceDataTypes(self) -> ReferenceDataTypes:
+        """
+        :return: A client for interacting with ReferenceDataTypes
+        """
+        return self.__reference_data_types
+    
+    @property
+    def ReferenceData(self) -> ReferenceData:
+        """
+        :return: A client for interacting with ReferenceData
+        """
+        return self.__reference_data
 
     @property
     def Roles(self) -> Roles:

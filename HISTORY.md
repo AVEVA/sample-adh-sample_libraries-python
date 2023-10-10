@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.0_preview / 2023-09-20
+
+- Add preview Event Store and Graph QL support
+
 ## 0.9.13_preview / 2023-04-17
 
 - Improved SdsError class
