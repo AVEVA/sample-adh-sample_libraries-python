@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.4_preview / 2023-12-08
+
+- Migrate Pipelines
+
 ## 0.10.3_preview / 2023-11-27
 
 - Update Event Store features
