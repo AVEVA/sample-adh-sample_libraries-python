@@ -140,7 +140,7 @@ class StreamingUpdates(object):
         self.__base_client.validateParameters(namespace_id, signup_id)
 
         response = self.__base_client.request('delete', self.__signup_path.format(
-            namespace_id=namespace_id, asset_id=self.__base_client.encode(signup_id)))
+            namespace_id=namespace_id, signup_id=self.__base_client.encode(signup_id)))
         self.__base_client.checkResponse(
             response, f'Failed to delete Signup, {signup_id}.')
 
