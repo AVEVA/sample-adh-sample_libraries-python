@@ -1,5 +1,6 @@
 from __future__ import annotations
 import json
+import datetime
 
 from .SdsExtrapolationMode import SdsExtrapolationMode
 from .SdsInterpolationMode import SdsInterpolationMode
@@ -14,7 +15,9 @@ class SdsStream(object):
                  description: str = None, indexes: list[SdsStreamIndex] = None,
                  interpolation_mode: SdsInterpolationMode = None,
                  extrapolation_mode: SdsExtrapolationMode = None,
-                 property_overrides: list[SdsStreamPropertyOverride] = None):
+                 property_overrides: list[SdsStreamPropertyOverride] = None, 
+                 created_date: datetime = None,
+                 modified_date: datetime = None):
         """
         :param id: required
         :param type_id: required
@@ -27,6 +30,8 @@ class SdsStream(object):
                                   not required
         :param property_overrides:  array of  SdsStreamPropertyOverride
                                    not required
+        :param created_date: not required
+        :param modified_date: not required
         """
         self.Id = id
         self.TypeId = type_id
@@ -36,6 +41,8 @@ class SdsStream(object):
         self.InterpolationMode = interpolation_mode
         self.ExtrapolationMode = extrapolation_mode
         self.PropertyOverrides = property_overrides
+        self.CreatedDate = created_date
+        self.ModifiedDate = modified_date
 
     @property
     def Id(self) -> str:
@@ -173,6 +180,40 @@ class SdsStream(object):
         """
         self.__property_overrides = value
 
+    @property
+    def CreatedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__created_date
+
+    @CreatedDate.setter
+    def CreatedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__created_date = value
+
+    @property
+    def ModifiedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__modified_date
+
+    @ModifiedDate.setter
+    def ModifiedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__modified_date = value
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
@@ -203,7 +244,13 @@ class SdsStream(object):
             for value in self.PropertyOverrides:
                 result['PropertyOverrides'].append(
                     value.toDictionary())
+                
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = self.CreatedDate
 
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = self.ModifiedDate
+        
         return result
 
     @staticmethod
@@ -249,5 +296,11 @@ class SdsStream(object):
                 for value in property_overrides:
                     result.PropertyOverrides.append(
                         SdsStreamPropertyOverride.fromJson(value))
+        
+        if 'CreatedDate' in content:
+            result.CreatedDate = content['CreatedDate']
 
+        if 'ModifiedDate' in content:
+            result.CreatedDate = content['ModifiedDate']
+            
         return result

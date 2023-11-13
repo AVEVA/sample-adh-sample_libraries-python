@@ -1,5 +1,6 @@
 from __future__ import annotations
 import json
+import datetime
 
 from .Status.StatusConfiguration import StatusConfiguration
 from .MetadataItem import MetadataItem
@@ -12,7 +13,9 @@ class AssetType(object):
     def __init__(self, id: str = None, name: str = None, description: str = None,
                  metadata: MetadataItem = None,
                  type_references: list[TypeReference] = None,
-                 status: StatusConfiguration = None):
+                 status: StatusConfiguration = None,
+                 created_date: datetime = None,
+                 modified_date: datetime = None):
         """
         :param id: required
         :param name: not required
@@ -20,6 +23,8 @@ class AssetType(object):
         :param metadata: not required
         :param type_references: not required
         :param status_mapping: not required
+        :param created_date: not required
+        :param modified_date: not required
         """
         self.Id = id
         self.Name = name
@@ -27,6 +32,8 @@ class AssetType(object):
         self.Metadata = metadata
         self.TypeReferences = type_references
         self.Status = status
+        self.CreatedDate = created_date
+        self.ModifiedDate - modified_date
 
     @property
     def Id(self) -> str:
@@ -130,6 +137,40 @@ class AssetType(object):
         """
         self.__status = value
 
+    @property
+    def CreatedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__created_date
+
+    @CreatedDate.setter
+    def CreatedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__created_date = value
+
+    @property
+    def ModifiedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__modified_date
+
+    @ModifiedDate.setter
+    def ModifiedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__modified_date = value
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
@@ -156,6 +197,12 @@ class AssetType(object):
 
         if self.Status is not None:
             result['Status'] = self.Status.toDictionary()
+
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = self.CreatedDate
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = self.ModifiedDate
 
         return result
 
@@ -192,5 +239,11 @@ class AssetType(object):
 
         if 'Status' in content:
             result.Status = StatusConfiguration.fromJson(content['Status'])
+
+        if 'CreatedDate' in content:
+            result.CreatedDate = content['CreatedDate']
+
+        if 'ModifiedDate' in content:
+            result.CreatedDate = content['ModifiedDate']
 
         return result

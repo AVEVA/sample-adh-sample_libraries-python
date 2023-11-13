@@ -1,5 +1,6 @@
 from __future__ import annotations
 import json
+import datetime
 
 from .SdsType import SdsType
 from .SdsExtrapolationMode import SdsExtrapolationMode
@@ -14,7 +15,9 @@ class SdsResolvedStream(object):
                  interpolation_mode: SdsInterpolationMode = None,
                  extrapolation_mode: SdsExtrapolationMode = None,
                  property_overrides: list[SdsStreamPropertyOverride] = None, 
-                 resolved = True, type: SdsType = None):
+                 resolved = True, type: SdsType = None,
+                 created_date: datetime = None,
+                 modified_date: datetime = None):
         """
         :param id: required
         :param type_id: not required
@@ -29,6 +32,8 @@ class SdsResolvedStream(object):
                                    not required
         :param resolved: not required
         :param type: required
+        :param created_date: not required
+        :param modified_date: not required
         """
         self.Id = id
         self.TypeId = type_id
@@ -40,6 +45,8 @@ class SdsResolvedStream(object):
         self.PropertyOverrides = property_overrides
         self.Resolved = resolved
         self.Type = type
+        self.CreatedDate = created_date
+        self.ModifiedDate = modified_date
 
     @property
     def Id(self) -> str:
@@ -211,6 +218,40 @@ class SdsResolvedStream(object):
         """
         self.__type = value
 
+    @property
+    def CreatedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__created_date
+
+    @CreatedDate.setter
+    def CreatedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__created_date = value
+
+    @property
+    def ModifiedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__modified_date
+
+    @ModifiedDate.setter
+    def ModifiedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__modified_date = value
+
 
     def toJson(self):
         return json.dumps(self.toDictionary())
@@ -253,6 +294,12 @@ class SdsResolvedStream(object):
             
         if self.Type is not None:
             result['Type'] = self.Type.toDictionary()
+        
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = self.CreatedDate
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = self.ModifiedDate
         
         return result
 
@@ -306,5 +353,11 @@ class SdsResolvedStream(object):
 
         if 'Type' in content:
             result.Type = SdsType.fromJson(content['Type'])
+
+        if 'CreatedDate' in content:
+            result.CreatedDate = content['CreatedDate']
+
+        if 'ModifiedDate' in content:
+            result.CreatedDate = content['ModifiedDate']
 
         return result

@@ -1,5 +1,6 @@
 from __future__ import annotations
 import json
+import datetime
 
 from .SdsStreamViewProperty import SdsStreamViewProperty
 
@@ -11,7 +12,8 @@ class SdsStreamView(object):
 
     def __init__(self, id: str = None, source_type_id: str = None, target_type_id: str = None,
                  name: str = None, description: str = None,
-                 properties: list[SdsStreamViewProperty] = None):
+                 properties: list[SdsStreamViewProperty] = None, 
+                 created_date: datetime = None, modified_date: datetime = None):
         """
         :param id: required
         :param source_type_id: required
@@ -19,6 +21,8 @@ class SdsStreamView(object):
         :param name: not required
         :param description: not required
         :param properties: not required
+        :param created_date: not required
+        :param modified_date: not required
         """
         self.Id = id
         self.SourceTypeId = source_type_id
@@ -26,6 +30,8 @@ class SdsStreamView(object):
         self.Name = name
         self.Description = description
         self.Properties = properties
+        self.CreatedDate = created_date
+        self.ModifiedDate = modified_date
 
     @property
     def Id(self) -> str:
@@ -128,6 +134,39 @@ class SdsStreamView(object):
         :return:
         """
         self.__properties = value
+    @property
+    def CreatedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__created_date
+
+    @CreatedDate.setter
+    def CreatedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__created_date = value
+    
+    @property
+    def ModifiedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__modified_date
+
+    @ModifiedDate.setter
+    def ModifiedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__modified_date = value
 
     def toJson(self):
         return json.dumps(self.toDictionary())
@@ -148,6 +187,12 @@ class SdsStreamView(object):
             result['Properties'] = []
             for value in self.Properties:
                 result['Properties'].append(value.toDictionary())
+        
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = self.CreatedDate
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = self.ModifiedDate
 
         return result
 
@@ -180,5 +225,11 @@ class SdsStreamView(object):
                 for value in properties:
                     result.Properties.append(
                         SdsStreamViewProperty.fromJson(value))
+                    
+        if 'CreatedDate' in content:
+            result.CreatedDate = content['CreatedDate']
+
+        if 'ModifiedDate' in content:
+            result.CreatedDate = content['ModifiedDate']
 
         return result
