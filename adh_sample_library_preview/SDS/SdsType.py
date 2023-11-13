@@ -331,12 +331,6 @@ class SdsType(object):
         if self.ExtrapolationMode is not None:
             result['ExtrapolationMode'] = self.ExtrapolationMode.name
 
-        if self.CreatedDate is not None:
-            result['CreatedDate'] = self.CreatedDate
-
-        if self.ModifiedDate is not None:
-            result['ModifiedDate'] = self.ModifiedDate
-
         return result
 
     @staticmethod
@@ -414,6 +408,6 @@ class SdsType(object):
             result.CreatedDate = content['CreatedDate']
 
         if 'ModifiedDate' in content:
-            result.CreatedDate = content['ModifiedDate']
+            result.ModifiedDate = content['ModifiedDate']
 
         return result

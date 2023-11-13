@@ -295,12 +295,6 @@ class SdsResolvedStream(object):
         if self.Type is not None:
             result['Type'] = self.Type.toDictionary()
         
-        if self.CreatedDate is not None:
-            result['CreatedDate'] = self.CreatedDate
-
-        if self.ModifiedDate is not None:
-            result['ModifiedDate'] = self.ModifiedDate
-        
         return result
 
 
@@ -358,6 +352,6 @@ class SdsResolvedStream(object):
             result.CreatedDate = content['CreatedDate']
 
         if 'ModifiedDate' in content:
-            result.CreatedDate = content['ModifiedDate']
+            result.ModifiedDate = content['ModifiedDate']
 
         return result
