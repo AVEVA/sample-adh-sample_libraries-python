@@ -143,3 +143,6 @@ sample_local_testing_program.py
 config.ini
 product-readiness.*
 appsettings.json
+
+# Miscellaneous
+*.zip
