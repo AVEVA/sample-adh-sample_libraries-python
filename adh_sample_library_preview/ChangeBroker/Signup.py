@@ -11,7 +11,7 @@ class Signup(object):
     Represents a signup base model.
     """
 
-    def __init__(self, id: str = None, name: str = None, owner: Any = None, community_id: str = None, type: Any = None, created_date: str = None, last_accessed_date: str = None, modified_date: str = None, expired_date: str = None, resources_deleted: bool = None, signup_state: Any = None):
+    def __init__(self, id: str = None, bookmark: str = None ,name: str = None, owner: Any = None, community_id: str = None, type: Any = None, created_date: str = None, last_accessed_date: str = None, modified_date: str = None, expired_date: str = None, resources_deleted: bool = None, signup_state: Any = None):
         """
         :param str id: Signup Identifier.
         :param str name: Signup Name.
@@ -27,6 +27,7 @@ class Signup(object):
         """
 
         self.__id = id
+        self.__bookmark = bookmark
         self.__name = name
         self.__owner = owner
         self.__community_id = community_id
@@ -45,6 +46,14 @@ class Signup(object):
     @Id.setter
     def Id(self, value: str):
         self.__id = value
+
+    @property
+    def Bookmark(self) -> str:
+        return self.__bookmark
+
+    @Bookmark.setter
+    def Bookmark(self, value: str):
+        self.__bookmark = value
 
     @property
     def Name(self) -> str:
@@ -135,6 +144,9 @@ class Signup(object):
         if self.Id is not None:
             result['Id'] = self.Id
 
+        if self.Id is not None:
+            result['Bookmark'] = self.Bookmark
+
         if self.Name is not None:
             result['Name'] = self.Name
 
@@ -174,37 +186,40 @@ class Signup(object):
         if not content:
             return result
 
-        if 'Id' in content:
-            result.Id = content['Id']
+        if 'Id'.casefold() in content:
+            result.Id = content['Id'.casefold()]
 
-        if 'Name' in content:
-            result.Name = content['Name']
+        if 'Bookmark'.casefold() in content:
+            result.Id = content['Bookmark'.casefold()]
 
-        if 'Owner' in content:
-            result.Owner = content['Owner']
+        if 'Name'.casefold() in content:
+            result.Name = content['Name'.casefold()]
 
-        if 'CommunityId' in content:
-            result.CommunityId = content['CommunityId']
+        if 'Owner'.casefold() in content:
+            result.Owner = content['Owner'.casefold()]
 
-        if 'Type' in content:
-            result.Type = ResourceType(content['Type'])
+        if 'CommunityId'.casefold() in content:
+            result.CommunityId = content['CommunityId'.casefold()]
 
-        if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+        if 'Type'.casefold() in content:
+            result.Type = ResourceType(content['Type'.casefold()])
 
-        if 'LastAccessedDate' in content:
-            result.LastAccessedDate = content['LastAccessedDate']
+        if 'CreatedDate'.casefold() in content:
+            result.CreatedDate = content['CreatedDate'.casefold()]
 
-        if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+        if 'LastAccessedDate'.casefold() in content:
+            result.LastAccessedDate = content['LastAccessedDate'.casefold()]
 
-        if 'ExpiredDate' in content:
-            result.ExpiredDate = content['ExpiredDate']
+        if 'ModifiedDate'.casefold() in content:
+            result.ModifiedDate = content['ModifiedDate'.casefold()]
 
-        if 'ResourcesDeleted' in content:
-            result.ResourcesDeleted = content['ResourcesDeleted']
+        if 'ExpiredDate'.casefold() in content:
+            result.ExpiredDate = content['ExpiredDate'.casefold()]
 
-        if 'SignupState' in content:
-            result.SignupState = SignupState(content['SignupState'])
+        if 'ResourcesDeleted'.casefold() in content:
+            result.ResourcesDeleted = content['ResourcesDeleted'].casefold()
+
+        if 'SignupState'.casefold() in content:
+            result.SignupState = SignupState(content['SignupState'.casefold()])
 
         return result

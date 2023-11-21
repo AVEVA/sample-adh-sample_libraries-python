@@ -1,16 +1,16 @@
 ﻿from __future__ import annotations
 
 from .BaseClient import BaseClient
-from .StreamingUpdate.CreateSignupInput import CreateSignupInput
-from .StreamingUpdate.Signup import Signup
-from .StreamingUpdate.SignupResourceIds import SignupResourceIds
-from .StreamingUpdate.SignupResourcesInput import SignupResourcesInput
-from .StreamingUpdate.Trustee import Trustee
-from .StreamingUpdate.Update import Update
-from .StreamingUpdate.UpdateSignupInput import UpdateSignupInput
+from .ChangeBroker.CreateSignupInput import CreateSignupInput
+from .ChangeBroker.Signup import Signup
+from .ChangeBroker.SignupResource import SignupResource
+from .ChangeBroker.SignupResourcesInput import SignupResourcesInput
+from .ChangeBroker.Trustee import Trustee
+from .ChangeBroker.Update import Update
+from .ChangeBroker.UpdateSignupInput import UpdateSignupInput
 
 
-class StreamingUpdates(object):
+class ChangeBroker(object):
     """
     Client for interacting with Signups
     """
@@ -47,7 +47,7 @@ class StreamingUpdates(object):
             response, f'Failed to get signups.')
 
         results = []
-        for i in response.json():
+        for i in response.json()['signups']:
             results.append(Signup.fromJson(i))
         return results
 
@@ -165,7 +165,7 @@ class StreamingUpdates(object):
 
     def getSignupResources(self,
                            namespace_id: str = None,
-                           signup_id: str = None) -> SignupResourceIds:
+                           signup_id: str = None) -> SignupResource:
         """
         Retrieves a model that contains collections of accessible and inaccessible resources for a signup. 
 
@@ -179,7 +179,7 @@ class StreamingUpdates(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
-        result = SignupResourceIds.fromJson(response.json())
+        result = SignupResource.fromJson(response.json())
 
         return result
 
@@ -208,7 +208,7 @@ class StreamingUpdates(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
-        result = SignupResourceIds.fromJson(response.json())
+        result = SignupResource.fromJson(response.json())
         return result
 
     def getUpdates(self,

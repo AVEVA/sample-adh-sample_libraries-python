@@ -21,7 +21,7 @@ from .ReferenceData import ReferenceData
 from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .Securable import Securable
-from .StreamingUpdates import StreamingUpdates
+from .ChangeBroker import ChangeBroker
 from .Subscriptions import Subscriptions
 from .Topics import Topics
 from .Users import Users
@@ -32,5 +32,5 @@ from .Event import *
 from .OMF import *
 from .SDS import *
 from .Security import *
-from .StreamingUpdate import *
+from .ChangeBroker import *
 from .Tenant import *
