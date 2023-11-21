@@ -4,6 +4,7 @@ from .Assets import Assets
 from .AssetTypes import AssetTypes
 from .AuthorizationTags import AuthorizationTags
 from .BaseClient import BaseClient
+from .Signups import Signups
 from .Communities import Communities
 from .DataViews import DataViews
 from .Enumerations import Enumerations
@@ -15,7 +16,6 @@ from .ReferenceData import ReferenceData
 from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .SharedStreams import SharedStreams
-from .StreamingUpdates import StreamingUpdates
 from .Streams import Streams
 from .StreamViews import StreamViews
 from .Subscriptions import Subscriptions
@@ -63,7 +63,7 @@ class ADHClient:
         self.__reference_data = ReferenceData(self.__base_client)
         self.__roles = Roles(self.__base_client)
         self.__shared_streams = SharedStreams(self.__base_client)
-        self.__streaming_updates = StreamingUpdates(self.__base_client)
+        self.__signups = Signups(self.__base_client)
         self.__streams = Streams(self.__base_client)
         self.__stream_views = StreamViews(self.__base_client)
         self.__subscriptions = Subscriptions(self.__base_client)
@@ -154,11 +154,11 @@ class ADHClient:
         return self.__shared_streams
     
     @property
-    def StreamingUpdates(self) -> StreamingUpdates:
+    def Signups(self) -> Signups:
         """
-        :return: A client for interacting with Streaming Updates
+        :return: A client for interacting with the Change Broker
         """
-        return self.__streaming_updates
+        return self.__signups
 
     @property
     def DataViews(self) -> DataViews:

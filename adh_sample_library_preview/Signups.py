@@ -1,16 +1,15 @@
 ﻿from __future__ import annotations
-
 from .BaseClient import BaseClient
-from .ChangeBroker.CreateSignupInput import CreateSignupInput
-from .ChangeBroker.Signup import Signup
-from .ChangeBroker.SignupResource import SignupResource
-from .ChangeBroker.SignupResourcesInput import SignupResourcesInput
-from .ChangeBroker.Trustee import Trustee
-from .ChangeBroker.Update import Update
-from .ChangeBroker.UpdateSignupInput import UpdateSignupInput
+from .Signup.CreateSignupInput import CreateSignupInput
+from .Signup.SignupResource import SignupResource
+from .Signup.SignupResources import SignupResources
+from .Signup.SignupResourcesInput import SignupResourcesInput
+from .Signup.Trustee import Trustee
+from .Signup.Update import Update
+from .Signup.UpdateSignupInput import UpdateSignupInput
 
 
-class ChangeBroker(object):
+class Signups(object):
     """
     Client for interacting with Signups
     """

@@ -4,6 +4,7 @@ from .ResourceType import ResourceType
 from .Signup import Signup
 from .SignupInvalidResources import SignupInvalidResources
 from .SignupResource import SignupResource
+from .SignupResources import SignupResources
 from .SignupResourcesInput import SignupResourcesInput
 from .SignupState import SignupState
 from .Trustee import Trustee
