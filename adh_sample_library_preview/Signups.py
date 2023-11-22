@@ -164,7 +164,7 @@ class Signups(object):
 
     def getSignupResources(self,
                            namespace_id: str = None,
-                           signup_id: str = None) -> SignupResource:
+                           signup_id: str = None) -> SignupResources:
         """
         Retrieves a model that contains collections of accessible and inaccessible resources for a signup. 
 
@@ -178,7 +178,7 @@ class Signups(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
-        result = SignupResource.fromJson(response.json())
+        result = SignupResources.fromJson(response.json())
 
         return result
 
@@ -207,7 +207,7 @@ class Signups(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
-        result = SignupResource.fromJson(response.json())
+        result = SignupResources.fromJson(response.json())
         return result
 
     def getUpdates(self,

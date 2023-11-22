@@ -7,7 +7,7 @@ from SignupResource import SignupResource
 
 class SignupResources(object):
     """
-    A model that holds lists of recources retrieved from signup
+    A model that holds lists of resources retrieved from signup
     """
 
     def __init__(self, resources: list[SignupResource] = None):
