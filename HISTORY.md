@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.2_preview / 2023-11-27
+
+- Update Event Store features
+- Add Units
 
 ## 0.10.1_preview / 2023-10-10
 

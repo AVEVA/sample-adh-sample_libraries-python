@@ -6,7 +6,7 @@ from .EnumerationState import EnumerationState
 from .LifeCycleState import LifeCycleState
 
 
-class EventGraphEnumeration(object):
+class Enumeration(object):
 
     def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
         """
@@ -141,8 +141,8 @@ class EventGraphEnumeration(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> EventGraphEnumeration:
-        result = EventGraphEnumeration()
+    def fromJson(content: dict[str, Any]) -> Enumeration:
+        result = Enumeration()
 
         if not content:
             return result

@@ -2,16 +2,16 @@
 import json
 from typing import Any
 
-from .EventGraphReferenceDataCategory import EventGraphReferenceDataCategory
+from .ReferenceDataCategory import ReferenceDataCategory
 from .LifeCycleState import LifeCycleState
 from .TypeProperty import TypeProperty
 
 
-class EventGraphReferenceDataType(object):
+class ReferenceDataType(object):
 
-    def __init__(self, category: EventGraphReferenceDataCategory = None, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
+    def __init__(self, category: ReferenceDataCategory = None, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
         """
-        :param EventGraphReferenceDataCategory category: 
+        :param ReferenceDataCategory category: 
         :param list[TypeProperty] properties: 
         :param str default_authorization_tag: 
         :param str name: 
@@ -37,11 +37,11 @@ class EventGraphReferenceDataType(object):
         self.__description = description
 
     @property
-    def Category(self) -> EventGraphReferenceDataCategory:
+    def Category(self) -> ReferenceDataCategory:
         return self.__category
 
     @Category.setter
-    def Category(self, value: EventGraphReferenceDataCategory):
+    def Category(self, value: ReferenceDataCategory):
         self.__category = value
 
     @property
@@ -168,14 +168,14 @@ class EventGraphReferenceDataType(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> EventGraphReferenceDataType:
-        result = EventGraphReferenceDataType()
+    def fromJson(content: dict[str, Any]) -> ReferenceDataType:
+        result = ReferenceDataType()
 
         if not content:
             return result
 
         if 'Category' in content:
-            result.Category = EventGraphReferenceDataCategory(content['Category'])
+            result.Category = ReferenceDataCategory(content['Category'])
 
         if 'Properties' in content:
             values = content['Properties']

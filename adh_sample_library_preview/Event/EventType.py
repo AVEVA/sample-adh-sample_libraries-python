@@ -6,7 +6,7 @@ from .LifeCycleState import LifeCycleState
 from .TypeProperty import TypeProperty
 
 
-class EventGraphEventType(object):
+class EventType(object):
 
     def __init__(self, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
         """
@@ -154,8 +154,8 @@ class EventGraphEventType(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> EventGraphEventType:
-        result = EventGraphEventType()
+    def fromJson(content: dict[str, Any]) -> EventType:
+        result = EventType()
 
         if not content:
             return result

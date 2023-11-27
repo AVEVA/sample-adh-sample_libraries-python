@@ -23,6 +23,7 @@ from .Roles import Roles
 from .Securable import Securable
 from .Subscriptions import Subscriptions
 from .Topics import Topics
+from .Units import Units
 from .Users import Users
 from .Asset import *
 from .Community import *
@@ -32,3 +33,4 @@ from .OMF import *
 from .SDS import *
 from .Security import *
 from .Tenant import *
+from .Unit import *
