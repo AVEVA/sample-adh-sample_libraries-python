@@ -1,6 +1,6 @@
 from __future__ import annotations
+from datetime import datetime
 import json
-import datetime
 
 from .Status.StatusConfiguration import StatusConfiguration
 from .MetadataItem import MetadataItem
@@ -220,6 +220,12 @@ class Asset(object):
         if self.StatusMapping is not None:
             result['StatusMapping'] = self.StatusMapping.toDictionary()
 
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
+
         return result
 
     @staticmethod
@@ -262,9 +268,9 @@ class Asset(object):
                 content['StatusMapping'])
         
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         return result

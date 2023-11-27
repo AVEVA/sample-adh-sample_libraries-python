@@ -1,6 +1,6 @@
 from __future__ import annotations
+from datetime import datetime
 import json
-import datetime
 
 from .Status.StatusConfiguration import StatusConfiguration
 from .MetadataItem import MetadataItem
@@ -33,7 +33,7 @@ class AssetType(object):
         self.TypeReferences = type_references
         self.Status = status
         self.CreatedDate = created_date
-        self.ModifiedDate - modified_date
+        self.ModifiedDate = modified_date
 
     @property
     def Id(self) -> str:
@@ -198,6 +198,12 @@ class AssetType(object):
         if self.Status is not None:
             result['Status'] = self.Status.toDictionary()
 
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
+
         return result
 
     @staticmethod
@@ -235,9 +241,9 @@ class AssetType(object):
             result.Status = StatusConfiguration.fromJson(content['Status'])
 
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         return result

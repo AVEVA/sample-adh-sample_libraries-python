@@ -1,6 +1,6 @@
 from __future__ import annotations
+from datetime import datetime
 import json
-import datetime
 
 from .SdsExtrapolationMode import SdsExtrapolationMode
 from .SdsInterpolationMode import SdsInterpolationMode
@@ -244,6 +244,12 @@ class SdsStream(object):
             for value in self.PropertyOverrides:
                 result['PropertyOverrides'].append(
                     value.toDictionary())
+                
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
         
         return result
 
@@ -292,9 +298,9 @@ class SdsStream(object):
                         SdsStreamPropertyOverride.fromJson(value))
         
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
             
         return result

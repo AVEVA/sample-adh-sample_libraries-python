@@ -1,6 +1,6 @@
 from __future__ import annotations
+from datetime import datetime
 import json
-import datetime
 
 from .SdsStreamViewProperty import SdsStreamViewProperty
 
@@ -188,6 +188,12 @@ class SdsStreamView(object):
             for value in self.Properties:
                 result['Properties'].append(value.toDictionary())
 
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
+
         return result
 
     @staticmethod
@@ -221,9 +227,9 @@ class SdsStreamView(object):
                         SdsStreamViewProperty.fromJson(value))
                     
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         return result

@@ -1,6 +1,6 @@
 from __future__ import annotations
+from datetime import datetime
 import json
-import datetime
 
 from .SdsType import SdsType
 from .SdsExtrapolationMode import SdsExtrapolationMode
@@ -294,6 +294,12 @@ class SdsResolvedStream(object):
             
         if self.Type is not None:
             result['Type'] = self.Type.toDictionary()
+
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
         
         return result
 
@@ -349,9 +355,9 @@ class SdsResolvedStream(object):
             result.Type = SdsType.fromJson(content['Type'])
 
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         return result

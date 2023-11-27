@@ -1,25 +1,25 @@
 from __future__ import annotations
+from datetime import datetime
 import json
-import datetime
 
 
 class AssetRule(object):
     """ADH Asset Rule definition"""
 
     def __init__(self, id: str = None, name: str = None, description: str = None,
-                created_date: datetime = None, modified_date: datetime = None ):
+                creation_time: datetime = None, modified_time: datetime = None ):
         """
         :param id: required
         :param name: required
         :param description: not required
-        :param created_date: not required
-        :param modified_date: not required
+        :param creation_time: not required
+        :param modified_time: not required
         """
         self.Id = id
         self.Name = name
         self.Description = description
-        self.CreatedDate = created_date
-        self.ModifiedDate = modified_date
+        self.CreationTime = creation_time
+        self.ModifiedTime = modified_time
 
     @property
     def Id(self) -> str:
@@ -73,38 +73,38 @@ class AssetRule(object):
         self.__description = value
 
     @property
-    def CreatedDate(self) -> datetime:
+    def CreationTime(self) -> datetime:
         """
         not required
         :return:
         """
-        return self.__created_date
+        return self.__creation_time
 
-    @CreatedDate.setter
-    def CreatedDate(self, value: datetime):
+    @CreationTime.setter
+    def CreationTime(self, value: datetime):
         """
         not required
         :param value:
         :return:
         """
-        self.__created_date = value
+        self.__creation_time = value
 
     @property
-    def ModifiedDate(self) -> datetime:
+    def ModifiedTime(self) -> datetime:
         """
         not required
         :return:
         """
-        return self.__modified_date
+        return self.__modified_time
 
-    @ModifiedDate.setter
-    def ModifiedDate(self, value: datetime):
+    @ModifiedTime.setter
+    def ModifiedTime(self, value: datetime):
         """
         not required
         :param value:
         :return:
         """
-        self.__modified_date = value
+        self.__modified_time = value
 
     def toJson(self):
         return json.dumps(self.toDictionary())
@@ -116,6 +116,12 @@ class AssetRule(object):
         # optional properties
         if self.Description is not None:
             result['Description'] = self.Description
+
+        if self.CreationTime is not None:
+            result['CreationTime'] = datetime.isoformat(self.CreationTime)
+
+        if self.ModifiedTime is not None:
+            result['ModifiedTime'] = datetime.isoformat(self.ModifiedTime)
 
         return result
 
@@ -135,10 +141,10 @@ class AssetRule(object):
         if 'Description' in content:
             result.Description = content['Description']
 
-        if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+        if 'CreationTime' in content:
+            result.CreationTime = datetime.fromisoformat(content['CreationTime'])
 
-        if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+        if 'ModifiedTime' in content:
+            result.ModifiedTime = datetime.fromisoformat(content['ModifiedTime'])
 
         return result

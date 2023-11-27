@@ -1,6 +1,6 @@
 from __future__ import annotations  # To type hint the enclosing class
+from datetime import datetime
 import json
-import datetime
 
 from .SdsExtrapolationMode import SdsExtrapolationMode
 from .SdsInterpolationMode import SdsInterpolationMode
@@ -331,6 +331,12 @@ class SdsType(object):
         if self.ExtrapolationMode is not None:
             result['ExtrapolationMode'] = self.ExtrapolationMode.name
 
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
+
         return result
 
     @staticmethod
@@ -405,9 +411,9 @@ class SdsType(object):
                         extrapolation_mode]
                     
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         return result
