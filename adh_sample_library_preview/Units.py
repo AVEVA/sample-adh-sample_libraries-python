@@ -25,7 +25,7 @@ class Units(object):
         response = self.__base_client.request(
             'get',
             self.__units_path.format(
-                namespace_id=namespace_id, asset_id=self.__base_client.encode(uom_id)
+                namespace_id=namespace_id, uom_id=self.__base_client.encode(uom_id)
             ),
         )
         self.__base_client.checkResponse(response, f'Failed to get uom, {uom_id}.')
