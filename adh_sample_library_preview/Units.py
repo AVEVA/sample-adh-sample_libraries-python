@@ -24,7 +24,7 @@ class Units(object):
 
         response = self.__base_client.request(
             'get',
-            self.__units_path.format(
+            self.__unit_path.format(
                 namespace_id=namespace_id, uom_id=self.__base_client.encode(uom_id)
             ),
         )
