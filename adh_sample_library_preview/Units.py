@@ -33,7 +33,7 @@ class Units(object):
         result = SdsUom.fromJson(response.json())
         return result
 
-    def getAssets(
+    def getUnitsofMeasure(
         self,
         namespace_id: str,
         filter: str = '',
@@ -42,7 +42,7 @@ class Units(object):
         order_by: str = '',
     ) -> list[SdsUom]:
         """
-        Returns a list of assets
+        Returns a list of all available units of measure in the system.Returns a list of assets
         :param namespace_id: The namespace identifier
         :param filter: Filter expression.
         :param skip: Parameter representing the zero-based offset of the first SdsUomQuantity to retrieve. If not specified, a default value of 0 is used.
@@ -59,7 +59,7 @@ class Units(object):
 
         response = self.__base_client.request(
             'get',
-            self.__unit_path.format(namespace_id=namespace_id),
+            self.__units_path.format(namespace_id=namespace_id),
             params={'filter': filter, 'skip': skip, 'count': count, order_by: order_by},
         )
         self.__base_client.checkResponse(response, f'Failed to get uoms.')
