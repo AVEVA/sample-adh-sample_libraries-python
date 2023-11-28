@@ -33,11 +33,15 @@ class UomValueInput(Generic[T]):
 
         if not content:
             return result
+        
+        case_fold_content = {}
+        for k, v in content.items():
+            case_fold_content.update({k.casefold(): v})
 
-        if 'Value' in content:
-            result.Value = content['Value']
+        if 'value' in case_fold_content:
+            result.Value = case_fold_content['value']
 
-        if 'Uom' in content:
-            result.Uom = SdsUom.fromJson(content['Uom'])
+        if 'uom' in case_fold_content:
+            result.Uom = SdsUom.fromJson(case_fold_content['uom'])
 
         return result

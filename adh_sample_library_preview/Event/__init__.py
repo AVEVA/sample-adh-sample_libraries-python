@@ -1,4 +1,6 @@
 from .AuthorizationTag import *
+from .BaseEvent import *
+from .BaseEventType import *
 from .EnumerationState import *
 from .Enumeration import *
 from .EventType import *

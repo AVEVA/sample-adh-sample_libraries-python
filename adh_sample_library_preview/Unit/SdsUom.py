@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import json
 
 
@@ -233,28 +234,32 @@ class SdsUom(object):
         if not content:
             return result
 
-        if 'Id' in content:
-            result.Id = content['Id']
+        case_fold_content = {}
+        for k, v in content.items():
+            case_fold_content.update({k.casefold(): v})
 
-        if 'Abbreviation' in content:
-            result.Abbreviation = content['Abbreviation']
+        if 'id' in case_fold_content:
+            result.Id = case_fold_content['id']
 
-        if 'DisplayName' in content:
-            result.DisplayName = content['DisplayName']
+        if 'abbreviation' in case_fold_content:
+            result.Abbreviation = case_fold_content['abbreviation']
 
-        if 'QuantityId' in content:
-            result.QuantityId = content['QuantityId']
+        if 'displayname' in case_fold_content:
+            result.DisplayName = case_fold_content['displayname']
 
-        if 'ConversionFactor' in content:
-            result.ConversionFactor = content['ConversionFactor']
+        if 'quantityid' in case_fold_content:
+            result.QuantityId = case_fold_content['quantityid']
 
-        if 'ConversionOffset' in content:
-            result.ConversionOffset = content['ConversionOffset']
+        if 'conversionfactor' in case_fold_content:
+            result.ConversionFactor = case_fold_content['conversionfactor']
 
-        if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+        if 'conversionooffset' in case_fold_content:
+            result.ConversionOffset = case_fold_content['conversionoffset']
 
-        if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+        if 'createddate' in case_fold_content:
+            result.CreatedDate = case_fold_content['createddate']
+
+        if 'modifieddate' in case_fold_content:
+            result.ModifiedDate = case_fold_content['modifieddate']
 
         return result
