@@ -40,10 +40,10 @@ class SignupResource(object):
         result = {}
 
         if self.ResourceId is not None:
-            result['ResourceId'] = self.ResourceId
+            result['resourceId'] = self.ResourceId
 
         if self.IsAccessible is not None:
-            result['IsAccessible'] = self.IsAccessible
+            result['isAccessible'] = self.IsAccessible
 
         return result
 

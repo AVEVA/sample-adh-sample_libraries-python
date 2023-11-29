@@ -142,42 +142,43 @@ class Signup(object):
         result = {}
 
         if self.Id is not None:
-            result['Id'] = self.Id
+            result['id'] = self.Id
 
-        if self.Id is not None:
-            result['Bookmark'] = self.Bookmark
+        if self.Bookmark is not None:
+            result['bookmark'] = self.Bookmark
 
         if self.Name is not None:
-            result['Name'] = self.Name
+            result['name'] = self.Name
 
         if self.Owner is not None:
-            result['Owner'] = self.Owner
+            result['owner'] = self.Owner
 
         if self.CommunityId is not None:
-            result['CommunityId'] = self.CommunityId
+            result['communityId'] = self.CommunityId
 
         if self.Type is not None:
-            result['Type'] = self.Type.name
+            result['type'] = self.Type.name
 
         if self.CreatedDate is not None:
-            result['CreatedDate'] = self.CreatedDate
+            result['createdDate'] = self.CreatedDate
 
         if self.LastAccessedDate is not None:
-            result['LastAccessedDate'] = self.LastAccessedDate
+            result['lastAccessedDate'] = self.LastAccessedDate
 
         if self.ModifiedDate is not None:
-            result['ModifiedDate'] = self.ModifiedDate
+            result['modifiedDate'] = self.ModifiedDate
 
         if self.ExpiredDate is not None:
-            result['ExpiredDate'] = self.ExpiredDate
+            result['expiredDate'] = self.ExpiredDate
 
         if self.ResourcesDeleted is not None:
-            result['ResourcesDeleted'] = self.ResourcesDeleted
+            result['resourcesDeleted'] = self.ResourcesDeleted
 
         if self.SignupState is not None:
-            result['SignupState'] = self.SignupState.name
+            result['signupState'] = self.SignupState.name
 
         return result
+
 
     @staticmethod
     def fromJson(content: dict[str, Any]) -> Signup:
@@ -186,40 +187,40 @@ class Signup(object):
         if not content:
             return result
 
-        if 'Id'.casefold() in content:
-            result.Id = content['Id'.casefold()]
+        if 'id' in content:
+            result.Id = content['id']
 
-        if 'Bookmark'.casefold() in content:
-            result.Id = content['Bookmark'.casefold()]
+        if 'bookmark' in content:
+            result.Bookmark = content['bookmark']
 
-        if 'Name'.casefold() in content:
-            result.Name = content['Name'.casefold()]
+        if 'name' in content:
+            result.Name = content['name']
 
-        if 'Owner'.casefold() in content:
-            result.Owner = content['Owner'.casefold()]
+        if 'owner' in content:
+            result.Owner = content['owner']
 
-        if 'CommunityId'.casefold() in content:
-            result.CommunityId = content['CommunityId'.casefold()]
+        if 'communityId' in content:
+            result.CommunityId = content['communityId']
 
-        if 'Type'.casefold() in content:
-            result.Type = ResourceType(content['Type'.casefold()])
+        if 'type' in content:
+            result.Type = ResourceType(content['type'])
 
-        if 'CreatedDate'.casefold() in content:
-            result.CreatedDate = content['CreatedDate'.casefold()]
+        if 'createdDate' in content:
+            result.CreatedDate = content['createdDate']
 
-        if 'LastAccessedDate'.casefold() in content:
-            result.LastAccessedDate = content['LastAccessedDate'.casefold()]
+        if 'lastAccessedDate' in content:
+            result.LastAccessedDate = content['lastAccessedDate']
 
-        if 'ModifiedDate'.casefold() in content:
-            result.ModifiedDate = content['ModifiedDate'.casefold()]
+        if 'modifiedDate' in content:
+            result.ModifiedDate = content['modifiedDate']
 
-        if 'ExpiredDate'.casefold() in content:
-            result.ExpiredDate = content['ExpiredDate'.casefold()]
+        if 'expiredDate' in content:
+            result.ExpiredDate = content['expiredDate']
 
-        if 'ResourcesDeleted'.casefold() in content:
-            result.ResourcesDeleted = content['ResourcesDeleted'].casefold()
+        if 'resourcesDeleted' in content:
+            result.ResourcesDeleted = content['resourcesDeleted']
 
-        if 'SignupState'.casefold() in content:
-            result.SignupState = SignupState(content['SignupState'.casefold()])
+        if 'signupState' in content:
+            result.SignupState = SignupState(content['signupState'])
 
         return result

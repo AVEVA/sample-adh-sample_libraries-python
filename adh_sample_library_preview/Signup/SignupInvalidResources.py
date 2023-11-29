@@ -40,14 +40,14 @@ class SignupInvalidResources(object):
         result = {}
 
         if self.InvalidResourcesToRemove is not None:
-            result['InvalidResourcesToRemove'] = []
+            result['invalidresourcestoRemove'] = []
             for value in self.InvalidResourcesToRemove:
-                result['InvalidResourcesToRemove'].append(value)
+                result['invalidresourcestoRemove'].append(value)
 
         if self.FailedResourceIds is not None:
-            result['FailedResourceIds'] = []
+            result['failedresourceIds'] = []
             for value in self.FailedResourceIds:
-                result['FailedResourceIds'].append(value)
+                result['failedresourceIds'].append(value)
 
         return result
 
@@ -58,15 +58,15 @@ class SignupInvalidResources(object):
         if not content:
             return result
 
-        if 'InvalidResourcesToRemove' in content:
-            values = content['InvalidResourcesToRemove']
+        if 'invalidresourcestoRemove' in content:
+            values = content['invalidresourcestoRemove']
             if values is not None:
                 result.InvalidResourcesToRemove = []
                 for value in values:
                     result.InvalidResourcesToRemove.append(value)
 
-        if 'FailedResourceIds' in content:
-            values = content['FailedResourceIds']
+        if 'failedresourceIds' in content:
+            values = content['failedresourceIds']
             if values is not None:
                 result.FailedResourceIds = []
                 for value in values:

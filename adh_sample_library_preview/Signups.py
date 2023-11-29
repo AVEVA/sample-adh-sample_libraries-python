@@ -1,13 +1,12 @@
 ﻿from __future__ import annotations
 from .BaseClient import BaseClient
 from .Signup.CreateSignupInput import CreateSignupInput
-from .Signup.SignupResource import SignupResource
 from .Signup.SignupResources import SignupResources
 from .Signup.SignupResourcesInput import SignupResourcesInput
 from .Signup.Trustee import Trustee
 from .Signup.Update import Update
 from .Signup.UpdateSignupInput import UpdateSignupInput
-
+from .Signup.Signup import Signup
 
 class Signups(object):
     """
@@ -98,11 +97,7 @@ class Signups(object):
 
         result = Signup.fromJson(response.json())
 
-        bookmark = response.headers.get('Get-Updates')
-        if bookmark is not None:
-            bookmark = bookmark.split('?bookmark=')[1]
-
-        return result, bookmark
+        return result
 
     def updateSignup(self,
                      namespace_id: str = None,
@@ -241,11 +236,7 @@ class Signups(object):
         data = response.json()['data']
         updates = [Update[value_class].fromJson(datum, value_class) for datum in data]
 
-        bookmark = response.headers.get('Next-Request')
-        if bookmark is not None:
-            bookmark = bookmark.split('?bookmark=')[1]
-        
-        return updates, bookmark
+        return updates
 
     def __setPathAndQueryTemplates(self):
         """
