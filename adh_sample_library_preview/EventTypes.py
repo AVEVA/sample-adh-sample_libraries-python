@@ -124,7 +124,6 @@ class EventTypes(Securable, object):
 
         return EventGraphEventType.fromJson(response.json())
 
-
     def updateEventType(self, namespace_id: str,
                         event_type_id: str,
                         event_type: EventGraphEventType = None) -> EventGraphEventType:

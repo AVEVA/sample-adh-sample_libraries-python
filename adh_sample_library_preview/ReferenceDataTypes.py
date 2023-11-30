@@ -124,7 +124,6 @@ class ReferenceDataTypes(Securable, object):
 
         return EventGraphReferenceDataType.fromJson(response.json())
 
-
     def updateReferenceDataType(self, namespace_id: str,
                         reference_data_type_id: str,
                         reference_data_type: EventGraphReferenceDataType = None) -> EventGraphReferenceDataType:
@@ -148,7 +147,6 @@ class ReferenceDataTypes(Securable, object):
             response, f'Failed to update ReferenceDataType, {reference_data_type_id}.')
 
         return EventGraphReferenceDataType.fromJson(response.json())
-
 
     def deleteReferenceDataType(self, namespace_id: str,
                         reference_data_type_id: str):

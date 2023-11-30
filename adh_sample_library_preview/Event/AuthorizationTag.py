@@ -8,7 +8,6 @@ from .LifeCycleState import LifeCycleState
 
 class AuthorizationTag(object):
 
-
     def __init__(self, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
         """
         :param str id: 
@@ -89,7 +88,6 @@ class AuthorizationTag(object):
 
     @staticmethod
     def fromJson(content: dict[str, Any]) -> AuthorizationTag:
-
         result = AuthorizationTag()
 
         if not content:
