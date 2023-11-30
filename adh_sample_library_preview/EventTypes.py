@@ -180,7 +180,7 @@ class EventTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__event_types_bulk_path.format(
-             namespace_id=namespace_id), data=event_types.toJson())
+            namespace_id=namespace_id), data=event_types.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create Event Types.')

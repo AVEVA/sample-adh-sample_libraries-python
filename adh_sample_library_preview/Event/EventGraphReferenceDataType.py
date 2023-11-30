@@ -20,8 +20,6 @@ class EventGraphReferenceDataType(object):
         :param int version: 
         :param str id: 
         :param LifeCycleState state: 
-        :param str created_date: 
-        :param str modified_date: 
         :param datetime created_date: 
         :param datetime modified_date: 
         :param str description: 
