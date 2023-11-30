@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.3_preview / 2023-11-30
+
+- Implemented ChangeBroker features in the library
+
 ## 0.10.0_preview / 2023-09-20
 
 - Add preview Event Store and Graph QL support

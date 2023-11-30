@@ -1,16 +1,14 @@
 ﻿from __future__ import annotations
-
 from .BaseClient import BaseClient
-from .StreamingUpdate.CreateSignupInput import CreateSignupInput
-from .StreamingUpdate.Signup import Signup
-from .StreamingUpdate.SignupResourceIds import SignupResourceIds
-from .StreamingUpdate.SignupResourcesInput import SignupResourcesInput
-from .StreamingUpdate.Trustee import Trustee
-from .StreamingUpdate.Update import Update
-from .StreamingUpdate.UpdateSignupInput import UpdateSignupInput
+from .Signup.CreateSignupInput import CreateSignupInput
+from .Signup.SignupResources import SignupResources
+from .Signup.SignupResourcesInput import SignupResourcesInput
+from .Signup.Trustee import Trustee
+from .Signup.Update import Update
+from .Signup.UpdateSignupInput import UpdateSignupInput
+from .Signup.Signup import Signup
 
-
-class StreamingUpdates(object):
+class Signups(object):
     """
     Client for interacting with Signups
     """
@@ -47,7 +45,7 @@ class StreamingUpdates(object):
             response, f'Failed to get signups.')
 
         results = []
-        for i in response.json():
+        for i in response.json()['signups']:
             results.append(Signup.fromJson(i))
         return results
 
@@ -99,11 +97,7 @@ class StreamingUpdates(object):
 
         result = Signup.fromJson(response.json())
 
-        bookmark = response.headers.get('Get-Updates')
-        if bookmark is not None:
-            bookmark = bookmark.split('?bookmark=')[1]
-
-        return result, bookmark
+        return result
 
     def updateSignup(self,
                      namespace_id: str = None,
@@ -165,7 +159,7 @@ class StreamingUpdates(object):
 
     def getSignupResources(self,
                            namespace_id: str = None,
-                           signup_id: str = None) -> SignupResourceIds:
+                           signup_id: str = None) -> SignupResources:
         """
         Retrieves a model that contains collections of accessible and inaccessible resources for a signup. 
 
@@ -179,7 +173,7 @@ class StreamingUpdates(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
-        result = SignupResourceIds.fromJson(response.json())
+        result = SignupResources.fromJson(response.json())
 
         return result
 
@@ -208,7 +202,7 @@ class StreamingUpdates(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
-        result = SignupResourceIds.fromJson(response.json())
+        result = SignupResources.fromJson(response.json())
         return result
 
     def getUpdates(self,
@@ -242,11 +236,7 @@ class StreamingUpdates(object):
         data = response.json()['data']
         updates = [Update[value_class].fromJson(datum, value_class) for datum in data]
 
-        bookmark = response.headers.get('Next-Request')
-        if bookmark is not None:
-            bookmark = bookmark.split('?bookmark=')[1]
-        
-        return updates, bookmark
+        return updates
 
     def __setPathAndQueryTemplates(self):
         """

@@ -53,14 +53,14 @@ class Update(Generic[T]):
         result = {}
 
         if self.ResourceId is not None:
-            result['ResourceId'] = self.ResourceId
+            result['resourceId'] = self.ResourceId
 
         if self.Operation is not None:
-            result['Operation'] = self.Operation.name
+            result['operation'] = self.Operation.name
 
         if self.Events is not None:
             for event in self.Events:
-                result['Events'].append(event)
+                result['events'].append(event)
 
         return result
 

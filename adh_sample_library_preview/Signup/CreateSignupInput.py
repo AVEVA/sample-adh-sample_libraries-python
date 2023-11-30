@@ -52,15 +52,15 @@ class CreateSignupInput(object):
         result = {}
 
         if self.Name is not None:
-            result['Name'] = self.Name
+            result['name'] = self.Name
 
         if self.ResourceType is not None:
-            result['ResourceType'] = self.ResourceType.name
+            result['resourceType'] = self.ResourceType.name
 
         if self.ResourceIds is not None:
-            result['ResourceIds'] = []
+            result['resourceIds'] = []
             for value in self.ResourceIds:
-                result['ResourceIds'].append(value)
+                result['resourceIds'].append(value)
 
         return result
 
@@ -71,14 +71,14 @@ class CreateSignupInput(object):
         if not content:
             return result
 
-        if 'Name' in content:
-            result.Name = content['Name']
+        if 'name' in content:
+            result.Name = content['name']
 
-        if 'ResourceType' in content:
-            result.ResourceType = ResourceType(content['ResourceType'])
+        if 'resourceType' in content:
+            result.ResourceType = ResourceType(content['resourceType'])
 
-        if 'ResourceIds' in content:
-            values = content['ResourceIds']
+        if 'resourceIds' in content:
+            values = content['resourceIds']
             if values is not None:
                 result.ResourceIds = []
                 for value in values:

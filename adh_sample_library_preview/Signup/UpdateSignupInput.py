@@ -30,7 +30,7 @@ class UpdateSignupInput(object):
         result = {}
 
         if self.Name is not None:
-            result['Name'] = self.Name
+            result['name'] = self.Name
 
         return result
 
@@ -42,6 +42,6 @@ class UpdateSignupInput(object):
             return result
 
         if 'Name' in content:
-            result.Name = content['Name']
+            result.Name = content['name']
 
         return result

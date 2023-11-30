@@ -41,14 +41,14 @@ class SignupResourcesInput(object):
         result = {}
 
         if self.ResourcesToAdd is not None:
-            result['ResourcesToAdd'] = []
+            result['resourcestoAdd'] = []
             for value in self.ResourcesToAdd:
-                result['ResourcesToAdd'].append(value)
+                result['resourcestoAdd'].append(value)
 
         if self.ResourcesToRemove is not None:
-            result['ResourcesToRemove'] = []
+            result['resourcestoRemove'] = []
             for value in self.ResourcesToRemove:
-                result['ResourcesToRemove'].append(value)
+                result['resourcestoRemove'].append(value)
 
         return result
 
@@ -59,15 +59,15 @@ class SignupResourcesInput(object):
         if not content:
             return result
 
-        if 'ResourcesToAdd' in content:
-            values = content['ResourcesToAdd']
+        if 'resourcestoAdd' in content:
+            values = content['resourcestoAdd']
             if values is not None:
                 result.ResourcesToAdd = []
                 for value in values:
                     result.ResourcesToAdd.append(value)
 
-        if 'ResourcesToRemove' in content:
-            values = content['ResourcesToRemove']
+        if 'resourcestoRemove' in content:
+            values = content['resourcestoRemove']
             if values is not None:
                 result.ResourcesToRemove = []
                 for value in values:
