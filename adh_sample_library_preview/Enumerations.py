@@ -52,7 +52,6 @@ class Enumerations(Securable, object):
         results: list[EventGraphEnumeration] = []
         for i in serialized:
             results.append(EventGraphEnumeration.fromJson(i))
-
         return results
 
     def createEnumeration(self, namespace_id: str,
@@ -125,7 +124,6 @@ class Enumerations(Securable, object):
 
         return EventGraphEnumeration.fromJson(response.json())
 
-
     def updateEnumeration(self, namespace_id: str,
                         enumeration_id: str,
                         enumeration: EventGraphEnumeration = None) -> EventGraphEnumeration:
@@ -144,7 +142,6 @@ class Enumerations(Securable, object):
 
         response = self.__base_client.request('put', self.__enumeration_path.format(
             namespace_id=namespace_id, enumeration_id=enumeration_id), data=enumeration.toJson())
-
 
         self.__base_client.checkResponse(
             response, f'Failed to update Enumeration, {enumeration_id}.')

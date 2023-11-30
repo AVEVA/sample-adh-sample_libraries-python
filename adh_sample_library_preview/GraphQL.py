@@ -49,7 +49,6 @@ class GraphQL(object):
         
         response = self.__base_client.request('post', self.__graph_ql_path.format(
             namespace_id=namespace_id), data=json.dumps(request_body), params=params)
-
         self.__base_client.checkResponse(
             response, f'Failed to execute GraphQL query, {query}.')
 

@@ -52,7 +52,6 @@ class AuthorizationTags(Securable, object):
         results: list[AuthorizationTag] = []
         for i in serialized:
             results.append(AuthorizationTag.fromJson(i))
-
         return results
 
     def getAuthorizationTag(self, namespace_id: str,
@@ -97,7 +96,6 @@ class AuthorizationTags(Securable, object):
 
         response = self.__base_client.request('post', self.__authorization_tag_path.format(
             namespace_id=namespace_id, authorization_tag_id=authorization_tag_id), data=authorization_tag.toJson())
-
 
         self.__base_client.checkResponse(
             response, f'Failed to create Authorization Tag, {authorization_tag_id}.')
@@ -165,7 +163,6 @@ class AuthorizationTags(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to bulk create Authorization Tags.')
         return AuthorizationTag.fromJson(response.json())
-
 
     # private methods
 

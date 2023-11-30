@@ -186,7 +186,6 @@ class EventTypes(Securable, object):
             response, f'Failed to bulk create Event Types.')
         return EventGraphEventType.fromJson(response.json())
 
-
     # private methods
 
     def __setPathAndQueryTemplates(self):
