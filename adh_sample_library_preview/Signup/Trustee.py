@@ -49,13 +49,13 @@ class Trustee(object):
         result = {}
 
         if self.Type is not None:
-            result['Type'] = self.Type.value
+            result['type'] = self.Type.value
 
         if self.ObjectId is not None:
-            result['ObjectId'] = self.ObjectId
+            result['objectId'] = self.ObjectId
 
         if self.TenantId is not None:
-            result['TenantId'] = self.TenantId
+            result['tenantId'] = self.TenantId
 
         return result
 
@@ -66,13 +66,13 @@ class Trustee(object):
         if not content:
             return result
 
-        if 'Type' in content:
-            result.Type = TrusteeType(content['Type'])
+        if 'type' in content:
+            result.Type = TrusteeType(content['type'])
 
-        if 'ObjectId' in content:
-            result.ObjectId = content['ObjectId']
+        if 'objectId' in content:
+            result.ObjectId = content['objectId']
 
-        if 'TenantId' in content:
-            result.TenantId = content['TenantId']
+        if 'tenantId' in content:
+            result.TenantId = content['tenantId']
 
         return result
