@@ -1,5 +1,8 @@
 # Version History
 
+## 0.10.2_preview / 2023-11-16
+
+- Add created and modified date to SdsStream, Sdstype, SdsStreamView, SdsResolvedStream, Asset, AssetType and AssetRule
 
 ## 0.10.1_preview / 2023-10-10
 

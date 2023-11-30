@@ -1,19 +1,25 @@
 from __future__ import annotations
+from datetime import datetime
 import json
 
 
 class AssetRule(object):
     """ADH Asset Rule definition"""
 
-    def __init__(self, id: str = None, name: str = None, description: str = None):
+    def __init__(self, id: str = None, name: str = None, description: str = None,
+                creation_time: datetime = None, modified_time: datetime = None ):
         """
         :param id: required
         :param name: required
         :param description: not required
+        :param creation_time: not required
+        :param modified_time: not required
         """
         self.Id = id
         self.Name = name
         self.Description = description
+        self.CreationTime = creation_time
+        self.ModifiedTime = modified_time
 
     @property
     def Id(self) -> str:
@@ -66,6 +72,40 @@ class AssetRule(object):
         """
         self.__description = value
 
+    @property
+    def CreationTime(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__creation_time
+
+    @CreationTime.setter
+    def CreationTime(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__creation_time = value
+
+    @property
+    def ModifiedTime(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__modified_time
+
+    @ModifiedTime.setter
+    def ModifiedTime(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__modified_time = value
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
@@ -76,6 +116,12 @@ class AssetRule(object):
         # optional properties
         if self.Description is not None:
             result['Description'] = self.Description
+
+        if self.CreationTime is not None:
+            result['CreationTime'] = datetime.isoformat(self.CreationTime)
+
+        if self.ModifiedTime is not None:
+            result['ModifiedTime'] = datetime.isoformat(self.ModifiedTime)
 
         return result
 
@@ -94,5 +140,11 @@ class AssetRule(object):
 
         if 'Description' in content:
             result.Description = content['Description']
+
+        if 'CreationTime' in content:
+            result.CreationTime = datetime.fromisoformat(content['CreationTime'])
+
+        if 'ModifiedTime' in content:
+            result.ModifiedTime = datetime.fromisoformat(content['ModifiedTime'])
 
         return result
