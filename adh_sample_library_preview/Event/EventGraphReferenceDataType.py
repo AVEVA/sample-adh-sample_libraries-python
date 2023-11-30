@@ -1,4 +1,5 @@
 ﻿from __future__ import annotations
+from datetime import datetime
 import json
 from typing import Any
 
@@ -9,7 +10,7 @@ from .TypeProperty import TypeProperty
 
 class EventGraphReferenceDataType(object):
 
-    def __init__(self, category: EventGraphReferenceDataCategory = None, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
+    def __init__(self, category: EventGraphReferenceDataCategory = None, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
         """
         :param EventGraphReferenceDataCategory category: 
         :param list[TypeProperty] properties: 
@@ -21,6 +22,8 @@ class EventGraphReferenceDataType(object):
         :param LifeCycleState state: 
         :param str created_date: 
         :param str modified_date: 
+        :param datetime created_date: 
+        :param datetime modified_date: 
         :param str description: 
         """
 
@@ -101,19 +104,19 @@ class EventGraphReferenceDataType(object):
         self.__state = value
 
     @property
-    def CreatedDate(self) -> str:
+    def CreatedDate(self) -> datetime:
         return self.__created_date
 
     @CreatedDate.setter
-    def CreatedDate(self, value: str):
+    def CreatedDate(self, value: datetime):
         self.__created_date = value
 
     @property
-    def ModifiedDate(self) -> str:
+    def ModifiedDate(self) -> datetime:
         return self.__modified_date
 
     @ModifiedDate.setter
-    def ModifiedDate(self, value: str):
+    def ModifiedDate(self, value: datetime):
         self.__modified_date = value
 
     @property
@@ -124,10 +127,10 @@ class EventGraphReferenceDataType(object):
     def Description(self, value: str):
         self.__description = value
 
-    def to_json(self) -> str:
-        return json.dumps(self.to_dictionary())
+    def toJson(self) -> str:
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self) -> dict[str, Any]:
+    def toDictionary(self) -> dict[str, Any]:
         result = {}
 
         if self.Category is not None:
@@ -136,7 +139,7 @@ class EventGraphReferenceDataType(object):
         if self.Properties is not None:
             result['Properties'] = []
             for value in self.Properties:
-                result['Properties'].append(value.to_dictionary())
+                result['Properties'].append(value.toDictionary())
 
         if self.DefaultAuthorizationTag is not None:
             result['DefaultAuthorizationTag'] = self.DefaultAuthorizationTag
@@ -157,10 +160,10 @@ class EventGraphReferenceDataType(object):
             result['State'] = self.State.value
 
         if self.CreatedDate is not None:
-            result['CreatedDate'] = self.CreatedDate
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
 
         if self.ModifiedDate is not None:
-            result['ModifiedDate'] = self.ModifiedDate
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
 
         if self.Description is not None:
             result['Description'] = self.Description
@@ -168,7 +171,7 @@ class EventGraphReferenceDataType(object):
         return result
 
     @staticmethod
-    def from_json(content: dict[str, Any]) -> EventGraphReferenceDataType:
+    def fromJson(content: dict[str, Any]) -> EventGraphReferenceDataType:
         result = EventGraphReferenceDataType()
 
         if not content:
@@ -182,7 +185,7 @@ class EventGraphReferenceDataType(object):
             if values is not None:
                 result.Properties = []
                 for value in values:
-                    result.Properties.append(TypeProperty.from_json(value))
+                    result.Properties.append(TypeProperty.fromJson(value))
 
         if 'DefaultAuthorizationTag' in content:
             result.DefaultAuthorizationTag = content['DefaultAuthorizationTag']
@@ -203,10 +206,10 @@ class EventGraphReferenceDataType(object):
             result.State = LifeCycleState(content['State'])
 
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         if 'Description' in content:
             result.Description = content['Description']

@@ -62,10 +62,10 @@ class EnumerationState(object):
     def Description(self, value: str):
         self.__description = value
 
-    def to_json(self) -> str:
-        return json.dumps(self.to_dictionary())
+    def toJson(self) -> str:
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self) -> dict[str, Any]:
+    def toDictionary(self) -> dict[str, Any]:
         result = {}
 
         if self.Name is not None:
@@ -86,7 +86,7 @@ class EnumerationState(object):
         return result
 
     @staticmethod
-    def from_json(content: dict[str, Any]) -> EnumerationState:
+    def fromJson(content: dict[str, Any]) -> EnumerationState:
         result = EnumerationState()
 
         if not content:

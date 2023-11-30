@@ -51,7 +51,8 @@ class Enumerations(Securable, object):
         serialized = response.json()
         results: list[EventGraphEnumeration] = []
         for i in serialized:
-            results.append(EventGraphEnumeration.from_json(i))
+            results.append(EventGraphEnumeration.fromJson(i))
+
         return results
 
     def createEnumeration(self, namespace_id: str,
@@ -69,12 +70,12 @@ class Enumerations(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__enumerations_path.format(
-            namespace_id=namespace_id), data=enumeration.to_json())
+            namespace_id=namespace_id), data=enumeration.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to create Enumeration.')
 
-        return EventGraphEnumeration.from_json(response.json())
+        return EventGraphEnumeration.fromJson(response.json())
 
     def getEnumeration(self, namespace_id: str,
                      enumeration_id: str,
@@ -98,7 +99,7 @@ class Enumerations(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get Enumeration, {enumeration_id}.')
 
-        return EventGraphEnumeration.from_json(response.json())
+        return EventGraphEnumeration.fromJson(response.json())
 
     def getOrCreateEnumeration(self, namespace_id: str,
                              enumeration_id: str,
@@ -117,12 +118,13 @@ class Enumerations(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__enumeration_path.format(
-            namespace_id=namespace_id, enumeration_id=enumeration_id), data=enumeration.to_json())
+            namespace_id=namespace_id, enumeration_id=enumeration_id), data=enumeration.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to create Enumeration, {enumeration_id}.')
 
-        return EventGraphEnumeration.from_json(response.json())
+        return EventGraphEnumeration.fromJson(response.json())
+
 
     def updateEnumeration(self, namespace_id: str,
                         enumeration_id: str,
@@ -141,12 +143,13 @@ class Enumerations(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('put', self.__enumeration_path.format(
-            namespace_id=namespace_id, enumeration_id=enumeration_id), data=enumeration.to_json())
+            namespace_id=namespace_id, enumeration_id=enumeration_id), data=enumeration.toJson())
+
 
         self.__base_client.checkResponse(
             response, f'Failed to update Enumeration, {enumeration_id}.')
 
-        return EventGraphEnumeration.from_json(response.json())
+        return EventGraphEnumeration.fromJson(response.json())
 
     def deleteEnumeration(self, namespace_id: str,
                         enumeration_id: str):
@@ -180,11 +183,11 @@ class Enumerations(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__enumerations_path_bulk_path.format(
-            namespace_id=namespace_id), data=enumerations.to_json())
+            namespace_id=namespace_id), data=enumerations.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create Enumerations.')
-        return EventGraphEnumeration.from_json(response.json())
+        return EventGraphEnumeration.fromJson(response.json())
 
     # private methods
 

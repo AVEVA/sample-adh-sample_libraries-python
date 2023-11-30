@@ -37,8 +37,19 @@ class GraphQL(object):
             'query': query
         }
 
+        params = {}
+        if variables is not None:
+            params['variables'] = variables
+        if operation_name is not None:
+            params['operation_name'] = operation_name
+        if continuation is not None:
+            params['continuation'] = continuation
+        if metrics is not None:
+            params['metrics'] = metrics
+        
         response = self.__base_client.request('post', self.__graph_ql_path.format(
-            namespace_id=namespace_id), data=json.dumps(request_body))
+            namespace_id=namespace_id), data=json.dumps(request_body), params=params)
+
         self.__base_client.checkResponse(
             response, f'Failed to execute GraphQL query, {query}.')
 
@@ -56,7 +67,7 @@ class GraphQL(object):
             'data': data_class.fromJson(result['data']),
             'extensions': result['extension']}
 
-    def checkForSchemaChanges(self, namespace_id: str, body: str = 'force', continuation: str = None, metrics: bool = None) -> Any:
+    def checkForSchemaChanges(self, namespace_id: str, body: str = 'force') -> Any:
         """
         Executes a GraphQL Query or Mutation based on the GraphQLRequest body content in a POST request.
         The query or mutation will run against a loaded GraphQL schema that defines all the Types and API's available for an ADH namespace.
@@ -64,8 +75,6 @@ class GraphQL(object):
         The request variables property can be used to pass named values into a query or mutation. The value can be a scalar or any schema defined type or type collection (serialized JSON).
         
         :param namespace_id: id of namespace to work against
-        :param continuation: Additional data for querying the next page of data. Use this when the GraphQL query response has a continuation token in its extension data.
-        :param metrics: Enables collection of metrics. These are added to the GraphQL response in its extension data.
         """
 
         self.__base_client.validateParameters(namespace_id)

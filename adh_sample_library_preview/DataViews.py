@@ -320,6 +320,9 @@ class DataViews(Securable, object):
         nextPage = links.get('next', None)
         firstPage = links.get('first', None)
 
+        if form is not None and form.casefold() == "parquet":
+            return response.content, nextPage, firstPage
+
         if form is not None and form.casefold() != "default":
             return response.text, nextPage, firstPage
 
@@ -405,7 +408,10 @@ class DataViews(Securable, object):
                  for link in self.__urlLinks.finditer(links_header)}
 
         nextPage = links.get('next', None)
-        firstPage = links.get('first', None)
+        firstPage = links.get('first', None)        
+
+        if form is not None and form.casefold() == "parquet":
+            return response.content, nextPage, firstPage
 
         if form is not None and form.casefold() != "default":
             return response.text, nextPage, firstPage

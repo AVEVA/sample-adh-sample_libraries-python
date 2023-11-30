@@ -51,7 +51,7 @@ class ReferenceDataTypes(Securable, object):
         serialized = response.json()
         results: list[EventGraphReferenceDataType] = []
         for i in serialized:
-            results.append(EventGraphReferenceDataType.from_json(i))
+            results.append(EventGraphReferenceDataType.fromJson(i))
         return results
 
     def createReferenceDataType(self, namespace_id: str,
@@ -69,12 +69,12 @@ class ReferenceDataTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__reference_data_types_path.format(
-            namespace_id=namespace_id), data=reference_data_type.to_json())
+            namespace_id=namespace_id), data=reference_data_type.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to create ReferenceDataType.')
 
-        return EventGraphReferenceDataType.from_json(response.json())
+        return EventGraphReferenceDataType.fromJson(response.json())
 
     def getReferenceDataType(self, namespace_id: str,
                      reference_data_type_id: str,
@@ -98,7 +98,7 @@ class ReferenceDataTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get ReferenceDataType, {reference_data_type_id}.')
 
-        return EventGraphReferenceDataType.from_json(response.json())
+        return EventGraphReferenceDataType.fromJson(response.json())
 
     def getOrCreateReferenceDataType(self, namespace_id: str,
                              reference_data_type_id: str,
@@ -117,12 +117,13 @@ class ReferenceDataTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__reference_data_type_path.format(
-            namespace_id=namespace_id, reference_data_type_id=reference_data_type_id), data=reference_data_type.to_json())
+            namespace_id=namespace_id, reference_data_type_id=reference_data_type_id), data=reference_data_type.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to create ReferenceDataType, {reference_data_type_id}.')
 
-        return EventGraphReferenceDataType.from_json(response.json())
+        return EventGraphReferenceDataType.fromJson(response.json())
+
 
     def updateReferenceDataType(self, namespace_id: str,
                         reference_data_type_id: str,
@@ -141,12 +142,13 @@ class ReferenceDataTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('put', self.__reference_data_type_path.format(
-            namespace_id=namespace_id, reference_data_type_id=reference_data_type_id), data=reference_data_type.to_json())
+            namespace_id=namespace_id, reference_data_type_id=reference_data_type_id), data=reference_data_type.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to update ReferenceDataType, {reference_data_type_id}.')
 
-        return EventGraphReferenceDataType.from_json(response.json())
+        return EventGraphReferenceDataType.fromJson(response.json())
+
 
     def deleteReferenceDataType(self, namespace_id: str,
                         reference_data_type_id: str):
@@ -180,11 +182,11 @@ class ReferenceDataTypes(Securable, object):
             raise TypeError
 
         response = self.__base_client.request('post', self.__reference_data_types_bulk_path.format(
-            namespace_id=namespace_id), data=reference_data_types.to_json())
+            namespace_id=namespace_id), data=reference_data_types.toJson())
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create ReferenceDataTypes.')
-        return EventGraphReferenceDataType.from_json(response.json())
+        return EventGraphReferenceDataType.fromJson(response.json())
 
     # private methods
 

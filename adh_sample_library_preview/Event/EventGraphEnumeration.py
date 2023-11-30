@@ -1,4 +1,5 @@
 ﻿from __future__ import annotations
+from datetime import datetime
 import json
 from typing import Any
 
@@ -8,7 +9,7 @@ from .LifeCycleState import LifeCycleState
 
 class EventGraphEnumeration(object):
 
-    def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
+    def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
         """
         :param list[EnumerationState] members: 
         :param str name: 
@@ -16,8 +17,8 @@ class EventGraphEnumeration(object):
         :param int version: 
         :param str id: 
         :param LifeCycleState state: 
-        :param str created_date: 
-        :param str modified_date: 
+        :param datetime created_date: 
+        :param datetime modified_date: 
         :param str description: 
         """
 
@@ -80,19 +81,19 @@ class EventGraphEnumeration(object):
         self.__state = value
 
     @property
-    def CreatedDate(self) -> str:
+    def CreatedDate(self) -> datetime:
         return self.__created_date
 
     @CreatedDate.setter
-    def CreatedDate(self, value: str):
+    def CreatedDate(self, value: datetime):
         self.__created_date = value
 
     @property
-    def ModifiedDate(self) -> str:
+    def ModifiedDate(self) -> datetime:
         return self.__modified_date
 
     @ModifiedDate.setter
-    def ModifiedDate(self, value: str):
+    def ModifiedDate(self, value: datetime):
         self.__modified_date = value
 
     @property
@@ -103,16 +104,16 @@ class EventGraphEnumeration(object):
     def Description(self, value: str):
         self.__description = value
 
-    def to_json(self) -> str:
-        return json.dumps(self.to_dictionary())
+    def toJson(self) -> str:
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self) -> dict[str, Any]:
+    def toDictionary(self) -> dict[str, Any]:
         result = {}
 
         if self.Members is not None:
             result['Members'] = []
             for value in self.Members:
-                result['Members'].append(value.to_dictionary())
+                result['Members'].append(value.toDictionary())
 
         if self.Name is not None:
             result['Name'] = self.Name
@@ -130,10 +131,10 @@ class EventGraphEnumeration(object):
             result['State'] = self.State.value
 
         if self.CreatedDate is not None:
-            result['CreatedDate'] = self.CreatedDate
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
 
         if self.ModifiedDate is not None:
-            result['ModifiedDate'] = self.ModifiedDate
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
 
         if self.Description is not None:
             result['Description'] = self.Description
@@ -141,7 +142,7 @@ class EventGraphEnumeration(object):
         return result
 
     @staticmethod
-    def from_json(content: dict[str, Any]) -> EventGraphEnumeration:
+    def fromJson(content: dict[str, Any]) -> EventGraphEnumeration:
         result = EventGraphEnumeration()
 
         if not content:
@@ -152,7 +153,7 @@ class EventGraphEnumeration(object):
             if values is not None:
                 result.Members = []
                 for value in values:
-                    result.Members.append(EnumerationState.from_json(value))
+                    result.Members.append(EnumerationState.fromJson(value))
 
         if 'Name' in content:
             result.Name = content['Name']
@@ -170,10 +171,10 @@ class EventGraphEnumeration(object):
             result.State = LifeCycleState(content['State'])
 
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         if 'Description' in content:
             result.Description = content['Description']
