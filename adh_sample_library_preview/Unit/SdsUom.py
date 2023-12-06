@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 
 
 class SdsUom(object):
@@ -15,8 +16,8 @@ class SdsUom(object):
         quantity_id: str = None,
         conversion_factor: float = None,
         conversion_offset: float = None,
-        created_date: str = None,
-        modified_date: str = None,
+        created_date: datetime = None,
+        modified_date: datetime = None,
     ):
         """
         :param id: not required
@@ -159,7 +160,7 @@ class SdsUom(object):
         self.__conversion_offset = value
 
     @property
-    def CreatedDate(self) -> str:
+    def CreatedDate(self) -> datetime:
         """
         not required
         :return:
@@ -167,7 +168,7 @@ class SdsUom(object):
         return self.__created_date
 
     @CreatedDate.setter
-    def CreatedDate(self, value: str):
+    def CreatedDate(self, value: datetime):
         """
         not required
         :param value:
@@ -176,7 +177,7 @@ class SdsUom(object):
         self.__created_date = value
 
     @property
-    def ModifiedDate(self) -> str:
+    def ModifiedDate(self) -> datetime:
         """
         not required
         :return:
@@ -184,7 +185,7 @@ class SdsUom(object):
         return self.__modified_date
 
     @ModifiedDate.setter
-    def ModifiedDate(self, value: str):
+    def ModifiedDate(self, value: datetime):
         """
         not required
         :param value:
@@ -220,10 +221,10 @@ class SdsUom(object):
             result['ConversionOffset'] = self.ConversionOffset
 
         if self.CreatedDate is not None:
-            result['CreatedDate'] = self.CreatedDate
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
 
         if self.ModifiedDate is not None:
-            result['ModifiedDate'] = self.ModifiedDate
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
 
         return result
 
@@ -257,9 +258,13 @@ class SdsUom(object):
             result.ConversionOffset = case_fold_content['conversionoffset']
 
         if 'createddate' in case_fold_content:
-            result.CreatedDate = case_fold_content['createddate']
+            result.CreatedDate = datetime.fromisoformat(
+                case_fold_content['createddate']
+            )
 
         if 'modifieddate' in case_fold_content:
-            result.ModifiedDate = case_fold_content['modifieddate']
+            result.ModifiedDate = datetime.fromisoformat(
+                case_fold_content['modifieddate']
+            )
 
         return result

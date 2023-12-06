@@ -80,7 +80,7 @@ class BaseEventType(EventType):
             ),
             TypeProperty(
                 PropertyTypeCode.DateTime,
-                'startTime',
+                'eventStartTime',
                 'startTime',
                 'startTime',
                 PropertyTypeFlags.none,
@@ -89,7 +89,7 @@ class BaseEventType(EventType):
             ),
             TypeProperty(
                 PropertyTypeCode.DateTime,
-                'endTime',
+                'eventEndTime',
                 'endTime',
                 'endTime',
                 PropertyTypeFlags.none,
@@ -98,7 +98,7 @@ class BaseEventType(EventType):
             ),
             TypeProperty(
                 PropertyTypeCode.TimeSpan,
-                'duration',
+                'eventDuration',
                 'duration',
                 'duration',
                 PropertyTypeFlags.none,
@@ -116,7 +116,7 @@ class BaseEventType(EventType):
             ),
             TypeProperty(
                 PropertyTypeCode.Enumeration,
-                'state',
+                'eventState',
                 'state',
                 'state',
                 PropertyTypeFlags.none,
