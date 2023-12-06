@@ -1,4 +1,5 @@
 from __future__ import annotations  # To type hint the enclosing class
+from datetime import datetime
 import json
 
 from .SdsExtrapolationMode import SdsExtrapolationMode
@@ -16,7 +17,8 @@ class SdsType(object):
                  is_reference_type: bool = None, generic_arguments: list[SdsType] = None,
                  base_type: SdsType = None, derived_types: list[SdsType] = None,
                  interpolation_mode: SdsInterpolationMode = None,
-                 extrapolation_mode: SdsExtrapolationMode = None):
+                 extrapolation_mode: SdsExtrapolationMode = None, 
+                 created_date: datetime = None, modified_date: datetime = None):
         """
         :param id: required
         :param sds_type_code: required
@@ -30,6 +32,8 @@ class SdsType(object):
         :param derived_types: not required
         :param interpolation_mode: not required
         :param extrapolation_mode: not required
+        :param created_date: not required
+        :param modified_date: not required
         """
         self.Id = id
         self.SdsTypeCode = sds_type_code
@@ -43,6 +47,8 @@ class SdsType(object):
         self.DerivedTypes = derived_types
         self.InterpolationMode = interpolation_mode
         self.ExtrapolationMode = extrapolation_mode
+        self.CreatedDate = created_date
+        self.ModifiedDate = modified_date
 
     @property
     def Id(self) -> str:
@@ -248,6 +254,40 @@ class SdsType(object):
         """
         self.__extrapolation_mode = value
 
+    @property
+    def CreatedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__created_date
+
+    @CreatedDate.setter
+    def CreatedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__created_date = value
+    
+    @property
+    def ModifiedDate(self) -> datetime:
+        """
+        not required
+        :return:
+        """
+        return self.__modified_date
+
+    @ModifiedDate.setter
+    def ModifiedDate(self, value: datetime):
+        """
+        not required
+        :param value:
+        :return:
+        """
+        self.__modified_date = value
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
@@ -290,6 +330,12 @@ class SdsType(object):
 
         if self.ExtrapolationMode is not None:
             result['ExtrapolationMode'] = self.ExtrapolationMode.name
+
+        if self.CreatedDate is not None:
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+
+        if self.ModifiedDate is not None:
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
 
         return result
 
@@ -363,5 +409,11 @@ class SdsType(object):
                 elif type(extrapolation_mode) == str:
                     result.ExtrapolationMode = SdsExtrapolationMode[
                         extrapolation_mode]
+                    
+        if 'CreatedDate' in content:
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
+
+        if 'ModifiedDate' in content:
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         return result

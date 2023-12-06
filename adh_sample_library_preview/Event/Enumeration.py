@@ -1,4 +1,5 @@
 ﻿from __future__ import annotations
+from datetime import datetime
 import json
 from typing import Any
 
@@ -8,7 +9,7 @@ from .LifeCycleState import LifeCycleState
 
 class Enumeration(object):
 
-    def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: str = None, modified_date: str = None, description: str = None):
+    def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
         """
         :param list[EnumerationState] members: 
         :param str name: 
@@ -16,8 +17,8 @@ class Enumeration(object):
         :param int version: 
         :param str id: 
         :param LifeCycleState state: 
-        :param str created_date: 
-        :param str modified_date: 
+        :param datetime created_date: 
+        :param datetime modified_date: 
         :param str description: 
         """
 
@@ -80,19 +81,19 @@ class Enumeration(object):
         self.__state = value
 
     @property
-    def CreatedDate(self) -> str:
+    def CreatedDate(self) -> datetime:
         return self.__created_date
 
     @CreatedDate.setter
-    def CreatedDate(self, value: str):
+    def CreatedDate(self, value: datetime):
         self.__created_date = value
 
     @property
-    def ModifiedDate(self) -> str:
+    def ModifiedDate(self) -> datetime:
         return self.__modified_date
 
     @ModifiedDate.setter
-    def ModifiedDate(self, value: str):
+    def ModifiedDate(self, value: datetime):
         self.__modified_date = value
 
     @property
@@ -130,10 +131,10 @@ class Enumeration(object):
             result['State'] = self.State.value
 
         if self.CreatedDate is not None:
-            result['CreatedDate'] = self.CreatedDate
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
 
         if self.ModifiedDate is not None:
-            result['ModifiedDate'] = self.ModifiedDate
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
 
         if self.Description is not None:
             result['Description'] = self.Description
@@ -170,10 +171,10 @@ class Enumeration(object):
             result.State = LifeCycleState(content['State'])
 
         if 'CreatedDate' in content:
-            result.CreatedDate = content['CreatedDate']
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = content['ModifiedDate']
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         if 'Description' in content:
             result.Description = content['Description']
