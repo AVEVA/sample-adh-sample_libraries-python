@@ -1,18 +1,15 @@
 from __future__ import annotations
 import json
-from typing import Any, Type, TypeVar, Generic
+from typing import Any, Type
 
 from .Operation import Operation
 
-T = TypeVar("T")
-
-
-class Update(Generic[T]):
+class Update(object):
     """
     Represents an update
     """
 
-    def __init__(self, resource_id: str = None, operation: Operation = None, events: list[T] = None):
+    def __init__(self, resource_id: str = None, operation: Operation = None, events: list[Any] = None):
         """
         :param str resource_id: Resource Identifier
         :param str operation: Operation
@@ -39,11 +36,11 @@ class Update(Generic[T]):
         self.__operation = value
 
     @property
-    def Events(self) -> list[T]:
+    def Events(self) -> list[Any]:
         return self.__events
 
     @Events.setter
-    def Events(self, value: list[T]):
+    def Events(self, value: list[Any]):
         self.__events = value
 
     def toJson(self) -> str:
@@ -65,8 +62,8 @@ class Update(Generic[T]):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any], input_type: Type[T]) -> Update[T]:
-        result = Update[T]()
+    def fromJson(content: dict[str, Any], input_type: Type[Any]) -> Update[Any]:
+        result = Update[Any]()
 
         if not content:
             return result

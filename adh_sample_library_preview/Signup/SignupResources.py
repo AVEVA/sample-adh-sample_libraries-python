@@ -3,8 +3,6 @@ import json
 from typing import Any
 from .SignupResource import SignupResource
 
-
-
 class SignupResources(object):
     """
     A model that holds lists of resources retrieved from signup
@@ -17,11 +15,11 @@ class SignupResources(object):
         self.__resources = resources
 
     @property
-    def Resources(self) -> SignupResource:
+    def Resources(self) -> list[SignupResource]:
         return self.__resources
 
     @Resources.setter
-    def Resources(self, value: SignupResource):
+    def Resources(self, value: list[SignupResource]):
         self.__resources = value
 
 
@@ -32,7 +30,8 @@ class SignupResources(object):
         result = {}
 
         if self.Resources is not None:
-            result['resources'] = self.Resources
+            for resource in self.Resources:
+                result['resources'] = resource
 
         return result
 
@@ -44,7 +43,7 @@ class SignupResources(object):
             return result
 
         if 'resources' in content:
-            result.Resources = content['resources']
-
+            for resource in content:
+                result.Resources = resource['resources']
 
         return result

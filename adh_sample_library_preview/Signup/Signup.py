@@ -4,26 +4,26 @@ from typing import Any
 
 from .ResourceType import ResourceType
 from .SignupState import SignupState
-
+from Security.Trustee import Trustee
 
 class Signup(object):
     """
     Represents a signup base model.
     """
 
-    def __init__(self, id: str = None, bookmark: str = None ,name: str = None, owner: Any = None, community_id: str = None, type: Any = None, created_date: str = None, last_accessed_date: str = None, modified_date: str = None, expired_date: str = None, resources_deleted: bool = None, signup_state: Any = None):
+    def __init__(self, id: str = None, bookmark: str = None ,name: str = None, owner: Trustee = None, community_id: str = None, type: ResourceType = None, created_date: str = None, last_accessed_date: str = None, modified_date: str = None, expired_date: str = None, resources_deleted: bool = None, signup_state: SignupState = None):
         """
         :param str id: Signup Identifier.
         :param str name: Signup Name.
-        :param Any owner: Signup Owner.
+        :param Trustee owner: Signup Owner.
         :param str community_id: Community Identifier Associated with Signup.
-        :param Any type: Signup Resource Type.
+        :param ResourceType type: Signup Resource Type.
         :param str created_date: Date Signup was Created.
         :param str last_accessed_date: Date Signup was Last Accessed.
         :param str modified_date: Date Signup was Last Modified.
         :param str expired_date: Date Signup is set to expire.
         :param bool resources_deleted: Flag to indicate if all the partitions have successfully deleted the associated resources after expiring the signup.
-        :param Any signup_state: Signup Status.
+        :param SignupState signup_state: Signup Status.
         """
 
         self.__id = id

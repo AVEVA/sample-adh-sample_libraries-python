@@ -10,7 +10,7 @@ class CreateSignupInput(object):
     The CreateSignupInput object.
     """
 
-    def __init__(self, name: str = None, resource_type: Any = None, resource_ids: list[str] = None):
+    def __init__(self, name: str = None, resource_type: ResourceType = None, resource_ids: list[str] = None):
         """
         :param str name: Signup Name.
         :param Any resource_type: Resource type of the resource identifiers.

@@ -3,7 +3,6 @@ import json
 from typing import Any
 
 
-
 class SignupResourcesInput(object):
     """
     The SignupResourcesInput object.
@@ -41,14 +40,14 @@ class SignupResourcesInput(object):
         result = {}
 
         if self.ResourcesToAdd is not None:
-            result['resourcestoAdd'] = []
+            result['resourcesToAdd'] = []
             for value in self.ResourcesToAdd:
-                result['resourcestoAdd'].append(value)
+                result['resourcesToAdd'].append(value)
 
         if self.ResourcesToRemove is not None:
-            result['resourcestoRemove'] = []
+            result['resourcesToRemove'] = []
             for value in self.ResourcesToRemove:
-                result['resourcestoRemove'].append(value)
+                result['resourcesToRemove'].append(value)
 
         return result
 
@@ -59,15 +58,15 @@ class SignupResourcesInput(object):
         if not content:
             return result
 
-        if 'resourcestoAdd' in content:
-            values = content['resourcestoAdd']
+        if 'resourcesToAdd' in content:
+            values = content['resourcesToAdd']
             if values is not None:
                 result.ResourcesToAdd = []
                 for value in values:
                     result.ResourcesToAdd.append(value)
 
-        if 'resourcestoRemove' in content:
-            values = content['resourcestoRemove']
+        if 'resourcesToRemove' in content:
+            values = content['resourcesToRemove']
             if values is not None:
                 result.ResourcesToRemove = []
                 for value in values:

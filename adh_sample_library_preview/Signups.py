@@ -208,17 +208,13 @@ class Signups(object):
     def getUpdates(self,
                    namespace_id: str = None,
                    signup_id: str = None,
-                   bookmark: str = None,
-                   value_class: type = None) -> tuple[list[Update], str]:
+                   bookmark: str = None ) -> tuple[list[Update], str]:
         """
         Returns a sequence of updates for all resources within the Signup, starting from the sequential marker represented by a provided `Bookmark`. 
 
         :param str namespace_id: The namespace identifier.
         :param str signup_id: The signup identifier.
         :param str bookmark: An encoded token representing a sequential starting point from which updates are to be retrieved for the current request. A request URI including a starter Bookmark token is provided in the 'Get-Updates' header of a successful Signup activation response.
-        :param value_class: use this to cast the value into a given type.
-            Type must support .fromJson()  Default is None.
-            If None returns a dynamic Python object from the data.
         """
 
         self.__base_client.validateParameters(
@@ -234,7 +230,7 @@ class Signups(object):
             response, f'Failed to get Signup updates, {signup_id}.')
 
         data = response.json()['data']
-        updates = [Update[value_class].fromJson(datum, value_class) for datum in data]
+        updates = [Update.fromJson(datum) for datum in data]
 
         return updates
 
