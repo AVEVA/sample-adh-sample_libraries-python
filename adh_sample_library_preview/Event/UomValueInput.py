@@ -20,10 +20,10 @@ class UomValueInput(Generic[T]):
         result = {}
 
         if self.Value is not None:
-            result['Value'] = self.Value
+            result['value'] = self.Value
 
         if self.Uom is not None:
-            result['Uom'] = self.Uom.toDictionary()
+            result['uom'] = self.Uom.toDictionary()
 
         return result
 
