@@ -3,6 +3,6 @@
 
 class LifeCycleState(Enum):
 
-    ACTIVE = 'Active'
-    DEPRECATED = 'Deprecated'
-    DELETED = 'Deleted'
+    Active = 'Active'
+    Deprecated = 'Deprecated'
+    Deleted = 'Deleted'

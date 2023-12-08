@@ -3,18 +3,15 @@ from datetime import datetime
 import json
 from typing import Any
 
-from .EventGraphReferenceDataCategory import EventGraphReferenceDataCategory
+from .EnumerationState import EnumerationState
 from .LifeCycleState import LifeCycleState
-from .TypeProperty import TypeProperty
 
 
-class EventGraphReferenceDataType(object):
+class Enumeration(object):
 
-    def __init__(self, category: EventGraphReferenceDataCategory = None, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
+    def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
         """
-        :param EventGraphReferenceDataCategory category: 
-        :param list[TypeProperty] properties: 
-        :param str default_authorization_tag: 
+        :param list[EnumerationState] members: 
         :param str name: 
         :param str graph_ql_name: 
         :param int version: 
@@ -25,9 +22,7 @@ class EventGraphReferenceDataType(object):
         :param str description: 
         """
 
-        self.__category = category
-        self.__properties = properties
-        self.__default_authorization_tag = default_authorization_tag
+        self.__members = members
         self.__name = name
         self.__graph_ql_name = graph_ql_name
         self.__version = version
@@ -38,28 +33,12 @@ class EventGraphReferenceDataType(object):
         self.__description = description
 
     @property
-    def Category(self) -> EventGraphReferenceDataCategory:
-        return self.__category
+    def Members(self) -> list[EnumerationState]:
+        return self.__members
 
-    @Category.setter
-    def Category(self, value: EventGraphReferenceDataCategory):
-        self.__category = value
-
-    @property
-    def Properties(self) -> list[TypeProperty]:
-        return self.__properties
-
-    @Properties.setter
-    def Properties(self, value: list[TypeProperty]):
-        self.__properties = value
-
-    @property
-    def DefaultAuthorizationTag(self) -> str:
-        return self.__default_authorization_tag
-
-    @DefaultAuthorizationTag.setter
-    def DefaultAuthorizationTag(self, value: str):
-        self.__default_authorization_tag = value
+    @Members.setter
+    def Members(self, value: list[EnumerationState]):
+        self.__members = value
 
     @property
     def Name(self) -> str:
@@ -131,16 +110,10 @@ class EventGraphReferenceDataType(object):
     def toDictionary(self) -> dict[str, Any]:
         result = {}
 
-        if self.Category is not None:
-            result['Category'] = self.Category.value
-
-        if self.Properties is not None:
-            result['Properties'] = []
-            for value in self.Properties:
-                result['Properties'].append(value.toDictionary())
-
-        if self.DefaultAuthorizationTag is not None:
-            result['DefaultAuthorizationTag'] = self.DefaultAuthorizationTag
+        if self.Members is not None:
+            result['Members'] = []
+            for value in self.Members:
+                result['Members'].append(value.toDictionary())
 
         if self.Name is not None:
             result['Name'] = self.Name
@@ -169,24 +142,18 @@ class EventGraphReferenceDataType(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> EventGraphReferenceDataType:
-        result = EventGraphReferenceDataType()
+    def fromJson(content: dict[str, Any]) -> Enumeration:
+        result = Enumeration()
 
         if not content:
             return result
 
-        if 'Category' in content:
-            result.Category = EventGraphReferenceDataCategory(content['Category'])
-
-        if 'Properties' in content:
-            values = content['Properties']
+        if 'Members' in content:
+            values = content['Members']
             if values is not None:
-                result.Properties = []
+                result.Members = []
                 for value in values:
-                    result.Properties.append(TypeProperty.fromJson(value))
-
-        if 'DefaultAuthorizationTag' in content:
-            result.DefaultAuthorizationTag = content['DefaultAuthorizationTag']
+                    result.Members.append(EnumerationState.fromJson(value))
 
         if 'Name' in content:
             result.Name = content['Name']

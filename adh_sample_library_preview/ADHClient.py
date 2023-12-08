@@ -20,6 +20,7 @@ from .StreamViews import StreamViews
 from .Subscriptions import Subscriptions
 from .Topics import Topics
 from .Types import Types
+from .Units import Units
 from .Users import Users
 
 class ADHClient:
@@ -67,6 +68,7 @@ class ADHClient:
         self.__subscriptions = Subscriptions(self.__base_client)
         self.__types = Types(self.__base_client)
         self.__topics = Topics(self.__base_client)
+        self.__units = Units(self.__base_client)
         self.__users = Users(self.__base_client)
 
     @property
@@ -255,6 +257,13 @@ class ADHClient:
         :return: A client for interacting with Topics
         """
         return self.__topics
+    
+    @property
+    def Units(self) -> Units:
+        """
+        :return: A client for interacting with Units
+        """
+        return self.__units
 
     @property
     def Users(self) -> Users:

@@ -1,7 +1,7 @@
 ﻿from __future__ import annotations
 
 from .BaseClient import BaseClient
-from .Event.EventGraphEventType import EventGraphEventType
+from .Event.EventType import EventType
 from .Securable import Securable
 
 
@@ -20,7 +20,7 @@ class EventTypes(Securable, object):
                       skip: int = None,
                       count: int = None,
                       include_deleted: bool = None,
-                      filter: str = None) -> list[EventGraphEventType]:
+                      filter: str = None) -> list[EventType]:
         """
         Returns an array of EventTypes in a given namespace and the version ETag in the HTTP response header. The If-Match and If-None-Match headers are supported.
 
@@ -49,23 +49,23 @@ class EventTypes(Securable, object):
             response, f'Failed to get list of Event Types.')
 
         serialized = response.json()
-        results: list[EventGraphEventType] = []
+        results: list[EventType] = []
         for i in serialized:
-            results.append(EventGraphEventType.fromJson(i))
+            results.append(EventType.fromJson(i))
         return results
 
     def createEventType(self, namespace_id: str,
-                        event_type: EventGraphEventType = None) -> EventGraphEventType:
+                        event_type: EventType = None) -> EventType:
         """
         Creates a new `EventType` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
-        :param EventGraphEventType event_type: An event type object
+        :param EventType event_type: An event type object
         """
 
         self.__base_client.validateParameters(namespace_id)
 
-        if not isinstance(event_type, EventGraphEventType):
+        if not isinstance(event_type, EventType):
             raise TypeError
 
         response = self.__base_client.request('post', self.__event_types_path.format(
@@ -74,11 +74,11 @@ class EventTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to create Event Type.')
 
-        return EventGraphEventType.fromJson(response.json())
+        return EventType.fromJson(response.json())
 
     def getEventType(self, namespace_id: str,
                      event_type_id: str,
-                     include_deleted: bool = None) -> EventGraphEventType:
+                     include_deleted: bool = None) -> EventType:
         """
         Gets the specified `EventType`. 
 
@@ -98,22 +98,22 @@ class EventTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get Event Type, {event_type_id}.')
 
-        return EventGraphEventType.fromJson(response.json())
+        return EventType.fromJson(response.json())
 
     def getOrCreateEventType(self, namespace_id: str,
                              event_type_id: str,
-                             event_type: EventGraphEventType = None) -> EventGraphEventType:
+                             event_type: EventType = None) -> EventType:
         """
         Creates the specified `EventType`. 
 
         :param namespace_id: id of namespace to work against
         :param str event_type_id: The id of the EventType.
-        :param EventGraphEventType event_type:  An event type object
+        :param EventType event_type:  An event type object
         """
 
         self.__base_client.validateParameters(namespace_id, event_type_id)
 
-        if not isinstance(event_type, EventGraphEventType):
+        if not isinstance(event_type, EventType):
             raise TypeError
 
         response = self.__base_client.request('post', self.__event_type_path.format(
@@ -122,22 +122,22 @@ class EventTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to create Event Type, {event_type_id}.')
 
-        return EventGraphEventType.fromJson(response.json())
+        return EventType.fromJson(response.json())
 
     def updateEventType(self, namespace_id: str,
                         event_type_id: str,
-                        event_type: EventGraphEventType = None) -> EventGraphEventType:
+                        event_type: EventType = None) -> EventType:
         """
         Updates the specified `EventType`. 
 
         :param namespace_id: id of namespace to work against
         :param str event_type_id: The id of the EventType.
-        :param EventGraphEventType event_type:  An event type object
+        :param EventType event_type:  An event type object
         """
 
         self.__base_client.validateParameters(namespace_id, event_type_id)
 
-        if not isinstance(event_type, EventGraphEventType):
+        if not isinstance(event_type, EventType):
             raise TypeError
 
         response = self.__base_client.request('put', self.__event_type_path.format(
@@ -146,7 +146,7 @@ class EventTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to update Event Type, {event_type_id}.')
 
-        return EventGraphEventType.fromJson(response.json())
+        return EventType.fromJson(response.json())
 
     def deleteEventType(self, namespace_id: str,
                         event_type_id: str):
@@ -166,17 +166,17 @@ class EventTypes(Securable, object):
             response, f'Failed to delete Event Type, {event_type_id}.')
 
     def bulkCreateEventTypes(self, namespace_id: str,
-                             event_types: list[EventGraphEventType] = None) -> EventGraphEventType:
+                             event_types: list[EventType] = None) -> EventType:
         """
         Creates Event Types in bulk. 
 
         :param namespace_id: id of namespace to work against
-        :param list[EventGraphEventType] event_types: A list list event type objects
+        :param list[EventType] event_types: A list list event type objects
         """
 
         self.__base_client.validateParameters(namespace_id)
 
-        if not isinstance(event_types, list[EventGraphEventType]):
+        if not isinstance(event_types, list[EventType]):
             raise TypeError
 
         response = self.__base_client.request('post', self.__event_types_bulk_path.format(
@@ -184,7 +184,7 @@ class EventTypes(Securable, object):
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create Event Types.')
-        return EventGraphEventType.fromJson(response.json())
+        return EventType.fromJson(response.json())
 
     # private methods
 
