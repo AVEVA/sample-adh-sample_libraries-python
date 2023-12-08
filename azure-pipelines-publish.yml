@@ -1,7 +1,7 @@
 jobs:
   - job: PublishLibrary
     pool:
-      name: 00-OSIManaged-Containers
+      name: DevOps Managed Containers Build
       demands: Agent.OS -equals Linux
     steps:
       - bash: |
