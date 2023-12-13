@@ -1,6 +1,6 @@
 # Version History
 
-## 0.10.3_preview / 2023-11-30
+## 0.10.4_preview / 2023-12-07
 
 - Implemented ChangeBroker features in the library
 
