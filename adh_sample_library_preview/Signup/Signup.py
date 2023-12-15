@@ -4,7 +4,7 @@ from typing import Any
 
 from .ResourceType import ResourceType
 from .SignupState import SignupState
-from Security.Trustee import Trustee
+from ..Security.Trustee import Trustee
 
 class Signup(object):
     """

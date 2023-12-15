@@ -7,7 +7,7 @@ from .SignupResource import SignupResource
 from .SignupResources import SignupResources
 from .SignupResourcesInput import SignupResourcesInput
 from .SignupState import SignupState
-from Security.Trustee import Trustee
-from Security.TrusteeType import TrusteeType
+from ..Security.Trustee import Trustee
+from ..Security.TrusteeType import TrusteeType
 from .Update import Update
 from .UpdateSignupInput import UpdateSignupInput
