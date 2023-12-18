@@ -2,23 +2,33 @@ from __future__ import annotations
 import json
 
 from .CommunityTenant import CommunityTenant
+from ..Security import Role
 
 
 class Community(object):
     """ADH community definition"""
 
-    def __init__(self, id: str = None, name: str = None, alias: str = None, description: str = None,
-                 tenants: list[CommunityTenant] = None, date_created: str = None,
-                 streams_contributed_count: int = None,
-                 total_streams_contributed_count: int = None):
+    def __init__(
+        self,
+        id: str = None,
+        member_role_id: str = None,
+        name: str = None,
+        display_name: str = None,
+        description: str = None,
+        tenants: list[CommunityTenant] = None,
+        date_created: str = None,
+        preferred_region_id: str = None,
+        community_roles: list[Role] = None,
+    ):
         self.Id = id
+        self.MemberRoleId = member_role_id
         self.Name = name
-        self.Alias = alias
+        self.DisplayName = display_name
         self.Description = description
         self.Tenants = tenants
         self.DateCreated = date_created
-        self.StreamsContributedCount = streams_contributed_count
-        self.TotalStreamsContributedCount = total_streams_contributed_count
+        self.PreferredRegionId = preferred_region_id
+        self.CommunityRoles = community_roles
 
     @property
     def Id(self) -> str:
@@ -29,6 +39,14 @@ class Community(object):
         self.__id = value
 
     @property
+    def MemberRoleId(self) -> str:
+        return self.__member_role_id
+
+    @MemberRoleId.setter
+    def MemberRoleId(self, value: str):
+        self.__member_role_id = value
+
+    @property
     def Name(self) -> str:
         return self.__name
 
@@ -37,12 +55,12 @@ class Community(object):
         self.__name = value
 
     @property
-    def Alias(self) -> str:
-        return self.__alias
+    def DisplayName(self) -> str:
+        return self.__display_name
 
-    @Alias.setter
-    def Alias(self, value: str):
-        self.__alias = value
+    @DisplayName.setter
+    def DisplayName(self, value: str):
+        self.__display_name = value
 
     @property
     def Description(self) -> str:
@@ -69,33 +87,44 @@ class Community(object):
         self.__date_created = value
 
     @property
-    def StreamsContributedCount(self) -> int:
-        return self.__streams_contributed_count
+    def PreferredRegionId(self) -> str:
+        return self.__preferred_region_id
 
-    @StreamsContributedCount.setter
-    def StreamsContributedCount(self, value: int):
-        self.__streams_contributed_count = value
+    @PreferredRegionId.setter
+    def PreferredRegionId(self, value: str):
+        self.__preferred_region_id = value
 
     @property
-    def TotalStreamsContributedCount(self) -> int:
-        return self.__total_streams_contributed_count
+    def CommunityRoles(self) -> list[Role]:
+        return self.__community_roles
 
-    @TotalStreamsContributedCount.setter
-    def TotalStreamsContributedCount(self, value: int):
-        self.__total_streams_contributed_count = value
+    @CommunityRoles.setter
+    def CommunityRoles(self, value: list[Role]):
+        self.__community_roles = value
 
     def toJson(self):
         return json.dumps(self.toDictionary())
 
     def toDictionary(self):
-        result = {'Id': self.Id, 'Name': self.Name, 'Alias': self.Alias,
-                  'Description': self.Description, 'Tenants': [], 'DateCreated': self.DateCreated,
-                  'StreamsContributedCount': self.StreamsContributedCount,
-                  'TotalStreamsContributedCount': self.TotalStreamsContributedCount}
+        result = {
+            'Id': self.Id,
+            'MemberRoleId': self.MemberRoleId,
+            'Name': self.Name,
+            'DisplayName': self.DisplayName,
+            'Description': self.Description,
+            'Tenants': [],
+            'DateCreated': self.DateCreated,
+            'PreferredRegionId': self.PreferredRegionId,
+            'CommunityRoles': [],
+        }
 
         if self.Tenants is not None:
             for value in self.Tenants:
                 result['Tenants'].append(value.toDictionary())
+
+        if self.CommunityRoles is not None:
+            for value in self.CommunityRoles:
+                result['CommunityRoles'].append(value.toDictionary())
 
         return result
 
@@ -109,11 +138,14 @@ class Community(object):
         if 'Id' in content:
             result.Id = content['Id']
 
+        if 'MemberRoleId' in content:
+            result.MemberRoleId = content['MemberRoleId']
+
         if 'Name' in content:
             result.Name = content['Name']
 
-        if 'Alias' in content:
-            result.Alias = content['Alias']
+        if 'DisplayName' in content:
+            result.DisplayName = content['DisplayName']
 
         if 'Description' in content:
             result.Description = content['Description']
@@ -128,10 +160,14 @@ class Community(object):
         if 'DateCreated' in content:
             result.DateCreated = content['DateCreated']
 
-        if 'StreamsContributedCount' in content:
-            result.StreamsContributedCount = content['StreamsContributedCount']
+        if 'PreferredRegionId' in content:
+            result.PreferredRegionId = content['PreferredRegionId']
 
-        if 'TotalStreamsContributedCount' in content:
-            result.TotalStreamsContributedCount = content['TotalStreamsContributedCount']
+        if 'CommunityRoles' in content:
+            community_roles = content['CommunityRoles']
+            if community_roles is not None and len(community_roles) > 0:
+                result.CommunityRoles = []
+                for value in community_roles:
+                    result.CommunityRoles.append(Role.fromJson(value))
 
         return result

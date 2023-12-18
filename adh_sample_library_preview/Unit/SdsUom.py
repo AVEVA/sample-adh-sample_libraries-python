@@ -200,31 +200,31 @@ class SdsUom(object):
         result = {}
 
         if self.Id is not None:
-            result['Id'] = self.Id
+            result['id'] = self.Id
 
         if self.Abbreviation is not None:
-            result['Abbreviation'] = self.Abbreviation
+            result['abbreviation'] = self.Abbreviation
 
         if self.Name is not None:
-            result['Name'] = self.Name
+            result['name'] = self.Name
 
         if self.DisplayName is not None:
-            result['DisplayName'] = self.DisplayName
+            result['displayName'] = self.DisplayName
 
         if self.QuantityId is not None:
-            result['QuantityId'] = self.QuantityId
+            result['quantityId'] = self.QuantityId
 
         if self.ConversionFactor is not None:
-            result['ConversionFactor'] = self.ConversionFactor
+            result['conversionFactor'] = self.ConversionFactor
 
         if self.ConversionOffset is not None:
-            result['ConversionOffset'] = self.ConversionOffset
+            result['conversionOffset'] = self.ConversionOffset
 
         if self.CreatedDate is not None:
-            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
+            result['createdDate'] = datetime.isoformat(self.CreatedDate)
 
         if self.ModifiedDate is not None:
-            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
+            result['modifiedDate'] = datetime.isoformat(self.ModifiedDate)
 
         return result
 

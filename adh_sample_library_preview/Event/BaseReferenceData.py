@@ -1,27 +1,18 @@
 from __future__ import annotations
 
 import json
-import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any
 
-
 from .EventState import EventState
-
-interval_regex = re.compile(
-    r'^(?P<days>\d+)?[.]?(?P<hours>\d\d):(?P<minutes>\d\d):(?P<seconds>(\d\d|\d\d[.]\d+))$'
-)
 
 
 @dataclass
-class BaseEvent(object):
+class BaseReferenceData(object):
     Id: str = None
     Name: str = None
     Description: str = None
-    StartTime: datetime = None
-    EndTime: datetime = None
-    Duration: timedelta = None
     State: EventState = None
     Asset: str = None
     CreatedDate: datetime = None
@@ -29,6 +20,8 @@ class BaseEvent(object):
     CreatedByUser: str = None
     ModifiedByUser: str = None
     AuthorizationTags: list[str] = None
+    SourceId: str = None
+    ResourceId: str = None
 
     def toJson(self) -> str:
         return json.dumps(self.toDictionary())
@@ -45,25 +38,8 @@ class BaseEvent(object):
         if self.Description is not None:
             result['description'] = self.Description
 
-        if self.StartTime is not None:
-            result['startTime'] = datetime.isoformat(self.StartTime)
-
-        if self.EndTime is not None:
-            result['endTime'] = datetime.isoformat(self.EndTime)
-
-        if self.Duration is not None:
-            result['duration'] = (
-                str(self.Duration)
-                .replace(' 0:', ' 00:')
-                .replace('days', 'day')
-                .replace(' day, ', '.')
-            )
-
         if self.State is not None:
             result['state'] = self.State.value
-
-        if self.Asset is not None:
-            result['asset'] = self.Asset
 
         if self.CreatedDate is not None:
             result['createdDate'] = datetime.isoformat(self.CreatedDate)
@@ -80,11 +56,17 @@ class BaseEvent(object):
         if self.AuthorizationTags is not None:
             result['authorizationTags'] = self.AuthorizationTags
 
+        if self.SourceId is not None:
+            result['sourceId'] = self.SourceId
+
+        if self.ResourceId is not None:
+            result['resourceId'] = self.ResourceId
+
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> BaseEvent:
-        result = BaseEvent()
+    def fromJson(content: dict[str, Any]) -> BaseReferenceData:
+        result = BaseReferenceData()
 
         if not content:
             return result
@@ -98,22 +80,8 @@ class BaseEvent(object):
         if 'description' in content:
             result.Description = content['description']
 
-        if 'startTime' in content:
-            result.StartTime = datetime.fromisoformat(content['startTime'])
-
-        if 'endTime' in content and content['endTime']:
-            result.EndTime = datetime.fromisoformat(content['endTime'])
-
-        if 'duration' in content:
-            groups = interval_regex.match(content['duration']).groupdict()
-            time_delta_params = {k: (float(v) if v else 0) for k, v in groups.items()}
-            result.Duration = timedelta(**time_delta_params)
-
         if 'state' in content:
             result.State = EventState(content['state'])
-
-        if 'asset' in content:
-            result.Asset = content['asset']
 
         if 'createdDate' in content:
             result.CreatedDate = datetime.fromisoformat(content['createdDate'])
@@ -129,5 +97,11 @@ class BaseEvent(object):
 
         if 'authorizationTags' in content:
             result.AuthorizationTags = content['authorizationTags']
+
+        if 'sourceId' in content:
+            result.SourceId = content['sourceId']
+
+        if 'resourceId' in content:
+            result.ResourceId = content['resourceId']
 
         return result

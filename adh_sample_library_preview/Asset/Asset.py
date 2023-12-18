@@ -13,7 +13,7 @@ class Asset(object):
     def __init__(self, id: str = None, name: str = None, description: str = None,
                  asset_type_id: str = None, metadata: list[MetadataItem] = None,
                  stream_references: list[StreamReference] = None,
-                 status_mapping: StatusConfiguration = None,
+                 status: StatusConfiguration = None,
                  created_date: datetime = None, modified_date: datetime = None):
         """
         :param id: required
@@ -22,7 +22,7 @@ class Asset(object):
         :param asset_type_id: not required
         :param metadata: not required
         :param stream_references: not required
-        :param status_mapping: not required
+        :param status: not required
         :param created_date: not required
         :param modified_date: not required
         """
@@ -32,7 +32,7 @@ class Asset(object):
         self.AssetTypeId = asset_type_id
         self.Metadata = metadata
         self.StreamReferences = stream_references
-        self.StatusMapping = status_mapping
+        self.Status = status
         self.CreatedDate = created_date
         self.ModifiedDate = modified_date
 
@@ -139,21 +139,21 @@ class Asset(object):
         self.__stream_references = value
 
     @property
-    def StatusMapping(self) -> StatusConfiguration:
+    def Status(self) -> StatusConfiguration:
         """
         not required
         :return:
         """
-        return self.__status_mapping
+        return self.__status
 
-    @StatusMapping.setter
-    def StatusMapping(self, value: StatusConfiguration):
+    @Status.setter
+    def Status(self, value: StatusConfiguration):
         """
         not required
         :param value:
         :return:
         """
-        self.__status_mapping = value
+        self.__status = value
 
     @property
     def CreatedDate(self) -> datetime:
@@ -217,8 +217,8 @@ class Asset(object):
                 result['StreamReferences'].append(
                     value.toDictionary())
 
-        if self.StatusMapping is not None:
-            result['StatusMapping'] = self.StatusMapping.toDictionary()
+        if self.Status is not None:
+            result['Status'] = self.Status.toDictionary()
 
         if self.CreatedDate is not None:
             result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
@@ -263,9 +263,9 @@ class Asset(object):
                     result.StreamReferences.append(
                         StreamReference.fromJson(value))
 
-        if 'StatusMapping' in content:
-            result.StatusMapping = StatusConfiguration.fromJson(
-                content['StatusMapping'])
+        if 'Status' in content:
+            result.Status = StatusConfiguration.fromJson(
+                content['Status'])
         
         if 'CreatedDate' in content:
             result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])

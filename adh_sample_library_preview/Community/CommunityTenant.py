@@ -7,14 +7,27 @@ from .CommunityTenantStatus import CommunityTenantStatus
 class CommunityTenant(object):
     """ADH community tenant definition"""
 
-    def __init__(self, id: str = None, name: str = None, status: CommunityTenantStatus = None,
-                 is_owner: bool = None, user_count: int = None, client_count: int = None):
+    def __init__(
+        self,
+        id: str = None,
+        name: str = None,
+        status: CommunityTenantStatus = None,
+        is_owner: bool = None,
+        user_count: int = None,
+        client_count: int = None,
+        preferred_region_id: str = None,
+        contact_email: str = None,
+        community_alias: str = None,
+    ):
         self.Id = id
         self.Name = name
         self.Status = status
         self.IsOwner = is_owner
         self.UserCount = user_count
         self.ClientCount = client_count
+        self.PreferredRegionId = preferred_region_id
+        self.ContactEmail = contact_email
+        self.CommunityAlias = community_alias
 
     @property
     def Id(self) -> str:
@@ -64,13 +77,45 @@ class CommunityTenant(object):
     def ClientCount(self, value: int):
         self.__client_count = value
 
+    @property
+    def PreferredRegionId(self) -> str:
+        return self.__preferred_region_id
+
+    @PreferredRegionId.setter
+    def PreferredRegionId(self, value: str):
+        self.__preferred_region_id = value
+
+    @property
+    def ContactEmail(self) -> str:
+        return self.__contact_email
+
+    @ContactEmail.setter
+    def ContactEmail(self, value: str):
+        self.__contact_email = value
+
+    @property
+    def CommunityAlias(self) -> str:
+        return self.__community_alias
+
+    @CommunityAlias.setter
+    def CommunityAlias(self, value: str):
+        self.__community_alias = value
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
     def toDictionary(self):
-        return {'Id': self.Id, 'Name': self.Name, 'Status': self.Status.name,
-                'IsOwner': self.IsOwner, 'UserCount': self.UserCount,
-                'ClientCount': self.ClientCount}
+        return {
+            'Id': self.Id,
+            'Name': self.Name,
+            'Status': self.Status.name,
+            'IsOwner': self.IsOwner,
+            'UserCount': self.UserCount,
+            'ClientCount': self.ClientCount,
+            'PreferredRegionId': self.PreferredRegionId,
+            'ContactEmail': self.ContactEmail,
+            'CommunityAlias': self.CommunityAlias,
+        }
 
     @staticmethod
     def fromJson(content: dict[str, str]):
@@ -93,5 +138,14 @@ class CommunityTenant(object):
 
         if 'ClientCount' in content:
             result.ClientCount = content['ClientCount']
+
+        if 'PreferredRegionId' in content:
+            result.PreferredRegionId = content['PreferredRegionId']
+
+        if 'ContactEmail' in content:
+            result.ContactEmail = content['ContactEmail']
+
+        if 'CommunityAlias' in content:
+            result.CommunityAlias = content['CommunityAlias']
 
         return result
