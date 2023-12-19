@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import logging
 
-from .AbstractBaseClient import AbstractBaseClient
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
@@ -29,7 +28,7 @@ from .Units import Units
 from .Users import Users
 
 
-class ADHClient(AbstractBaseClient):
+class ADHClient:
     """
     A client that handles communication with AVEVA Data Hub
     """

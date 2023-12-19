@@ -200,31 +200,31 @@ class SdsUom(object):
         result = {}
 
         if self.Id is not None:
-            result['id'] = self.Id
+            result['Id'] = self.Id
 
         if self.Abbreviation is not None:
-            result['abbreviation'] = self.Abbreviation
+            result['Abbreviation'] = self.Abbreviation
 
         if self.Name is not None:
-            result['name'] = self.Name
+            result['Name'] = self.Name
 
         if self.DisplayName is not None:
-            result['displayName'] = self.DisplayName
+            result['DisplayName'] = self.DisplayName
 
         if self.QuantityId is not None:
-            result['quantityId'] = self.QuantityId
+            result['QuantityId'] = self.QuantityId
 
         if self.ConversionFactor is not None:
-            result['conversionFactor'] = self.ConversionFactor
+            result['ConversionFactor'] = self.ConversionFactor
 
         if self.ConversionOffset is not None:
-            result['conversionOffset'] = self.ConversionOffset
+            result['ConversionOffset'] = self.ConversionOffset
 
         if self.CreatedDate is not None:
-            result['createdDate'] = datetime.isoformat(self.CreatedDate)
+            result['CreatedDate'] = datetime.isoformat(self.CreatedDate)
 
         if self.ModifiedDate is not None:
-            result['modifiedDate'] = datetime.isoformat(self.ModifiedDate)
+            result['ModifiedDate'] = datetime.isoformat(self.ModifiedDate)
 
         return result
 
@@ -235,36 +235,28 @@ class SdsUom(object):
         if not content:
             return result
 
-        case_fold_content = {}
-        for k, v in content.items():
-            case_fold_content.update({k.casefold(): v})
+        if 'Id' in content:
+            result.Id = content['Id']
 
-        if 'id' in case_fold_content:
-            result.Id = case_fold_content['id']
+        if 'Abbreviation' in content:
+            result.Abbreviation = content['Abbreviation']
 
-        if 'abbreviation' in case_fold_content:
-            result.Abbreviation = case_fold_content['abbreviation']
+        if 'DisplayName' in content:
+            result.DisplayName = content['DisplayName']
 
-        if 'displayname' in case_fold_content:
-            result.DisplayName = case_fold_content['displayname']
+        if 'QuantityId' in content:
+            result.QuantityId = content['QuantityId']
 
-        if 'quantityid' in case_fold_content:
-            result.QuantityId = case_fold_content['quantityid']
+        if 'ConversionFactor' in content:
+            result.ConversionFactor = content['ConversionFactor']
 
-        if 'conversionfactor' in case_fold_content:
-            result.ConversionFactor = case_fold_content['conversionfactor']
+        if 'ConversionOffset' in content:
+            result.ConversionOffset = content['ConversionOffset']
 
-        if 'conversionooffset' in case_fold_content:
-            result.ConversionOffset = case_fold_content['conversionoffset']
+        if 'CreatedDate' in content:
+            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
 
-        if 'createddate' in case_fold_content:
-            result.CreatedDate = datetime.fromisoformat(
-                case_fold_content['createddate']
-            )
-
-        if 'modifieddate' in case_fold_content:
-            result.ModifiedDate = datetime.fromisoformat(
-                case_fold_content['modifieddate']
-            )
+        if 'ModifiedDate' in content:
+            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
 
         return result

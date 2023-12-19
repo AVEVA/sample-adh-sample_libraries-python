@@ -8,6 +8,38 @@ from ..Units import SdsUom
 T = TypeVar('T')
 
 
+def _pascalToCamelCase(dictionary: dict[str, Any]):
+    camel_case_dictionary = {}
+    for k, v in dictionary.items():
+        if isinstance(v, list):
+            l = []
+            for i in v:
+                l.append(_pascalToCamelCase(i))
+            camel_case_dictionary.update({k[:1].lower() + k[1:]: l})
+        elif isinstance(v, dict):
+            camel_case_dictionary.update({k[:1].lower() + k[1:]: _pascalToCamelCase(v)})
+        else:
+            camel_case_dictionary.update({k[:1].lower() + k[1:]: v})
+    return camel_case_dictionary
+
+
+def _camelToPascalCase(dictionary: dict[str, Any]):
+    pascal_case_dictionary = {}
+    for k, v in dictionary.items():
+        if isinstance(v, list):
+            l = []
+            for i in v:
+                l.append(_camelToPascalCase(i))
+            pascal_case_dictionary.update({k[:1].upper() + k[1:]: l})
+        elif isinstance(v, dict):
+            pascal_case_dictionary.update(
+                {k[:1].upper() + k[1:]: _camelToPascalCase(v)}
+            )
+        else:
+            pascal_case_dictionary.update({k[:1].upper() + k[1:]: v})
+    return pascal_case_dictionary
+
+
 @dataclass
 class UomValueInput(Generic[T]):
     Value: T = None
@@ -23,8 +55,7 @@ class UomValueInput(Generic[T]):
             result['value'] = self.Value
 
         if self.Uom is not None:
-            result['uom'] = self.Uom.toDictionary()
-
+            result['uom'] = _pascalToCamelCase(self.Uom.toDictionary())
         return result
 
     @staticmethod
@@ -33,15 +64,11 @@ class UomValueInput(Generic[T]):
 
         if not content:
             return result
-        
-        case_fold_content = {}
-        for k, v in content.items():
-            case_fold_content.update({k.casefold(): v})
 
-        if 'value' in case_fold_content:
-            result.Value = case_fold_content['value']
+        if 'value' in content:
+            result.Value = content['value']
 
-        if 'uom' in case_fold_content:
-            result.Uom = SdsUom.fromJson(case_fold_content['uom'])
+        if 'uom' in content:
+            result.Uom = SdsUom.fromJson(_camelToPascalCase(content['uom']))
 
         return result
