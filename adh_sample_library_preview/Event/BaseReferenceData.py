@@ -14,7 +14,6 @@ class BaseReferenceData(object):
     Name: str = None
     Description: str = None
     State: EventState = None
-    Asset: str = None
     CreatedDate: datetime = None
     ModifiedDate: datetime = None
     CreatedByUser: str = None
