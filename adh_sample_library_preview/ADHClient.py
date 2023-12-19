@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import logging
 
@@ -27,7 +29,7 @@ from .Units import Units
 from .Users import Users
 
 
-class ADHClient:
+class ADHClient(AbstractBaseClient):
     """
     A client that handles communication with AVEVA Data Hub
     """
@@ -92,7 +94,7 @@ class ADHClient:
         self.__users = Users(self.__base_client)
 
     @staticmethod
-    def fromAppsettings(path: str = None) -> ('ADHClient', str):
+    def fromAppsettings(path: str = None) -> tuple['ADHClient', str]:
         if not path:
             path = 'appsettings.json'
 
