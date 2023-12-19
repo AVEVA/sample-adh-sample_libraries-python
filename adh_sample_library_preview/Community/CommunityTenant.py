@@ -108,7 +108,7 @@ class CommunityTenant(object):
         return {
             'Id': self.Id,
             'Name': self.Name,
-            'Status': self.Status.name,
+            'Status': self.Status.value,
             'IsOwner': self.IsOwner,
             'UserCount': self.UserCount,
             'ClientCount': self.ClientCount,
