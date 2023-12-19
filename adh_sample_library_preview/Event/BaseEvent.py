@@ -136,7 +136,7 @@ class BaseEvent(object):
         if 'endTime' in content and content['endTime']:
             result.EndTime = datetime.fromisoformat(content['endTime'])
 
-        if 'duration' in content:
+        if 'duration' in content and content['duration']:
             groups = interval_regex.match(content['duration']).groupdict()
             time_delta_params = {k: (float(v) if v else 0) for k, v in groups.items()}
             result.Duration = timedelta(**time_delta_params)
