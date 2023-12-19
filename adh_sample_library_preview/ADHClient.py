@@ -92,7 +92,7 @@ class ADHClient:
         self.__users = Users(self.__base_client)
 
     @staticmethod
-    def fromAppsettings(path: str = None):
+    def fromAppsettings(path: str = None) -> ('ADHClient', str):
         if not path:
             path = 'appsettings.json'
 
@@ -107,15 +107,17 @@ class ADHClient:
             logging.ERROR(f'Could not open/read appsettings.json')
             exit()
 
-        return ADHClient(
-            appsettings.get('ApiVersion'),
-            appsettings.get('TenantId'),
-            appsettings.get('Resource'),
+        return (
+            ADHClient(
+                appsettings.get('ApiVersion'),
+                appsettings.get('TenantId'),
+                appsettings.get('Resource'),
+                appsettings.get('ClientId'),
+                appsettings.get('ClientSecret', None),
+                appsettings.get('AcceptVerbosity', False),
+                appsettings.get('LoggingEnabled', False),
+            ),
             appsettings.get('NamespaceId'),
-            appsettings.get('ClientId'),
-            appsettings.get('ClientSecret', None),
-            appsettings.get('AcceptVerbosity', False),
-            appsettings.get('LoggingEnabled', False),
         )
 
     @property
