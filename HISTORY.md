@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.6_preview / 2023-12-20
+
+- No changes, forcing update
+
 ## 0.10.5_preview / 2023-12-18
 
 - Update Communities, Assets, and Events
