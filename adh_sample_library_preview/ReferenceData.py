@@ -8,7 +8,6 @@ from .Securable import Securable
 
 
 class ReferenceData(Securable, object):
-
     def __init__(self, client: BaseClient):
         super().__init__(client=client, collection='ReferenceData')
 
@@ -17,9 +16,18 @@ class ReferenceData(Securable, object):
 
         self.__setPathAndQueryTemplates()
 
-    def getReferenceData(self, namespace_id: str, reference_data_type_id: str, id: str = None, fields: str = None,
-                  filter: str = None, order_by: str = None, count: int = None, continuation_token: str = None,
-                  reference_data_class: type = None) -> list[Any]:
+    def getReferenceData(
+        self,
+        namespace_id: str,
+        reference_data_type_id: str,
+        id: str = None,
+        fields: str = None,
+        filter: str = None,
+        order_by: str = None,
+        count: int = None,
+        continuation_token: str = None,
+        reference_data_class: type = None,
+    ) -> list[Any]:
         """
         Queries one or many reference data of a specified TypeId from the Graph Storage.
         The response will vary based on the TypeId and if you query for a single reference data (by id), or for many reference data, or for many reference data with paging.
@@ -53,14 +61,26 @@ class ReferenceData(Securable, object):
         if continuation_token is not None:
             params['continuationToken'] = continuation_token
 
-        response = self.__base_client.request('get', self.__reference_data_path.format(
-            namespace_id=namespace_id), params=params)
+        response = self.__base_client.request(
+            'get',
+            self.__reference_data_path.format(namespace_id=namespace_id),
+            params=params,
+        )
         self.__base_client.checkResponse(
-            response, f'Failed to get reference_data, {reference_data_type_id}.')
+            response, f'Failed to get reference_data, {reference_data_type_id}.'
+        )
 
-        return DataContent(response=response, value_class=reference_data_class).resolve()
+        return DataContent(
+            response=response, value_class=reference_data_class
+        ).resolve()
 
-    def getOrCreateReferenceData(self, namespace_id: str, reference_data_type_id: str, reference_data: list[Any], reference_data_class: type = None) -> list[Any]:
+    def getOrCreateReferenceData(
+        self,
+        namespace_id: str,
+        reference_data_type_id: str,
+        reference_data: list[Any],
+        reference_data_class: type = None,
+    ) -> list[Any]:
         """
         Upserts one or many reference data of a specified TypeId to the Graph Storage.
         If the body contains a JSON array, it upserts many reference data. If the body contains a single JSON object it upserts one reference data.
@@ -72,27 +92,40 @@ class ReferenceData(Securable, object):
             If None returns a dynamic Python object from the data.
         """
         self.__base_client.validateParameters(
-            namespace_id, reference_data_type_id, reference_data)
+            namespace_id, reference_data_type_id, reference_data
+        )
 
         params = {}
         params['typeId'] = self.__base_client.encode(reference_data_type_id)
 
         if callable(getattr(reference_data[0], 'toJson', None)):
-            reference_data = []
+            temp_reference_data = []
             for reference_data in reference_data:
-                reference_data.append(reference_data.toDictionary())
-            payload = json.dumps(reference_data)
+                temp_reference_data.append(reference_data.toDictionary())
+            payload = json.dumps(temp_reference_data)
         else:
             payload = reference_data
 
-        response = self.__base_client.request('post', self.__reference_data_path.format(
-            namespace_id=namespace_id), data=payload, params=params)
+        response = self.__base_client.request(
+            'post',
+            self.__reference_data_path.format(namespace_id=namespace_id),
+            data=payload,
+            params=params,
+        )
         self.__base_client.checkResponse(
-            response, f'Failed to create reference_data, {reference_data_type_id}.')
+            response, f'Failed to create reference_data, {reference_data_type_id}.'
+        )
 
-        return DataContent(response=response, value_class=reference_data_class).resolve()
+        return DataContent(
+            response=response, value_class=reference_data_class
+        ).resolve()
 
-    def deleteReferenceData(self, namespace_id: str, reference_data_type_id: str, reference_data_id: str = None):
+    def deleteReferenceData(
+        self,
+        namespace_id: str,
+        reference_data_type_id: str,
+        reference_data_id: str = None,
+    ):
         """
         Deletes one reference data of a specified TypeId from the Graph Storage.
         :param namespace_id: The namespace identifier
@@ -100,16 +133,21 @@ class ReferenceData(Securable, object):
         :param reference_data_id: The reference data id to delete.
         """
         self.__base_client.validateParameters(
-            namespace_id, reference_data_type_id, reference_data_id)
+            namespace_id, reference_data_type_id, reference_data_id
+        )
 
         params = {}
         params['typeId'] = self.__base_client.encode(reference_data_type_id)
         params['id'] = self.__base_client.encode(reference_data_id)
 
-        response = self.__base_client.request('delete', self.__reference_data_path.format(
-            namespace_id=namespace_id), params=params)
+        response = self.__base_client.request(
+            'delete',
+            self.__reference_data_path.format(namespace_id=namespace_id),
+            params=params,
+        )
         self.__base_client.checkResponse(
-            response, f'Failed to delete reference_data, {reference_data_id}.')
+            response, f'Failed to delete reference_data, {reference_data_id}.'
+        )
 
     # private methods
 
@@ -118,8 +156,11 @@ class ReferenceData(Securable, object):
         Creates URLs that are used by the client
         :return:
         """
-        self.__base_path_preview = self.__uri_api + \
-            '-preview/Tenants/' + self.__base_client.tenant + \
-            '/Namespaces/{namespace_id}'
+        self.__base_path_preview = (
+            self.__uri_api
+            + '-preview/Tenants/'
+            + self.__base_client.tenant
+            + '/Namespaces/{namespace_id}'
+        )
 
         self.__reference_data_path = self.__base_path_preview + '/ReferenceData'

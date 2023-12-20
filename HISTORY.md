@@ -1,5 +1,10 @@
 # Version History
 
+## 0.10.5_preview / 2023-12-18
+
+- Update Communities, Assets, and Events
+- Add appsettings file parsing to library
+
 ## 0.10.4_preview / 2023-12-08
 
 - Migrate Pipelines

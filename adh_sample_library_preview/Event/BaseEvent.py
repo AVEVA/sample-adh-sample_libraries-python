@@ -6,12 +6,44 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any
 
-
+from ..Asset import Asset
 from .EventState import EventState
 
 interval_regex = re.compile(
     r'^(?P<days>\d+)?[.]?(?P<hours>\d\d):(?P<minutes>\d\d):(?P<seconds>(\d\d|\d\d[.]\d+))$'
 )
+
+
+def _pascalToCamelCase(dictionary: dict[str, Any]):
+    camel_case_dictionary = {}
+    for k, v in dictionary.items():
+        if isinstance(v, list):
+            l = []
+            for i in v:
+                l.append(_pascalToCamelCase(i))
+            camel_case_dictionary.update({k[:1].lower() + k[1:]: l})
+        elif isinstance(v, dict):
+            camel_case_dictionary.update({k[:1].lower() + k[1:]: _pascalToCamelCase(v)})
+        else:
+            camel_case_dictionary.update({k[:1].lower() + k[1:]: v})
+    return camel_case_dictionary
+
+
+def _camelToPascalCase(dictionary: dict[str, Any]):
+    pascal_case_dictionary = {}
+    for k, v in dictionary.items():
+        if isinstance(v, list):
+            l = []
+            for i in v:
+                l.append(_camelToPascalCase(i))
+            pascal_case_dictionary.update({k[:1].upper() + k[1:]: l})
+        elif isinstance(v, dict):
+            pascal_case_dictionary.update(
+                {k[:1].upper() + k[1:]: _camelToPascalCase(v)}
+            )
+        else:
+            pascal_case_dictionary.update({k[:1].upper() + k[1:]: v})
+    return pascal_case_dictionary
 
 
 @dataclass
@@ -23,9 +55,9 @@ class BaseEvent(object):
     EndTime: datetime = None
     Duration: timedelta = None
     State: EventState = None
-    Asset: str = None
-    CreatedDate: str = None
-    ModifiedDate: str = None
+    Asset: Asset = None
+    CreatedDate: datetime = None
+    ModifiedDate: datetime = None
     CreatedByUser: str = None
     ModifiedByUser: str = None
     AuthorizationTags: list[str] = None
@@ -63,7 +95,7 @@ class BaseEvent(object):
             result['state'] = self.State.value
 
         if self.Asset is not None:
-            result['asset'] = self.Asset
+            result['asset'] = _pascalToCamelCase(self.Asset.toDictionary())
 
         if self.CreatedDate is not None:
             result['createdDate'] = datetime.isoformat(self.CreatedDate)
@@ -104,7 +136,7 @@ class BaseEvent(object):
         if 'endTime' in content and content['endTime']:
             result.EndTime = datetime.fromisoformat(content['endTime'])
 
-        if 'duration' in content:
+        if 'duration' in content and content['duration']:
             groups = interval_regex.match(content['duration']).groupdict()
             time_delta_params = {k: (float(v) if v else 0) for k, v in groups.items()}
             result.Duration = timedelta(**time_delta_params)
@@ -112,8 +144,8 @@ class BaseEvent(object):
         if 'state' in content:
             result.State = EventState(content['state'])
 
-        if 'asset' in content:
-            result.Asset = content['asset']
+        if 'asset' in content and content['asset']:
+            result.Asset = Asset.fromJson(_camelToPascalCase(content['asset']))
 
         if 'createdDate' in content:
             result.CreatedDate = datetime.fromisoformat(content['createdDate'])
