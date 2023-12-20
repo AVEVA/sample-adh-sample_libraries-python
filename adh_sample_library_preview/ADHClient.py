@@ -118,7 +118,7 @@ class ADHClient:
                 appsettings.get('AcceptVerbosity', False),
                 appsettings.get('LoggingEnabled', False),
             ),
-            appsettings.get('NamespaceId'),
+            appsettings.get('NamespaceId', None),
         )
 
     @property
