@@ -1,5 +1,6 @@
 from __future__ import annotations  # To type hint the enclosing class
 from datetime import datetime
+from dateutil.parser import isoparse
 import json
 
 from .SdsExtrapolationMode import SdsExtrapolationMode
@@ -411,9 +412,9 @@ class SdsType(object):
                         extrapolation_mode]
                     
         if 'CreatedDate' in content:
-            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
+            result.CreatedDate = isoparse(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
+            result.ModifiedDate = isoparse(content['ModifiedDate'])
 
         return result

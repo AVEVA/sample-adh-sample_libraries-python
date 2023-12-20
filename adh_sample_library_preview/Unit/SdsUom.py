@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import datetime
+from dateutil.parser import isoparse
 
 
 class SdsUom(object):
@@ -254,9 +255,9 @@ class SdsUom(object):
             result.ConversionOffset = content['ConversionOffset']
 
         if 'CreatedDate' in content:
-            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
+            result.CreatedDate = isoparse(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
+            result.ModifiedDate = isoparse(content['ModifiedDate'])
 
         return result
