@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime
+from dateutil.parser import isoparse
 from typing import Any
 
 from .EventState import EventState
@@ -83,10 +84,10 @@ class BaseReferenceData(object):
             result.State = EventState(content['state'])
 
         if 'createdDate' in content:
-            result.CreatedDate = datetime.fromisoformat(content['createdDate'])
+            result.CreatedDate = isoparse(content['createdDate'])
 
         if 'modifiedDate' in content:
-            result.ModifiedDate = datetime.fromisoformat(content['modifiedDate'])
+            result.ModifiedDate = isoparse(content['modifiedDate'])
 
         if 'createdByUser' in content:
             result.CreatedByUser = content['createdByUser']

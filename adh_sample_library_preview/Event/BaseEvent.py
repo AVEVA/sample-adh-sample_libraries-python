@@ -4,6 +4,7 @@ import json
 import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from dateutil.parser import isoparse
 from typing import Any
 
 from ..Asset import Asset
@@ -131,10 +132,10 @@ class BaseEvent(object):
             result.Description = content['description']
 
         if 'startTime' in content:
-            result.StartTime = datetime.fromisoformat(content['startTime'])
+            result.StartTime = isoparse(content['startTime'])
 
         if 'endTime' in content and content['endTime']:
-            result.EndTime = datetime.fromisoformat(content['endTime'])
+            result.EndTime = isoparse(content['endTime'])
 
         if 'duration' in content and content['duration']:
             groups = interval_regex.match(content['duration']).groupdict()
@@ -148,10 +149,10 @@ class BaseEvent(object):
             result.Asset = Asset.fromJson(_camelToPascalCase(content['asset']))
 
         if 'createdDate' in content:
-            result.CreatedDate = datetime.fromisoformat(content['createdDate'])
+            result.CreatedDate = isoparse(content['createdDate'])
 
         if 'modifiedDate' in content:
-            result.ModifiedDate = datetime.fromisoformat(content['modifiedDate'])
+            result.ModifiedDate = isoparse(content['modifiedDate'])
 
         if 'createdByUser' in content:
             result.CreatedByUser = content['createdByUser']

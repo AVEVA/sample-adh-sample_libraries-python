@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.7_preview / 2023-12-20
+
+- Fixed fromisoformat backwards compatibilty issue by replacing with dateutil isoparse
+
 ## 0.10.6_preview / 2023-12-20
 
 - No changes, forcing update
