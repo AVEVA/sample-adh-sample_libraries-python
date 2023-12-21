@@ -1,16 +1,19 @@
 ﻿from __future__ import annotations
 from datetime import datetime
+from dateutil.parser import isoparse
 import json
 from typing import Any
 
+from .ReferenceDataCategory import ReferenceDataCategory
 from .LifeCycleState import LifeCycleState
 from .TypeProperty import TypeProperty
 
 
-class EventGraphEventType(object):
+class ReferenceDataType(object):
 
-    def __init__(self, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
+    def __init__(self, category: ReferenceDataCategory = None, properties: list[TypeProperty] = None, default_authorization_tag: str = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
         """
+        :param ReferenceDataCategory category: 
         :param list[TypeProperty] properties: 
         :param str default_authorization_tag: 
         :param str name: 
@@ -23,6 +26,7 @@ class EventGraphEventType(object):
         :param str description: 
         """
 
+        self.__category = category
         self.__properties = properties
         self.__default_authorization_tag = default_authorization_tag
         self.__name = name
@@ -33,6 +37,14 @@ class EventGraphEventType(object):
         self.__created_date = created_date
         self.__modified_date = modified_date
         self.__description = description
+
+    @property
+    def Category(self) -> ReferenceDataCategory:
+        return self.__category
+
+    @Category.setter
+    def Category(self, value: ReferenceDataCategory):
+        self.__category = value
 
     @property
     def Properties(self) -> list[TypeProperty]:
@@ -120,6 +132,9 @@ class EventGraphEventType(object):
     def toDictionary(self) -> dict[str, Any]:
         result = {}
 
+        if self.Category is not None:
+            result['Category'] = self.Category.value
+
         if self.Properties is not None:
             result['Properties'] = []
             for value in self.Properties:
@@ -155,11 +170,14 @@ class EventGraphEventType(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> EventGraphEventType:
-        result = EventGraphEventType()
+    def fromJson(content: dict[str, Any]) -> ReferenceDataType:
+        result = ReferenceDataType()
 
         if not content:
             return result
+
+        if 'Category' in content:
+            result.Category = ReferenceDataCategory(content['Category'])
 
         if 'Properties' in content:
             values = content['Properties']
@@ -187,10 +205,10 @@ class EventGraphEventType(object):
             result.State = LifeCycleState(content['State'])
 
         if 'CreatedDate' in content:
-            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
+            result.CreatedDate = isoparse(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
+            result.ModifiedDate = isoparse(content['ModifiedDate'])
 
         if 'Description' in content:
             result.Description = content['Description']

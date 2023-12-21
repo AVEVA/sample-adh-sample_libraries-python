@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from adh_sample_library_preview import Asset
-
-from .EventType import EventType
-from .TypeProperty import TypeProperty
+from .LifeCycleState import LifeCycleState
 from .PropertyTypeCode import PropertyTypeCode
 from .PropertyTypeFlags import PropertyTypeFlags
-from .LifeCycleState import LifeCycleState
+from .ReferenceDataType import ReferenceDataType
+from .ReferenceDataCategory import ReferenceDataCategory
+from .TypeProperty import TypeProperty
 
 
-class BaseEventType(EventType):
+class BaseExternalReferenceType(ReferenceDataType):
     """ADH Asset definition"""
 
     def __init__(self):
@@ -79,67 +78,31 @@ class BaseEventType(EventType):
                 description='Description of what the resource means',
             ),
             TypeProperty(
-                PropertyTypeCode.DateTime,
-                'eventStartTime',
-                'startTime',
-                'startTime',
+                PropertyTypeCode.String,
+                'sourceId',
+                'sourceId',
+                'sourceId',
                 PropertyTypeFlags.none,
                 LifeCycleState.Active,
-                description='Timestamp of when the event started',
-            ),
-            TypeProperty(
-                PropertyTypeCode.DateTime,
-                'eventEndTime',
-                'endTime',
-                'endTime',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='Timestamp of when the event ended',
-            ),
-            TypeProperty(
-                PropertyTypeCode.TimeSpan,
-                'eventDuration',
-                'duration',
-                'duration',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='Total duration of the event',
+                description='Id of remote repository to be referenced',
             ),
             TypeProperty(
                 PropertyTypeCode.String,
-                'eventType',
-                'eventType',
-                'eventType',
+                'resourceId',
+                'resourceId',
+                'resourceId',
                 PropertyTypeFlags.none,
                 LifeCycleState.Active,
-                description='A reference to another EventType that exists in the system',
-            ),
-            TypeProperty(
-                PropertyTypeCode.Enumeration,
-                'eventState',
-                'state',
-                'state',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                'state',
-                description='Current state of the event',
-            ),
-            TypeProperty(
-                PropertyTypeCode.Asset,
-                'asset',
-                'asset',
-                'asset',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='The asset associated with the resource',
+                description='Id of remote object to be referenced',
             ),
         ]
         super().__init__(
+            ReferenceDataCategory.ExternalReference,
             properties,
             'BaseAuthorizationTag',
-            'BaseEvent',
-            'BaseEvent',
+            'BaseExternalReference',
+            'BaseExternalReference',
             1,
-            'BaseEvent',
+            'BaseExternalReference',
             LifeCycleState.Active,
         )

@@ -1,4 +1,8 @@
-from .AbstractBaseClient import AbstractBaseClient
+from __future__ import annotations
+
+import json
+import logging
+
 from .AssetRules import AssetRules
 from .Assets import Assets
 from .AssetTypes import AssetTypes
@@ -21,15 +25,26 @@ from .StreamViews import StreamViews
 from .Subscriptions import Subscriptions
 from .Topics import Topics
 from .Types import Types
+from .Units import Units
 from .Users import Users
+
 
 class ADHClient:
     """
     A client that handles communication with AVEVA Data Hub
     """
 
-    def __init__(self, api_version: str, tenant: str, url: str, client_id: str,
-                 client_secret: str = None, accept_verbosity: bool = False, logging_enabled: bool = False, **kwargs):
+    def __init__(
+        self,
+        api_version: str,
+        tenant: str,
+        url: str,
+        client_id: str,
+        client_secret: str = None,
+        accept_verbosity: bool = False,
+        logging_enabled: bool = False,
+        **kwargs,
+    ):
         """
         Use this to help in communication with ADH
         :param api_version: Version of the api you are communicating with
@@ -45,8 +60,15 @@ class ADHClient:
         if 'base_client' in kwargs:
             self.__base_client = kwargs.get('base_client')
         else:
-            self.__base_client = BaseClient(api_version, tenant, url, client_id,
-                                            client_secret, accept_verbosity, logging_enabled)
+            self.__base_client = BaseClient(
+                api_version,
+                tenant,
+                url,
+                client_id,
+                client_secret,
+                accept_verbosity,
+                logging_enabled,
+            )
 
         self.__asset_rules = AssetRules(self.__base_client)
         self.__assets = Assets(self.__base_client)
@@ -69,7 +91,37 @@ class ADHClient:
         self.__subscriptions = Subscriptions(self.__base_client)
         self.__types = Types(self.__base_client)
         self.__topics = Topics(self.__base_client)
+        self.__units = Units(self.__base_client)
         self.__users = Users(self.__base_client)
+
+    @staticmethod
+    def fromAppsettings(path: str = None) -> tuple['ADHClient', str]:
+        if not path:
+            path = 'appsettings.json'
+
+        try:
+            with open(
+                path,
+                'r',
+            ) as f:
+                appsettings = json.load(f)
+        except Exception as error:
+            logging.ERROR(f'Error: {str(error)}')
+            logging.ERROR(f'Could not open/read appsettings.json')
+            exit()
+
+        return (
+            ADHClient(
+                appsettings.get('ApiVersion'),
+                appsettings.get('TenantId'),
+                appsettings.get('Resource'),
+                appsettings.get('ClientId'),
+                appsettings.get('ClientSecret', None),
+                appsettings.get('AcceptVerbosity', False),
+                appsettings.get('LoggingEnabled', False),
+            ),
+            appsettings.get('NamespaceId', None),
+        )
 
     @property
     def uri(self) -> str:
@@ -138,7 +190,7 @@ class ADHClient:
         :return: A client for interacting with Asset Types
         """
         return self.__asset_types
-    
+
     @property
     def AuthorizationTags(self) -> AuthorizationTags:
         """
@@ -166,7 +218,7 @@ class ADHClient:
         :return: A client for interacting with Data Views
         """
         return self.__data_views
-    
+
     @property
     def Enumerations(self) -> Enumerations:
         """
@@ -180,14 +232,14 @@ class ADHClient:
         :return: A client for interacting with Events
         """
         return self.__events
-    
+
     @property
     def EventTypes(self) -> EventTypes:
         """
         :return: A client for interacting with Events
         """
         return self.__event_types
-    
+
     @property
     def GraphQL(self) -> GraphQL:
         """
@@ -229,14 +281,14 @@ class ADHClient:
         :return: A client for interacting with Namespaces
         """
         return self.__namespaces
-    
+
     @property
     def ReferenceDataTypes(self) -> ReferenceDataTypes:
         """
         :return: A client for interacting with ReferenceDataTypes
         """
         return self.__reference_data_types
-    
+
     @property
     def ReferenceData(self) -> ReferenceData:
         """
@@ -264,6 +316,13 @@ class ADHClient:
         :return: A client for interacting with Topics
         """
         return self.__topics
+
+    @property
+    def Units(self) -> Units:
+        """
+        :return: A client for interacting with Units
+        """
+        return self.__units
 
     @property
     def Users(self) -> Users:

@@ -9,7 +9,7 @@ from .PropertyTypeFlags import PropertyTypeFlags
 
 class TypeProperty(object):
 
-    def __init__(self, property_type_code: PropertyTypeCode = None, id: str = None, name: str = None, graph_ql_name: str = None, flags: PropertyTypeFlags = None, state: LifeCycleState = None, property_type_id: str = None, remote_reference_name: str = None, description: str = None):
+    def __init__(self, property_type_code: PropertyTypeCode = None, id: str = None, name: str = None, graph_ql_name: str = None, flags: PropertyTypeFlags = None, state: LifeCycleState = None, property_type_id: str = None, remote_reference_name: str = None, description: str = None, uom: str = None):
         """
         :param PropertyTypeCode property_type_code: 
         :param str id: 
@@ -20,6 +20,7 @@ class TypeProperty(object):
         :param str property_type_id: 
         :param str remote_reference_name: 
         :param str description: 
+        :param str uom:
         """
 
         self.__property_type_code = property_type_code
@@ -31,6 +32,7 @@ class TypeProperty(object):
         self.__property_type_id = property_type_id
         self.__remote_reference_name = remote_reference_name
         self.__description = description
+        self.__uom = uom
 
     @property
     def PropertyTypeCode(self) -> PropertyTypeCode:
@@ -104,6 +106,14 @@ class TypeProperty(object):
     def Description(self, value: str):
         self.__description = value
 
+    @property
+    def Uom(self) -> str:
+        return self.__uom
+
+    @Uom.setter
+    def Uom(self, value: str):
+        self.__uom = value
+
     def toJson(self) -> str:
         return json.dumps(self.toDictionary())
 
@@ -136,6 +146,9 @@ class TypeProperty(object):
 
         if self.Description is not None:
             result['Description'] = self.Description
+
+        if self.Uom is not None:
+            result['Uom'] = self.Uom
 
         return result
 
@@ -172,5 +185,8 @@ class TypeProperty(object):
 
         if 'Description' in content:
             result.Description = content['Description']
+
+        if 'Uom' in content:
+            result.Description = content['Uom']
 
         return result

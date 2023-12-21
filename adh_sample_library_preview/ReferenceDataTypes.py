@@ -1,7 +1,7 @@
 ﻿from __future__ import annotations
 
 from .BaseClient import BaseClient
-from .Event.EventGraphReferenceDataType import EventGraphReferenceDataType
+from .Event.ReferenceDataType import ReferenceDataType
 from .Securable import Securable
 
 
@@ -20,7 +20,7 @@ class ReferenceDataTypes(Securable, object):
                       skip: int = None,
                       count: int = None,
                       include_deleted: bool = None,
-                      filter: str = None) -> list[EventGraphReferenceDataType]:
+                      filter: str = None) -> list[ReferenceDataType]:
         """
         Gets a list of `ReferenceDataType` objects. 
 
@@ -49,23 +49,23 @@ class ReferenceDataTypes(Securable, object):
             response, f'Failed to get list of ReferenceDataTypes.')
 
         serialized = response.json()
-        results: list[EventGraphReferenceDataType] = []
+        results: list[ReferenceDataType] = []
         for i in serialized:
-            results.append(EventGraphReferenceDataType.fromJson(i))
+            results.append(ReferenceDataType.fromJson(i))
         return results
 
     def createReferenceDataType(self, namespace_id: str,
-                             reference_data_type: EventGraphReferenceDataType = None) -> EventGraphReferenceDataType:
+                             reference_data_type: ReferenceDataType = None) -> ReferenceDataType:
         """
         Creates a new `ReferenceDataType` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
-        :param EventGraphReferenceDataType reference_data_type: A reference data type object
+        :param ReferenceDataType reference_data_type: A reference data type object
         """
 
         self.__base_client.validateParameters(namespace_id)
 
-        if not isinstance(reference_data_type, EventGraphReferenceDataType):
+        if not isinstance(reference_data_type, ReferenceDataType):
             raise TypeError
 
         response = self.__base_client.request('post', self.__reference_data_types_path.format(
@@ -74,11 +74,11 @@ class ReferenceDataTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to create ReferenceDataType.')
 
-        return EventGraphReferenceDataType.fromJson(response.json())
+        return ReferenceDataType.fromJson(response.json())
 
     def getReferenceDataType(self, namespace_id: str,
                      reference_data_type_id: str,
-                     include_deleted: bool = None) -> EventGraphReferenceDataType:
+                     include_deleted: bool = None) -> ReferenceDataType:
         """
         Gets the specified `ReferenceDataType`. 
 
@@ -98,22 +98,22 @@ class ReferenceDataTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get ReferenceDataType, {reference_data_type_id}.')
 
-        return EventGraphReferenceDataType.fromJson(response.json())
+        return ReferenceDataType.fromJson(response.json())
 
     def getOrCreateReferenceDataType(self, namespace_id: str,
                              reference_data_type_id: str,
-                             reference_data_type: EventGraphReferenceDataType = None) -> EventGraphReferenceDataType:
+                             reference_data_type: ReferenceDataType = None) -> ReferenceDataType:
         """
         Creates the specified `ReferenceDataType`. 
 
         :param namespace_id: id of namespace to work against
         :param str reference_data_type_id: The id of the ReferenceDataType. 
-        :param EventGraphReferenceDataType reference_data_type: A reference data type object
+        :param ReferenceDataType reference_data_type: A reference data type object
         """
 
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)
 
-        if not isinstance(reference_data_type, EventGraphReferenceDataType):
+        if not isinstance(reference_data_type, ReferenceDataType):
             raise TypeError
 
         response = self.__base_client.request('post', self.__reference_data_type_path.format(
@@ -122,22 +122,22 @@ class ReferenceDataTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to create ReferenceDataType, {reference_data_type_id}.')
 
-        return EventGraphReferenceDataType.fromJson(response.json())
+        return ReferenceDataType.fromJson(response.json())
 
     def updateReferenceDataType(self, namespace_id: str,
                         reference_data_type_id: str,
-                        reference_data_type: EventGraphReferenceDataType = None) -> EventGraphReferenceDataType:
+                        reference_data_type: ReferenceDataType = None) -> ReferenceDataType:
         """
         Updates the specified `ReferenceDataType`. 
 
         :param namespace_id: id of namespace to work against
         :param str reference_data_type_id: The id of the ReferenceDataType. 
-        :param EventGraphReferenceDataType reference_data_type: A reference data type object
+        :param ReferenceDataType reference_data_type: A reference data type object
         """
 
         self.__base_client.validateParameters(namespace_id, reference_data_type_id)
 
-        if not isinstance(reference_data_type, EventGraphReferenceDataType):
+        if not isinstance(reference_data_type, ReferenceDataType):
             raise TypeError
 
         response = self.__base_client.request('put', self.__reference_data_type_path.format(
@@ -146,7 +146,7 @@ class ReferenceDataTypes(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to update ReferenceDataType, {reference_data_type_id}.')
 
-        return EventGraphReferenceDataType.fromJson(response.json())
+        return ReferenceDataType.fromJson(response.json())
 
     def deleteReferenceDataType(self, namespace_id: str,
                         reference_data_type_id: str):
@@ -166,17 +166,17 @@ class ReferenceDataTypes(Securable, object):
             response, f'Failed to delete ReferenceDataType, {reference_data_type_id}.')
 
     def bulkCreateReferenceDataTypes(self, namespace_id: str,
-                             reference_data_types: list[EventGraphReferenceDataType] = None) -> EventGraphReferenceDataType:
+                             reference_data_types: list[ReferenceDataType] = None) -> ReferenceDataType:
         """
         Creates ReferenceDataTypes in bulk. 
 
         :param namespace_id: id of namespace to work against
-        :param list[EventGraphReferenceDataType] reference_data_types: 
+        :param list[ReferenceDataType] reference_data_types: 
         """
 
         self.__base_client.validateParameters(namespace_id)
 
-        if not isinstance(reference_data_types, list[EventGraphReferenceDataType]):
+        if not isinstance(reference_data_types, list[ReferenceDataType]):
             raise TypeError
 
         response = self.__base_client.request('post', self.__reference_data_types_bulk_path.format(
@@ -184,7 +184,7 @@ class ReferenceDataTypes(Securable, object):
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create ReferenceDataTypes.')
-        return EventGraphReferenceDataType.fromJson(response.json())
+        return ReferenceDataType.fromJson(response.json())
 
     # private methods
 

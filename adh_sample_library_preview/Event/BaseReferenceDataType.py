@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from adh_sample_library_preview import Asset
-
-from .EventType import EventType
-from .TypeProperty import TypeProperty
+from .LifeCycleState import LifeCycleState
 from .PropertyTypeCode import PropertyTypeCode
 from .PropertyTypeFlags import PropertyTypeFlags
-from .LifeCycleState import LifeCycleState
+from .ReferenceDataType import ReferenceDataType
+from .ReferenceDataCategory import ReferenceDataCategory
+from .TypeProperty import TypeProperty
 
 
-class BaseEventType(EventType):
+class BaseReferenceDataType(ReferenceDataType):
     """ADH Asset definition"""
 
     def __init__(self):
@@ -78,68 +77,14 @@ class BaseEventType(EventType):
                 LifeCycleState.Active,
                 description='Description of what the resource means',
             ),
-            TypeProperty(
-                PropertyTypeCode.DateTime,
-                'eventStartTime',
-                'startTime',
-                'startTime',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='Timestamp of when the event started',
-            ),
-            TypeProperty(
-                PropertyTypeCode.DateTime,
-                'eventEndTime',
-                'endTime',
-                'endTime',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='Timestamp of when the event ended',
-            ),
-            TypeProperty(
-                PropertyTypeCode.TimeSpan,
-                'eventDuration',
-                'duration',
-                'duration',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='Total duration of the event',
-            ),
-            TypeProperty(
-                PropertyTypeCode.String,
-                'eventType',
-                'eventType',
-                'eventType',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='A reference to another EventType that exists in the system',
-            ),
-            TypeProperty(
-                PropertyTypeCode.Enumeration,
-                'eventState',
-                'state',
-                'state',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                'state',
-                description='Current state of the event',
-            ),
-            TypeProperty(
-                PropertyTypeCode.Asset,
-                'asset',
-                'asset',
-                'asset',
-                PropertyTypeFlags.none,
-                LifeCycleState.Active,
-                description='The asset associated with the resource',
-            ),
         ]
         super().__init__(
+            ReferenceDataCategory.ReferenceData,
             properties,
             'BaseAuthorizationTag',
-            'BaseEvent',
-            'BaseEvent',
+            'BaseReferenceData',
+            'BaseReferenceData',
             1,
-            'BaseEvent',
+            'BaseReferenceData',
             LifeCycleState.Active,
         )
