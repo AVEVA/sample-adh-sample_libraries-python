@@ -62,7 +62,7 @@ class Update(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any], input_type: Type[Any]) -> Update[Any]:
+    def fromJson(content: dict[str, Any]) -> Update[Any]:
         result = Update[Any]()
 
         if not content:
@@ -78,11 +78,7 @@ class Update(object):
             events = content['events']
             if events is not None and len(events) > 0:
                 result.Events = []
-                if input_type is None:
-                    for event in events:
-                        result.Events.append(event)
-                else:
-                    for event in events:
-                        result.Events.append(input_type.fromJson(event))
+                for event in events:
+                    result.Events.append(event)
 
         return result

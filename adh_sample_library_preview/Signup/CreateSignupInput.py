@@ -55,7 +55,7 @@ class CreateSignupInput(object):
             result['name'] = self.Name
 
         if self.ResourceType is not None:
-            result['resourceType'] = self.ResourceType.name
+            result['resourceType'] = self.ResourceType.value
 
         if self.ResourceIds is not None:
             result['resourceIds'] = []

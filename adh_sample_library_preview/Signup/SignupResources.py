@@ -28,22 +28,23 @@ class SignupResources(object):
 
     def toDictionary(self) -> dict[str, Any]:
         result = {}
-
         if self.Resources is not None:
+            result['resources'] = []
             for resource in self.Resources:
-                result['resources'] = resource
+                result['resources'].append(resource.toDictionary())
 
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> SignupResource:
-        result = SignupResource()
+    def fromJson(content: dict[str, Any]) -> SignupResources:
+        result = SignupResources()
 
         if not content:
             return result
 
         if 'resources' in content:
-            for resource in content:
-                result.Resources = resource['resources']
+            result.Resources = []
+            for resource in content['resources']:
+                result.Resources.append(SignupResource.fromJson(resource))
 
         return result
