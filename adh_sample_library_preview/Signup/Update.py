@@ -62,8 +62,8 @@ class Update(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> Update[Any]:
-        result = Update[Any]()
+    def fromJson(content: dict[str, Any]) -> Update:
+        result = Update()
 
         if not content:
             return result
