@@ -1,5 +1,6 @@
 from __future__ import annotations
 from datetime import datetime
+from dateutil.parser import isoparse
 import json
 
 
@@ -142,9 +143,9 @@ class AssetRule(object):
             result.Description = content['Description']
 
         if 'CreationTime' in content:
-            result.CreationTime = datetime.fromisoformat(content['CreationTime'])
+            result.CreationTime = isoparse(content['CreationTime'])
 
         if 'ModifiedTime' in content:
-            result.ModifiedTime = datetime.fromisoformat(content['ModifiedTime'])
+            result.ModifiedTime = isoparse(content['ModifiedTime'])
 
         return result

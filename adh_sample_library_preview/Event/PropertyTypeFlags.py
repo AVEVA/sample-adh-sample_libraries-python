@@ -10,4 +10,5 @@ class PropertyTypeFlags(Flag):
     Indexed = 2
     Required = 4
     IsCollection = 8
-    ReverseLookup = 16
+    NoUom = 16
+    NoAggregation = 32

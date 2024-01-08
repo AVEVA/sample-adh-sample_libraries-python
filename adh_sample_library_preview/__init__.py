@@ -24,6 +24,7 @@ from .Securable import Securable
 from .Signups import Signups
 from .Subscriptions import Subscriptions
 from .Topics import Topics
+from .Units import Units
 from .Users import Users
 from .Asset import *
 from .Community import *
@@ -34,3 +35,4 @@ from .SDS import *
 from .Security import *
 from .Signup import *
 from .Tenant import *
+from .Unit import *

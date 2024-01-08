@@ -1,7 +1,7 @@
 ﻿from __future__ import annotations
 
 from .BaseClient import BaseClient
-from .Event.EventGraphEnumeration import EventGraphEnumeration
+from .Event.Enumeration import Enumeration
 from .Securable import Securable
 
 
@@ -20,7 +20,7 @@ class Enumerations(Securable, object):
                       skip: int = None,
                       count: int = None,
                       include_deleted: bool = None,
-                      filter: str = None) -> list[EventGraphEnumeration]:
+                      filter: str = None) -> list[Enumeration]:
         """
         Gets a list of `Enumeration` objects. 
 
@@ -49,23 +49,23 @@ class Enumerations(Securable, object):
             response, f'Failed to get list of Enumerations.')
 
         serialized = response.json()
-        results: list[EventGraphEnumeration] = []
+        results: list[Enumeration] = []
         for i in serialized:
-            results.append(EventGraphEnumeration.fromJson(i))
+            results.append(Enumeration.fromJson(i))
         return results
 
     def createEnumeration(self, namespace_id: str,
-                             enumeration: EventGraphEnumeration = None) -> EventGraphEnumeration:
+                             enumeration: Enumeration = None) -> Enumeration:
         """
         Creates a new `Enumeration` object with server generated Id. 
 
         :param namespace_id: id of namespace to work against
-        :param EventGraphEnumeration enumeration: An enumeration object
+        :param Enumeration enumeration: An enumeration object
         """
 
         self.__base_client.validateParameters(namespace_id)
 
-        if not isinstance(enumeration, EventGraphEnumeration):
+        if not isinstance(enumeration, Enumeration):
             raise TypeError
 
         response = self.__base_client.request('post', self.__enumerations_path.format(
@@ -74,11 +74,11 @@ class Enumerations(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to create Enumeration.')
 
-        return EventGraphEnumeration.fromJson(response.json())
+        return Enumeration.fromJson(response.json())
 
     def getEnumeration(self, namespace_id: str,
                      enumeration_id: str,
-                     include_deleted: bool = None) -> EventGraphEnumeration:
+                     include_deleted: bool = None) -> Enumeration:
         """
         Gets the specified `Enumeration`. 
 
@@ -98,22 +98,22 @@ class Enumerations(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to get Enumeration, {enumeration_id}.')
 
-        return EventGraphEnumeration.fromJson(response.json())
+        return Enumeration.fromJson(response.json())
 
     def getOrCreateEnumeration(self, namespace_id: str,
                              enumeration_id: str,
-                             enumeration: EventGraphEnumeration = None) -> EventGraphEnumeration:
+                             enumeration: Enumeration = None) -> Enumeration:
         """
         Creates the specified `Enumeration`. 
 
         :param namespace_id: id of namespace to work against
         :param str enumeration_id: The enumeration identifier
-        :param EventGraphEnumeration enumeration: An enumeration object
+        :param Enumeration enumeration: An enumeration object
         """
 
         self.__base_client.validateParameters(namespace_id, enumeration_id)
 
-        if not isinstance(enumeration, EventGraphEnumeration):
+        if not isinstance(enumeration, Enumeration):
             raise TypeError
 
         response = self.__base_client.request('post', self.__enumeration_path.format(
@@ -122,22 +122,22 @@ class Enumerations(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to create Enumeration, {enumeration_id}.')
 
-        return EventGraphEnumeration.fromJson(response.json())
+        return Enumeration.fromJson(response.json())
 
     def updateEnumeration(self, namespace_id: str,
                         enumeration_id: str,
-                        enumeration: EventGraphEnumeration = None) -> EventGraphEnumeration:
+                        enumeration: Enumeration = None) -> Enumeration:
         """
         Updates the specified `Enumeration`. 
 
         :param namespace_id: id of namespace to work against
         :param str enumeration_id: The enumeration identifier
-        :param EventGraphEnumeration enumeration: An enumeration object
+        :param Enumeration enumeration: An enumeration object
         """
 
         self.__base_client.validateParameters(namespace_id, enumeration_id)
 
-        if not isinstance(enumeration, EventGraphEnumeration):
+        if not isinstance(enumeration, Enumeration):
             raise TypeError
 
         response = self.__base_client.request('put', self.__enumeration_path.format(
@@ -146,7 +146,7 @@ class Enumerations(Securable, object):
         self.__base_client.checkResponse(
             response, f'Failed to update Enumeration, {enumeration_id}.')
 
-        return EventGraphEnumeration.fromJson(response.json())
+        return Enumeration.fromJson(response.json())
 
     def deleteEnumeration(self, namespace_id: str,
                         enumeration_id: str):
@@ -166,17 +166,17 @@ class Enumerations(Securable, object):
             response, f'Failed to delete Enumeration, {enumeration_id}.')
 
     def bulkCreateEnumerations(self, namespace_id: str,
-                             enumerations: list[EventGraphEnumeration] = None) -> EventGraphEnumeration:
+                             enumerations: list[Enumeration] = None) -> Enumeration:
         """
         Creates Enumerations in bulk. 
 
         :param namespace_id: id of namespace to work against
-        :param list[EventGraphEnumeration] enumerations: A list of enumeration objects
+        :param list[Enumeration] enumerations: A list of enumeration objects
         """
 
         self.__base_client.validateParameters(namespace_id)
 
-        if not isinstance(enumerations, list[EventGraphEnumeration]):
+        if not isinstance(enumerations, list[Enumeration]):
             raise TypeError
 
         response = self.__base_client.request('post', self.__enumerations_path_bulk_path.format(
@@ -184,7 +184,7 @@ class Enumerations(Securable, object):
 
         self.__base_client.checkResponse(
             response, f'Failed to bulk create Enumerations.')
-        return EventGraphEnumeration.fromJson(response.json())
+        return Enumeration.fromJson(response.json())
 
     # private methods
 

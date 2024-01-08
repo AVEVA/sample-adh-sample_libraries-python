@@ -4,6 +4,28 @@
 
 - Implemented ChangeBroker features in the library
 
+## 0.10.7_preview / 2023-12-20
+
+- Fixed fromisoformat backwards compatibilty issue by replacing with dateutil isoparse
+
+## 0.10.6_preview / 2023-12-20
+
+- No changes, forcing update
+
+## 0.10.5_preview / 2023-12-18
+
+- Update Communities, Assets, and Events
+- Add appsettings file parsing to library
+
+## 0.10.4_preview / 2023-12-08
+
+- Migrate Pipelines
+
+## 0.10.3_preview / 2023-11-27
+
+- Update Event Store features
+- Add Units
+
 ## 0.10.2_preview / 2023-11-16
 
 - Add created and modified date to SdsStream, Sdstype, SdsStreamView, SdsResolvedStream, Asset, AssetType and AssetRule

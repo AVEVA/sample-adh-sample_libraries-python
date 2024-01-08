@@ -1,5 +1,6 @@
 ﻿from __future__ import annotations
 from datetime import datetime
+from dateutil.parser import isoparse
 import json
 from typing import Any
 
@@ -7,7 +8,7 @@ from .EnumerationState import EnumerationState
 from .LifeCycleState import LifeCycleState
 
 
-class EventGraphEnumeration(object):
+class Enumeration(object):
 
     def __init__(self, members: list[EnumerationState] = None, name: str = None, graph_ql_name: str = None, version: int = None, id: str = None, state: LifeCycleState = None, created_date: datetime = None, modified_date: datetime = None, description: str = None):
         """
@@ -142,8 +143,8 @@ class EventGraphEnumeration(object):
         return result
 
     @staticmethod
-    def fromJson(content: dict[str, Any]) -> EventGraphEnumeration:
-        result = EventGraphEnumeration()
+    def fromJson(content: dict[str, Any]) -> Enumeration:
+        result = Enumeration()
 
         if not content:
             return result
@@ -171,10 +172,10 @@ class EventGraphEnumeration(object):
             result.State = LifeCycleState(content['State'])
 
         if 'CreatedDate' in content:
-            result.CreatedDate = datetime.fromisoformat(content['CreatedDate'])
+            result.CreatedDate = isoparse(content['CreatedDate'])
 
         if 'ModifiedDate' in content:
-            result.ModifiedDate = datetime.fromisoformat(content['ModifiedDate'])
+            result.ModifiedDate = isoparse(content['ModifiedDate'])
 
         if 'Description' in content:
             result.Description = content['Description']

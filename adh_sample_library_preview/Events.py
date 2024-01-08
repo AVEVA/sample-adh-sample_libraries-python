@@ -8,7 +8,6 @@ from .Securable import Securable
 
 
 class Events(Securable, object):
-
     def __init__(self, client: BaseClient):
         super().__init__(client=client, collection='Events')
 
@@ -17,9 +16,18 @@ class Events(Securable, object):
 
         self.__setPathAndQueryTemplates()
 
-    def getEvents(self, namespace_id: str, event_type_id: str, id: str = None, fields: str = None,
-                  filter: str = None, order_by: str = None, count: int = None, continuation_token: str = None,
-                  event_class: type = None) -> list[Any]:
+    def getEvents(
+        self,
+        namespace_id: str,
+        event_type_id: str,
+        id: str = None,
+        fields: str = None,
+        filter: str = None,
+        order_by: str = None,
+        count: int = None,
+        continuation_token: str = None,
+        event_class: type = None,
+    ) -> list[Any]:
         """
         Queries one or many events of a specified TypeId from the Graph Storage.
         The response will vary based on the TypeId and if you query for a single event (by id), or for many events, or for many events with paging.
@@ -53,14 +61,22 @@ class Events(Securable, object):
         if continuation_token is not None:
             params['continuationToken'] = continuation_token
 
-        response = self.__base_client.request('get', self.__events_path.format(
-            namespace_id=namespace_id), params=params)
+        response = self.__base_client.request(
+            'get', self.__events_path.format(namespace_id=namespace_id), params=params
+        )
         self.__base_client.checkResponse(
-            response, f'Failed to get events, {event_type_id}.')
+            response, f'Failed to get events, {event_type_id}.'
+        )
 
         return DataContent(response=response, value_class=event_class).resolve()
 
-    def getOrCreateEvents(self, namespace_id: str, event_type_id: str, events: list[Any], event_class: type = None) -> list[Any]:
+    def getOrCreateEvents(
+        self,
+        namespace_id: str,
+        event_type_id: str,
+        events: list[Any],
+        event_class: type = None,
+    ) -> list[Any]:
         """
         Upserts one or many events of a specified TypeId to the Graph Storage.
         If the body contains a JSON array, it upserts many events. If the body contains a single JSON object it upserts one event.
@@ -71,24 +87,28 @@ class Events(Securable, object):
             Type must support .fromJson()  Default is None.
             If None returns a dynamic Python object from the data.
         """
-        self.__base_client.validateParameters(
-            namespace_id, event_type_id, events)
+        self.__base_client.validateParameters(namespace_id, event_type_id, events)
 
         params = {}
         params['typeId'] = self.__base_client.encode(event_type_id)
 
         if callable(getattr(events[0], 'toJson', None)):
-            events = []
+            temp_events = []
             for event in events:
-                events.append(event.toDictionary())
-            payload = json.dumps(events)
+                temp_events.append(event.toDictionary())
+            payload = json.dumps(temp_events)
         else:
             payload = events
 
-        response = self.__base_client.request('post', self.__events_path.format(
-            namespace_id=namespace_id), data=payload, params=params)
+        response = self.__base_client.request(
+            'post',
+            self.__events_path.format(namespace_id=namespace_id),
+            data=payload,
+            params=params,
+        )
         self.__base_client.checkResponse(
-            response, f'Failed to create events, {event_type_id}.')
+            response, f'Failed to create events, {event_type_id}.'
+        )
 
         return DataContent(response=response, value_class=event_class).resolve()
 
@@ -99,17 +119,20 @@ class Events(Securable, object):
         :param event_type_id: The event TypeId being deleted.
         :param event_id: The event id to delete.
         """
-        self.__base_client.validateParameters(
-            namespace_id, event_type_id, event_id)
+        self.__base_client.validateParameters(namespace_id, event_type_id, event_id)
 
         params = {}
         params['typeId'] = self.__base_client.encode(event_type_id)
         params['id'] = self.__base_client.encode(event_id)
 
-        response = self.__base_client.request('delete', self.__events_path.format(
-            namespace_id=namespace_id), params=params)
+        response = self.__base_client.request(
+            'delete',
+            self.__events_path.format(namespace_id=namespace_id),
+            params=params,
+        )
         self.__base_client.checkResponse(
-            response, f'Failed to delete event, {event_id}.')
+            response, f'Failed to delete event, {event_id}.'
+        )
 
     # private methods
 
@@ -118,8 +141,11 @@ class Events(Securable, object):
         Creates URLs that are used by the client
         :return:
         """
-        self.__base_path_preview = self.__uri_api + \
-            '-preview/Tenants/' + self.__base_client.tenant + \
-            '/Namespaces/{namespace_id}'
+        self.__base_path_preview = (
+            self.__uri_api
+            + '-preview/Tenants/'
+            + self.__base_client.tenant
+            + '/Namespaces/{namespace_id}'
+        )
 
         self.__events_path = self.__base_path_preview + '/Events'
