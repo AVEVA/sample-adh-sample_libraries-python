@@ -202,9 +202,6 @@ class Signups(object):
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
-        result = SignupResources.fromJson(response.json())
-        return result
-
     def getUpdates(self,
                    namespace_id: str = None,
                    signup_id: str = None,
