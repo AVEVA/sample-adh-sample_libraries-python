@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.8_preview / 2024-01-18
+
+- Fixed toisoformat for Events
+
 ## 0.10.7_preview / 2023-12-20
 
 - Fixed fromisoformat backwards compatibilty issue by replacing with dateutil isoparse

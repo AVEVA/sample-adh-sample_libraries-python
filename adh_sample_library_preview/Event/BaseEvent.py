@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from dateutil.parser import isoparse
 from typing import Any
 
@@ -79,10 +79,14 @@ class BaseEvent(object):
             result['description'] = self.Description
 
         if self.StartTime is not None:
-            result['startTime'] = datetime.isoformat(self.StartTime)
+            result['startTime'] = datetime.isoformat(
+                self.StartTime.astimezone(tz=timezone.utc)
+            ).replace('+00:00', 'Z')
 
         if self.EndTime is not None:
-            result['endTime'] = datetime.isoformat(self.EndTime)
+            result['endTime'] = datetime.isoformat(
+                self.EndTime.astimezone(tz=timezone.utc)
+            ).replace('+00:00', 'Z')
 
         if self.Duration is not None:
             result['duration'] = (
@@ -99,10 +103,14 @@ class BaseEvent(object):
             result['asset'] = _pascalToCamelCase(self.Asset.toDictionary())
 
         if self.CreatedDate is not None:
-            result['createdDate'] = datetime.isoformat(self.CreatedDate)
+            result['createdDate'] = datetime.isoformat(
+                self.CreatedDate.astimezone(tz=timezone.utc)
+            ).replace('+00:00', 'Z')
 
         if self.ModifiedDate is not None:
-            result['modifiedDate'] = datetime.isoformat(self.ModifiedDate)
+            result['modifiedDate'] = datetime.isoformat(
+                self.ModifiedDate.astimezone(tz=timezone.utc)
+            ).replace('+00:00', 'Z')
 
         if self.CreatedByUser is not None:
             result['createdByUser'] = self.CreatedByUser
