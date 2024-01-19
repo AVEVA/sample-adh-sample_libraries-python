@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.8_preview / 2023-12-21
+
+- Implemented ChangeBroker features in the library
+
 ## 0.10.7_preview / 2023-12-20
 
 - Fixed fromisoformat backwards compatibilty issue by replacing with dateutil isoparse

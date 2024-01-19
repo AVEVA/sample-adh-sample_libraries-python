@@ -5,14 +5,14 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='adh_sample_library_preview',
-    version='0.10.7_preview',
+    version='0.10.8_preview',
     author='OSIsoft',
     license='Apache 2.0',
     author_email='samples@osisoft.com',
     description='A preview of an ADH (Aveva Data Hub) client library',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/osisoft/sample-adh-sample_libraries-python',
+    url='https://github.com/aveva/sample-adh-sample_libraries-python',
     packages=setuptools.find_packages(),
     install_requires=[
         'requests>=2.28.2',
