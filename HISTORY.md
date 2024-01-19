@@ -1,8 +1,12 @@
 # Version History
 
-## 0.10.8_preview / 2024-01-18
+## 0.10.9_preview / 2024-01-18
 
 - Fixed toisoformat for Events
+
+## 0.10.8_preview / 2023-12-21
+
+- Implemented ChangeBroker features in the library
 
 ## 0.10.7_preview / 2023-12-20
 

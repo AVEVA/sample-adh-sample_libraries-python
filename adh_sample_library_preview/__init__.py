@@ -21,6 +21,7 @@ from .ReferenceData import ReferenceData
 from .ReferenceDataTypes import ReferenceDataTypes
 from .Roles import Roles
 from .Securable import Securable
+from .Signups import Signups
 from .Subscriptions import Subscriptions
 from .Topics import Topics
 from .Units import Units
@@ -32,5 +33,6 @@ from .Event import *
 from .OMF import *
 from .SDS import *
 from .Security import *
+from .Signup import *
 from .Tenant import *
 from .Unit import *
