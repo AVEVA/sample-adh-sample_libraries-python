@@ -3,10 +3,10 @@ from .BaseClient import BaseClient
 from .Signup.CreateSignupInput import CreateSignupInput
 from .Signup.SignupResources import SignupResources
 from .Signup.SignupResourcesInput import SignupResourcesInput
-from .Signup.Trustee import Trustee
 from .Signup.Update import Update
 from .Signup.UpdateSignupInput import UpdateSignupInput
 from .Signup.Signup import Signup
+from .Security.Trustee import Trustee
 
 class Signups(object):
     """
