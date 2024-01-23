@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.10_preview / 2024-01-18
+
+- Fixed Signups import
+
 ## 0.10.9_preview / 2024-01-18
 
 - Fixed toisoformat for Events
