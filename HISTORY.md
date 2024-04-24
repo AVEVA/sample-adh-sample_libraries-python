@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.11_preview / 2024-04-24
+
+- Fixed Assets Bulk Creation
+
 ## 0.10.10_preview / 2024-01-18
 
 - Fixed Signups import
