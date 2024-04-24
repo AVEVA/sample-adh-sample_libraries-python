@@ -100,7 +100,7 @@ class Assets(Securable, object):
         dictionary = []
         for value in assets:
             dictionary.append(value.toDictionary())
-        response = self.__base_client.request('post', self.__assets_path.format(
+        response = self.__base_client.request('post', self.__bulk_path.format(
             namespace_id=namespace_id), data=json.dumps(dictionary))
         self.__base_client.checkResponse(response, f'Failed to create assets.')
 
