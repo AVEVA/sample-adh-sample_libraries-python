@@ -5,9 +5,11 @@ from .ResolvedProperty import ResolvedProperty
 
 
 class ResolvedStream(object):
-    def __init__(self, name: str = None, properties: list[ResolvedProperty] = None):
+    def __init__(self, name: str = None, properties: list[ResolvedProperty] = None, streamId: str = None, streamReferenceName: str = None):
         self.Name = name
         self.Properties = properties
+        self.StreamId = streamId
+        self.StreamReferenceName = streamReferenceName
 
     @property
     def Name(self) -> str:
@@ -25,11 +27,27 @@ class ResolvedStream(object):
     def Properties(self, value: list[ResolvedProperty]):
         self.__properties = value
 
+    @property
+    def StreamId(self) -> str:
+        return self.__streamId
+
+    @StreamId.setter
+    def StreamId(self, value: str):
+        self.__streamId = value
+
+    @property
+    def StreamReferenceName(self) -> str:
+        return self.__streamReferenceName
+
+    @StreamReferenceName.setter
+    def StreamReferenceName(self, value: str):
+        self.__streamReferenceName = value
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
     def toDictionary(self):
-        result = {'Name': self.Name, 'Properties': []}
+        result = {'Name': self.Name, 'Properties': [], 'StreamId': self.StreamId, 'StreamReferenceName': self.StreamReferenceName}
 
         if self.Properties is not None:
             for value in self.Properties:
@@ -54,5 +72,11 @@ class ResolvedStream(object):
                 for value in properties:
                     result.Properties.append(
                         ResolvedProperty.fromJson(value))
+        
+        if 'StreamId' in content:
+            result.StreamId = content['StreamId']
+        
+        if 'StreamReferenceName' in content:
+            result.StreamReferenceName = content['StreamReferenceName']
 
         return result
