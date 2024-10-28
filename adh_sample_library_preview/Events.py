@@ -47,7 +47,8 @@ class Events(Securable, object):
         self.__base_client.validateParameters(namespace_id, event_type_id)
 
         params = {}
-        params['typeId'] = self.__base_client.encode(event_type_id)
+        params['typeId'] = event_type_id
+        
         if id is not None:
             params['id'] = id
         if fields is not None:
@@ -90,7 +91,7 @@ class Events(Securable, object):
         self.__base_client.validateParameters(namespace_id, event_type_id, events)
 
         params = {}
-        params['typeId'] = self.__base_client.encode(event_type_id)
+        params['typeId'] = event_type_id
 
         if callable(getattr(events[0], 'toJson', None)):
             temp_events = []
