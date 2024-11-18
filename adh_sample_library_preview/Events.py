@@ -123,8 +123,8 @@ class Events(Securable, object):
         self.__base_client.validateParameters(namespace_id, event_type_id, event_id)
 
         params = {}
-        params['typeId'] = self.__base_client.encode(event_type_id)
-        params['id'] = self.__base_client.encode(event_id)
+        params['typeId'] = event_type_id
+        params['id'] = event_id
 
         response = self.__base_client.request(
             'delete',
