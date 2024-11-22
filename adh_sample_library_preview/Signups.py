@@ -35,12 +35,11 @@ class Signups(object):
 
         self.__base_client.validateParameters(namespace_id)
 
-        params = {}
         if community_id is not None:
-            params['Community-Id'] = community_id
+            communityHeader = self.__base_client.getCommunityIdHeader(community_id)
 
         response = self.__base_client.request('get', self.__signups_path.format(
-            namespace_id=namespace_id), params=params)
+            namespace_id=namespace_id), additional_headers=communityHeader)
         self.__base_client.checkResponse(
             response, f'Failed to get signups.')
 
@@ -63,15 +62,14 @@ class Signups(object):
 
         self.__base_client.validateParameters(namespace_id)
 
-        params = {}
         if community_id is not None:
-            params['Community-Id'] = community_id
+            communityHeader = self.__base_client.getCommunityIdHeader(community_id)
 
         if not isinstance(body, CreateSignupInput):
             raise TypeError
 
         response = self.__base_client.request('post', self.__signups_path.format(
-            namespace_id=namespace_id), data=body.toJson(), params=params)
+            namespace_id=namespace_id), data=body.toJson(), additional_headers=communityHeader)
 
         self.__base_client.checkResponse(
             response, f'Failed to create Signup.')
@@ -193,12 +191,11 @@ class Signups(object):
 
         self.__base_client.validateParameters(namespace_id, signup_id, body)
 
-        params = {}
         if community_id is not None:
-            params['Community-Id'] = community_id
+            communityHeader = self.__base_client.getCommunityIdHeader(community_id)
 
         response = self.__base_client.request('post', self.__signup_resources_path.format(
-            namespace_id=namespace_id, signup_id=self.__base_client.encode(signup_id)), data=body.toJson(), params=params)
+            namespace_id=namespace_id, signup_id=self.__base_client.encode(signup_id)), data=body.toJson(), additional_headers=communityHeader)
         self.__base_client.checkResponse(
             response, f'Failed to get Signup resources, {signup_id}.')
 
