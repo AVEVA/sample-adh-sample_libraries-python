@@ -33,7 +33,7 @@ class Signups(object):
         :param str community_id: Community unique identifier.
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateParameters(namespace_id, community_id)
 
         if community_id is not None:
             communityHeader = self.__base_client.getCommunityIdHeader(community_id)
@@ -60,7 +60,7 @@ class Signups(object):
         :param CreateSignupInput body: Input of the signup to be created.
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateParameters(namespace_id, community_id)
 
         if community_id is not None:
             communityHeader = self.__base_client.getCommunityIdHeader(community_id)
@@ -78,6 +78,7 @@ class Signups(object):
 
     def getSignupById(self,
                       namespace_id: str = None,
+                      community_id: str = None,
                       signup_id: str = None) -> tuple[Signup, str]:
         """
         Retrieves a signup by signup identifier. 
@@ -88,8 +89,11 @@ class Signups(object):
 
         self.__base_client.validateParameters(namespace_id, signup_id)
 
+        if community_id is not None:
+            communityHeader = self.__base_client.getCommunityIdHeader(community_id)
+
         response = self.__base_client.request('get', self.__signup_path.format(
-            namespace_id=namespace_id, signup_id=self.__base_client.encode(signup_id)))
+            namespace_id=namespace_id, signup_id=self.__base_client.encode(signup_id)), additional_headers=communityHeader)
         self.__base_client.checkResponse(
             response, f'Failed to get Signup, {signup_id}.')
 
@@ -189,7 +193,7 @@ class Signups(object):
         :param SignupResourcesInput body: Signup resources input object to replace signup's resources.
         """
 
-        self.__base_client.validateParameters(namespace_id, signup_id, body)
+        self.__base_client.validateParameters(namespace_id, community_id, signup_id, body)
 
         if community_id is not None:
             communityHeader = self.__base_client.getCommunityIdHeader(community_id)
@@ -201,6 +205,7 @@ class Signups(object):
 
     def getUpdates(self,
                    namespace_id: str = None,
+                   community_id: str = None,
                    signup_id: str = None,
                    bookmark: str = None ) -> tuple[list[Update], str]:
         """
@@ -212,14 +217,17 @@ class Signups(object):
         """
 
         self.__base_client.validateParameters(
-            namespace_id, signup_id)
+            namespace_id, community_id, signup_id)
+        
+        if community_id is not None:
+            communityHeader = self.__base_client.getCommunityIdHeader(community_id)
 
         params = {}
         if bookmark is not None:
             params['bookmark'] = bookmark
 
         response = self.__base_client.request('get', self.__signup_updates_path.format(
-            namespace_id=namespace_id, signup_id=self.__base_client.encode(signup_id)), params=params)
+            namespace_id=namespace_id, signup_id=self.__base_client.encode(signup_id)), additional_headers=communityHeader, params=params)
         self.__base_client.checkResponse(
             response, f'Failed to get Signup updates, {signup_id}.')
 
