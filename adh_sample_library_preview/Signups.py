@@ -240,8 +240,9 @@ class Signups(object):
 
         data = response.json()['data']
         updates = [Update.fromJson(datum) for datum in data]
-
-        return updates
+        bookmark = response.json()['bookmark']
+        
+        return updates, bookmark
 
     def __setPathAndQueryTemplates(self):
         """
