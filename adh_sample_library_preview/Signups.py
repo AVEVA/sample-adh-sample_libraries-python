@@ -214,8 +214,8 @@ class Signups(object):
     def getUpdates(self,
                     namespace_id: str = None,
                     signup_id: str = None,
-                    community_id: str = None,
-                    bookmark: str = None ) -> tuple[list[Update], str]:
+                    bookmark: str = None,
+                    community_id: str = None ) -> tuple[list[Update], str]:
         """
         Returns a sequence of updates for all resources within the Signup, starting from the sequential marker represented by a provided `Bookmark`. 
 
