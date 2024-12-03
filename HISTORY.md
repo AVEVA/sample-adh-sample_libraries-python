@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.12_preview / 2024-11-18
+
+- Fixed events url encoding
+
 ## 0.10.11_preview / 2024-04-24
 
 - Fixed Assets Bulk Creation
