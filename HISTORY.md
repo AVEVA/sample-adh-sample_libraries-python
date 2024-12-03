@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.13_preview / 2024-12-03
+
+- Fixed support for communities signups
+
 ## 0.10.12_preview / 2024-11-18
 
 - Fixed events url encoding
