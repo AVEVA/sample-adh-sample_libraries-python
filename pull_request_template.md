@@ -3,7 +3,7 @@
 - ...
 
 # Related information or background
-Describe any context or additional background describing why these changes were necessary
+Describe any context or additional background describing why these changes are necessary
 
 # Checklist
 
