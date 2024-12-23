@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.14_preview / 2024-12-26
+
+- Fixed issue where variables were not included in GraphQL request
+
 ## 0.10.13_preview / 2024-12-03
 
 - Fixed support for communities signups
