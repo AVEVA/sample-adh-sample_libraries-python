@@ -1145,7 +1145,7 @@ class Streams(PatchableSecurable, object):
         :return:
         """
         self.__base_path = self.__uri_api + \
-            '/Tenants/{tenant_id}/Namespaces/{namespace_id}'
+            '/sds/{namespace_id}/v1'
         self.__base_path_preview = self.__uri_api + \
             '-preview/Tenants/{tenant_id}/Namespaces/{namespace_id}'
         self.__streams_path = self.__base_path + '/Streams'

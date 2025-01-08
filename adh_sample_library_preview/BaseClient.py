@@ -24,7 +24,7 @@ class BaseClient(AbstractBaseClient):
         else:
             self.__auth_object = None
 
-        self.__uri_api = url + '/api/' + api_version
+        self.__uri_api = 'https://' + url + '/api/account/' + account_id
         self.__session = requests.Session()
         self.__logging_enabled = logging_enabled
 
