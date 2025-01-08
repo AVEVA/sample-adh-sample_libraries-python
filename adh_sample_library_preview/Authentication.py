@@ -13,8 +13,8 @@ from .SdsError import SdsError
 
 class Authentication(object):
 
-    def __init__(self, tenant: str, url: str, client_id: str, client_secret: str):
-        self.__tenant = tenant
+    def __init__(self, account_id: str, url: str, client_id: str, client_secret: str):
+        self.__account_id = account_id
         self.__client_id = client_id
         self.__client_secret = client_secret
         self.__url = url
@@ -34,9 +34,11 @@ class Authentication(object):
 
     def __getClientIDSecretToken(self) -> str: 
         # Get OAuth endpoint configuration
-        endpoint = json.loads(requests.get(
-            self.__url + '/identity/.well-known/openid-configuration').content)
-        token_endpoint = endpoint.get('token_endpoint')
+        
+        # endpoint = json.loads(requests.get(
+        #     self.__url + '/identity/.well-known/openid-configuration').content)
+        # token_endpoint = endpoint.get('token_endpoint')
+        token_endpoint = "https://identity." + self.__url + "/account/" + self.__account_id + "/authentication/connect/token"
 
         tokenInformation = requests.post(
             token_endpoint,
@@ -103,7 +105,7 @@ class Authentication(object):
                 '&code_challenge_method=S256&client_id=' + self.__client_id + \
                 '&redirect_uri=' + redirect_uri + \
                 '&scope=' + scope + \
-                '&acr_values=tenant:' + self.__tenant
+                '&acr_values=tenant:' + self.__account_id # EG: Not sure how this needs to be changed
 
             # Open user default web browser at Auth page
             if not webbrowser.open(auth_url):

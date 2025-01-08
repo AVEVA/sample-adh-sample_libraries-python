@@ -43,7 +43,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'post',
             self.__dataViewPath.format(
-                tenant_id=self.__base_client.tenant,
+                tenant_id=self.__base_client.account_id,
                 namespace_id=namespace_id,
                 dataView_id=self.__base_client.encode(data_view.Id),
             ),
@@ -71,7 +71,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'put',
             self.__dataViewPath.format(
-                tenant_id=self.__base_client.tenant,
+                tenant_id=self.__base_client.account_id,
                 namespace_id=namespace_id,
                 dataView_id=self.__base_client.encode(data_view.Id),
             ),
@@ -95,7 +95,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'delete',
             self.__dataViewPath.format(
-                tenant_id=self.__base_client.tenant,
+                tenant_id=self.__base_client.account_id,
                 namespace_id=namespace_id,
                 dataView_id=self.__base_client.encode(data_view_id),
             )
@@ -119,7 +119,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'get',
             self.__dataViewPath.format(
-                tenant_id=self.__base_client.tenant,
+                tenant_id=self.__base_client.account_id,
                 namespace_id=namespace_id,
                 dataView_id=self.__base_client.encode(data_view_id),
             )
@@ -145,7 +145,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'get',
             self.__dataViewsPath.format(
-                tenant_id=self.__base_client.tenant, namespace_id=namespace_id
+                tenant_id=self.__base_client.account_id, namespace_id=namespace_id
             ),
             params={'skip': skip, 'count': count}
         )
@@ -172,7 +172,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'get',
             self.__dataViewResolvedDataItems.format(
-                tenant_id=self.__base_client.tenant,
+                tenant_id=self.__base_client.account_id,
                 namespace_id=namespace_id,
                 dataView_id=self.__base_client.encode(data_view_id),
                 query_id=query_id,
@@ -201,7 +201,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'get',
             self.__dataViewResolvedIneligibleDataItems.format(
-                tenant_id=self.__base_client.tenant,
+                tenant_id=self.__base_client.account_id,
                 namespace_id=namespace_id,
                 dataView_id=self.__base_client.encode(data_view_id),
                 query_id=query_id,
@@ -228,7 +228,7 @@ class DataViews(Securable, object):
         response = self.__base_client.request(
             'get',
             self.__dataViewResolvedAvailableFieldSets.format(
-                tenant_id=self.__base_client.tenant,
+                tenant_id=self.__base_client.account_id,
                 namespace_id=namespace_id,
                 dataView_id=self.__base_client.encode(data_view_id)
             )
@@ -299,7 +299,7 @@ class DataViews(Securable, object):
             response = self.__base_client.request(
                 'get',
                 self.__dataViewDataInterpolated.format(
-                    tenant_id=self.__base_client.tenant,
+                    tenant_id=self.__base_client.account_id,
                     namespace_id=namespace_id,
                     dataView_id=self.__base_client.encode(data_view_id),
                 ),
@@ -389,7 +389,7 @@ class DataViews(Securable, object):
             response = self.__base_client.request(
                 'get',
                 self.__dataViewDataStored.format(
-                    tenant_id=self.__base_client.tenant,
+                    tenant_id=self.__base_client.account_id,
                     namespace_id=namespace_id,
                     dataView_id=self.__base_client.encode(data_view_id),
                 ),

@@ -10,16 +10,16 @@ from .SdsError import SdsError
 class BaseClient(AbstractBaseClient):
     """Handles communication with Sds Service. Internal Use"""
 
-    def __init__(self, api_version: str, tenant: str, url: str, client_id: str = None,
+    def __init__(self, api_version: str, account_id: str, url: str, client_id: str = None,
                  client_secret: str = None, accept_verbosity: bool = False, logging_enabled: bool = False):
         self.__api_version = api_version
-        self.__tenant = tenant
+        self.__account_id = account_id
         self.__url = url  # if resource.endswith("/")  else resource + "/"
         self.__accept_verbosity = accept_verbosity
         self.__request_timeout = None
         if (client_id is not None):
             self.__auth_object = Authentication(
-                tenant, url, client_id, client_secret)
+                account_id, url, client_id, client_secret)
             self.__auth_object.getToken()
         else:
             self.__auth_object = None
@@ -53,12 +53,12 @@ class BaseClient(AbstractBaseClient):
         return self.__api_version
 
     @property
-    def tenant(self) -> str:
+    def account_id(self) -> str:
         """
-        Returns the tenant ID
+        Returns the account ID
         :return:
         """
-        return self.__tenant
+        return self.__account_id
 
     @property
     def AcceptVerbosity(self) -> bool:

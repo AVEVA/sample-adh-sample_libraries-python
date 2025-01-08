@@ -67,6 +67,6 @@ class Subscriptions(Securable, object):
         :return:
         """
         self.__base_path = self.__base_client.uri_API + '/Tenants/' + \
-            self.__base_client.tenant + '/Namespaces/{namespace_id}'
+            self.__base_client.account_id + '/Namespaces/{namespace_id}'
         self.__subscriptions_path = self.__base_path + '/subscriptions'
         self.__subscription_path = self.__subscriptions_path + '/{subscription_id}'

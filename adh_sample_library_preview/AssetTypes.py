@@ -149,6 +149,6 @@ class AssetTypes(Securable, object):
         :return:
         """
         self.__base_path = self.__base_client.uri_API + '/Tenants/' + \
-            self.__base_client.tenant + '/Namespaces/{namespace_id}'
+            self.__base_client.account_id + '/Namespaces/{namespace_id}'
         self.__asset_types_path = self.__base_path + '/AssetTypes'
         self.__asset_type_path = self.__asset_types_path + '/{asset_type_id}'

@@ -111,5 +111,5 @@ class Roles(object):
         : return:
         """
         self.__roles_path = self.__base_client.uri_API + '/Tenants/' + \
-            self.__base_client.tenant + '/Roles'
+            self.__base_client.account_id + '/Roles'
         self.__role_path = self.__roles_path + '/{role_id}'

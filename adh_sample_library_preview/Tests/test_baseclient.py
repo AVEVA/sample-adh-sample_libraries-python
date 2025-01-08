@@ -8,7 +8,7 @@ from adh_sample_library_preview.SdsError import SdsError
 
 @pytest.fixture
 def baseClient():
-    return BaseClient(api_version='api_version', tenant='tenant', url='https://test.com',
+    return BaseClient(api_version='api_version', account_id='tenant', url='https://test.com',
         client_id=None, client_secret=None, accept_verbosity='accept_verbosity')
 
 

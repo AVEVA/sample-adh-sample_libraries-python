@@ -194,7 +194,7 @@ class Enumerations(Securable, object):
         :return:
         """
         self.__base_path_preview = self.__uri_api + \
-            '-preview/Tenants/' + self.__base_client.tenant + \
+            '-preview/Tenants/' + self.__base_client.account_id + \
             '/Namespaces/{namespace_id}'
 
         self.__enumerations_path = self.__base_path_preview + '/Enumerations'

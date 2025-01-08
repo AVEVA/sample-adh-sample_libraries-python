@@ -79,7 +79,7 @@ class Units(object):
         self.__base_path_preview = (
             self.__uri_api
             + '/Tenants/'
-            + self.__base_client.tenant
+            + self.__base_client.account_id
             + '/Namespaces/{namespace_id}'
         )
 

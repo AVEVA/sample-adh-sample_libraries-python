@@ -14,7 +14,7 @@ class Securable(object):
         :param client: base client that handles auth and base routing
         :param acl_path: The access control path of the object
         """
-        self.__tenant = client.tenant
+        self.__tenant = client.account_id
         self.__uri_api = client.uri_API + api_suffix
         self.__base_client = client
         self.__collection = collection

@@ -60,6 +60,6 @@ class Namespaces(Securable, object):
         :return:
         """
         self.__tenant_path = self.__base_client.uri_API + '/Tenants/' + \
-            self.__base_client.tenant
+            self.__base_client.account_id
         self.__namespaces_path = self.__tenant_path + '/Namespaces'
         self.__namespace_path = self.__namespaces_path + '/{namespace_id}'

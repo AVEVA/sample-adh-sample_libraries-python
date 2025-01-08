@@ -37,7 +37,7 @@ class ADHClient:
     def __init__(
         self,
         api_version: str,
-        tenant: str,
+        account_id: str,
         url: str,
         client_id: str,
         client_secret: str = None,
@@ -62,7 +62,7 @@ class ADHClient:
         else:
             self.__base_client = BaseClient(
                 api_version,
-                tenant,
+                account_id,
                 url,
                 client_id,
                 client_secret,
@@ -113,7 +113,7 @@ class ADHClient:
         return (
             ADHClient(
                 appsettings.get('ApiVersion'),
-                appsettings.get('TenantId'),
+                appsettings.get('AccountId'),
                 appsettings.get('Resource'),
                 appsettings.get('ClientId'),
                 appsettings.get('ClientSecret', None),
@@ -131,11 +131,11 @@ class ADHClient:
         return self.__base_client.uri
 
     @property
-    def tenant(self) -> str:
+    def account_id(self) -> str:
         """
-        :return: The tenant of this ADH client as a string
+        :return: The account ID of this ADH client as a string
         """
-        return self.__base_client.tenant
+        return self.__base_client.account_id
 
     @property
     def acceptverbosity(self) -> bool:

@@ -15,7 +15,7 @@ class PatchableSecurable(Securable, object):
         """
         super().__init__(client=client, collection=collection)
 
-        self.__tenant = client.tenant
+        self.__tenant = client.account_id
         self.__uri_api = client.uri_API
         self.__base_client = client
         self.__collection = collection

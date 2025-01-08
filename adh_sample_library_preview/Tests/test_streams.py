@@ -143,7 +143,7 @@ def client(data, e2e):
     # If test credentials are provided run E2E tests, otherwise run Unit tests
     if e2e:
         adh_client = ADHClient(api_version=data.get('ApiVersion'), 
-                                tenant=data.get('TenantId'), 
+                                account_id=data.get('TenantId'), 
                                 url=data.get('Resource'), 
                                 client_id=data.get('ClientId'), 
                                 client_secret=data.get('ClientSecret'), 
@@ -158,7 +158,7 @@ def client(data, e2e):
         cleanup(data.get('NamespaceId'), data.get('TypeId'), data.get('StreamId'), adh_client)
     else:
         base_client = BaseClientStub()
-        adh_client = ADHClient(api_version=None, url=None, tenant=None, client_id=None, base_client=base_client)
+        adh_client = ADHClient(api_version=None, url=None, account_id=None, client_id=None, base_client=base_client)
         yield adh_client
 
 

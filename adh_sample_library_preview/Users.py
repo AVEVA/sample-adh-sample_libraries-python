@@ -19,7 +19,7 @@ class Users(object):
         """
         :param client: base client that handles auth and base routing
         """
-        self.__tenant = client.tenant
+        self.__tenant = client.account_id
         self.__uri_api = client.uri_API
         self.__base_client = client
 
