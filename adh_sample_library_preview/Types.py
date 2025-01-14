@@ -156,7 +156,7 @@ class Types(PatchableSecurable, object):
         :return:
         """
         self.__basePath = self.__url + \
-            '/Tenants/{tenant_id}/Namespaces/{namespace_id}'
+            '/sds/{namespace_id}/v1'
         self.__typesPath = self.__basePath + '/Types'
         self.__typePath = self.__typesPath + '/{type_id}'
         self.__typeRefCountPath = self.__typePath + '/ReferenceCount'
