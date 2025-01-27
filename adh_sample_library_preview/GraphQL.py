@@ -14,7 +14,7 @@ class GraphQL(object):
 
         self.__setPathAndQueryTemplates()
 
-    def executeQuery(self, namespace_id: str, query: str, variables: str = None, operation_name: str = None, continuation: str = None, metrics: bool = None, data_class: type = None) -> Any:
+    def executeQuery(self, namespace_id: str, query: str, variables: dict = None, operation_name: str = None, continuation: str = None, metrics: bool = None, data_class: type = None) -> Any:
         """
         Executes a GraphQL Query or Mutation based on the query arguments of a GET request.
         It returns a GraphQLResponse in JSON format. The format of the response varies depending on the request.
@@ -34,7 +34,8 @@ class GraphQL(object):
         self.__base_client.validateParameters(namespace_id)
 
         request_body = {
-            'query': query
+            'query': query,
+            'variables': variables
         }
 
         params = {}
