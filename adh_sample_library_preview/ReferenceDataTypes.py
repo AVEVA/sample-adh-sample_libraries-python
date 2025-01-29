@@ -30,7 +30,7 @@ class ReferenceDataTypes(Securable, object):
         :param bool include_deleted: Parameter indicating whether to include soft-deleted ReferenceDataTypes. If unspecified, a default value of false is used.
         :param str filter: Parameter representing the condition for results to be filtered by. If unspecified, results are not filtered.
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         params = {}
         if skip is not None:
@@ -63,7 +63,7 @@ class ReferenceDataTypes(Securable, object):
         :param ReferenceDataType reference_data_type: A reference data type object
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         if not isinstance(reference_data_type, ReferenceDataType):
             raise TypeError
@@ -86,7 +86,7 @@ class ReferenceDataTypes(Securable, object):
         :param str reference_data_type_id: The id of the ReferenceDataType. 
         :param bool include_deleted: Parameter indicating whether to include soft-deleted ReferenceDataTypes. If unspecified, a default value of false is used.
         """
-        self.__base_client.validateParameters(namespace_id, reference_data_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, reference_data_type_id)
 
         params = {}
         if include_deleted is not None:
@@ -111,7 +111,7 @@ class ReferenceDataTypes(Securable, object):
         :param ReferenceDataType reference_data_type: A reference data type object
         """
 
-        self.__base_client.validateParameters(namespace_id, reference_data_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, reference_data_type_id)
 
         if not isinstance(reference_data_type, ReferenceDataType):
             raise TypeError
@@ -135,7 +135,7 @@ class ReferenceDataTypes(Securable, object):
         :param ReferenceDataType reference_data_type: A reference data type object
         """
 
-        self.__base_client.validateParameters(namespace_id, reference_data_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, reference_data_type_id)
 
         if not isinstance(reference_data_type, ReferenceDataType):
             raise TypeError
@@ -157,7 +157,7 @@ class ReferenceDataTypes(Securable, object):
         :param str reference_data_type_id: The id of the ReferenceDataType. 
         """
 
-        self.__base_client.validateParameters(namespace_id, reference_data_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, reference_data_type_id)
 
         response = self.__base_client.request('delete', self.__reference_data_type_path.format(
             namespace_id=namespace_id, reference_data_type_id=reference_data_type_id))
@@ -174,7 +174,7 @@ class ReferenceDataTypes(Securable, object):
         :param list[ReferenceDataType] reference_data_types: 
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         if not isinstance(reference_data_types, list[ReferenceDataType]):
             raise TypeError

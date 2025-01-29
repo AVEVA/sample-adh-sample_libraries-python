@@ -33,7 +33,7 @@ class Signups(object):
         :param str community_id: Community unique identifier.
         """
 
-        self.__base_client.validateParameters(namespace_id, community_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
         
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -49,8 +49,8 @@ class Signups(object):
 
     def createSignup(self,
                      namespace_id: str = None,
-                     community_id: str = None,
-                     body: CreateSignupInput = None) -> Signup:
+                     body: CreateSignupInput = None,
+                     community_id: str = None) -> Signup:
         """
         Creates a signup for the list of resource identifiers provided. 
 
@@ -59,7 +59,7 @@ class Signups(object):
         :param CreateSignupInput body: Input of the signup to be created.
         """
 
-        self.__base_client.validateParameters(namespace_id, community_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -85,7 +85,7 @@ class Signups(object):
         :param str signup_id: Signup Identifier.
         """
 
-        self.__base_client.validateParameters(namespace_id, signup_id, community_id)
+        self.__base_client.validateRequiredParameters(namespace_id, signup_id)
 
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -101,8 +101,8 @@ class Signups(object):
     def updateSignup(self,
                      namespace_id: str = None,
                      signup_id: str = None,
-                     community_id: str = None,
-                     body: UpdateSignupInput = None,) -> Signup:
+                     body: UpdateSignupInput = None,
+                     community_id: str = None) -> Signup:
         """
         Updates the properties (for example, name) of a signup. 
 
@@ -111,7 +111,7 @@ class Signups(object):
         :param UpdateSignupInput body: Signup input object to replace the existing signup's properties.
         """
 
-        self.__base_client.validateParameters(namespace_id, signup_id, community_id, body)
+        self.__base_client.validateRequiredParameters(namespace_id, signup_id, body)
         
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -134,7 +134,7 @@ class Signups(object):
         :param str signup_id: Signup unique identifier
         """
 
-        self.__base_client.validateParameters(namespace_id, signup_id, community_id)
+        self.__base_client.validateRequiredParameters(namespace_id, signup_id)
 
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -153,7 +153,7 @@ class Signups(object):
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup unique identifier
         """
-        self.__base_client.validateParameters(namespace_id, signup_id, community_id)
+        self.__base_client.validateRequiredParameters(namespace_id, signup_id)
         
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -175,7 +175,7 @@ class Signups(object):
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup unique identifier
         """
-        self.__base_client.validateParameters(namespace_id, signup_id, community_id)
+        self.__base_client.validateRequiredParameters(namespace_id, signup_id)
         
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -191,8 +191,8 @@ class Signups(object):
     def updateSignupResources(self,
                               namespace_id: str = None,
                               signup_id: str = None,
-                              community_id: str = None,
-                              body: SignupResourcesInput = None):
+                              body: SignupResourcesInput = None,
+                              community_id: str = None):
         """
         Update Signup Resources. 
 
@@ -202,7 +202,7 @@ class Signups(object):
         :param SignupResourcesInput body: Signup resources input object to replace signup's resources.
         """
 
-        self.__base_client.validateParameters(namespace_id, signup_id, community_id, body)
+        self.__base_client.validateRequiredParameters(namespace_id, signup_id, body)
 
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 
@@ -224,8 +224,7 @@ class Signups(object):
         :param str bookmark: An encoded token representing a sequential starting point from which updates are to be retrieved for the current request. A request URI including a starter Bookmark token is provided in the 'Get-Updates' header of a successful Signup activation response.
         """
 
-        self.__base_client.validateParameters(
-            namespace_id, signup_id, community_id)
+        self.__base_client.validateRequiredParameters(namespace_id, signup_id)
         
         additional_headers = BaseClient.getCommunityIdHeader(community_id)
 

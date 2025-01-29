@@ -30,7 +30,7 @@ class AuthorizationTags(Securable, object):
         :param bool include_deleted: Parameter indicating whether to include soft-deleted Authorization Tags. If unspecified, a default value of false is used.
         :param str filter: 
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         params = {}
         if skip is not None:
@@ -64,7 +64,7 @@ class AuthorizationTags(Securable, object):
         :param str authorization_tag_id: The authorization tag identifier
         :param bool include_deleted: Parameter indicating whether to include soft-deleted Authorization Tags. If unspecified, a default value of false is used.
         """
-        self.__base_client.validateParameters(namespace_id, authorization_tag_id)
+        self.__base_client.validateRequiredParameters(namespace_id, authorization_tag_id)
 
         params = {}
         if include_deleted is not None:
@@ -89,7 +89,7 @@ class AuthorizationTags(Securable, object):
         :param AuthorizationTag authorization_tag: An authorization tag object
         """
 
-        self.__base_client.validateParameters(namespace_id, authorization_tag_id)
+        self.__base_client.validateRequiredParameters(namespace_id, authorization_tag_id)
 
         if not isinstance(authorization_tag, AuthorizationTag):
             raise TypeError
@@ -113,7 +113,7 @@ class AuthorizationTags(Securable, object):
         :param AuthorizationTag authorization_tag: An authorization tag object
         """
 
-        self.__base_client.validateParameters(namespace_id, authorization_tag_id)
+        self.__base_client.validateRequiredParameters(namespace_id, authorization_tag_id)
 
         if not isinstance(authorization_tag, AuthorizationTag):
             raise TypeError
@@ -135,7 +135,7 @@ class AuthorizationTags(Securable, object):
         :param str authorization_tag_id: The authorization tag identifier
         """
 
-        self.__base_client.validateParameters(namespace_id, authorization_tag_id)
+        self.__base_client.validateRequiredParameters(namespace_id, authorization_tag_id)
 
         response = self.__base_client.request('delete', self.__authorization_tag_path.format(
             namespace_id=namespace_id, authorization_tag_id=authorization_tag_id))
@@ -152,7 +152,7 @@ class AuthorizationTags(Securable, object):
         :param list[AuthorizationTag] authorization_tags: A list of authorization tag objects
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         if not isinstance(authorization_tags, list[AuthorizationTag]):
             raise TypeError

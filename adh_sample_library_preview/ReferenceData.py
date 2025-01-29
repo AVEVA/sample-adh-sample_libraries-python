@@ -44,7 +44,7 @@ class ReferenceData(Securable, object):
             If None returns a dynamic Python object from the data.
         """
 
-        self.__base_client.validateParameters(namespace_id, reference_data_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, reference_data_type_id)
 
         params = {}
         params['typeId'] = self.__base_client.encode(reference_data_type_id)
@@ -91,7 +91,7 @@ class ReferenceData(Securable, object):
             Type must support .fromJson()  Default is None.
             If None returns a dynamic Python object from the data.
         """
-        self.__base_client.validateParameters(
+        self.__base_client.validateRequiredParameters(
             namespace_id, reference_data_type_id, reference_data
         )
 
@@ -132,7 +132,7 @@ class ReferenceData(Securable, object):
         :param reference_data_type_id: The reference data TypeId being deleted.
         :param reference_data_id: The reference data id to delete.
         """
-        self.__base_client.validateParameters(
+        self.__base_client.validateRequiredParameters(
             namespace_id, reference_data_type_id, reference_data_id
         )
 

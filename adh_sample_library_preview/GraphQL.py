@@ -31,7 +31,7 @@ class GraphQL(object):
             If None returns a dynamic Python object from the data.
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         request_body = {
             'query': query,
@@ -77,7 +77,7 @@ class GraphQL(object):
         :param namespace_id: id of namespace to work against
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
         response = self.__base_client.request('post', self.__graph_ql_schema_path.format(
             namespace_id=namespace_id), data=body, additional_headers={'Content-type': 'text/plain'})
         self.__base_client.checkResponse(

@@ -148,7 +148,7 @@ class BaseClient(AbstractBaseClient):
 
     @staticmethod
     def getCommunityIdHeader(community_id: str) -> dict[str, str]:
-        return { 'Community-id': community_id }
+        return { 'Community-id': community_id } if community_id is not None else None 
 
 
     @staticmethod
@@ -204,7 +204,7 @@ class BaseClient(AbstractBaseClient):
             raise error
 
 
-    def validateParameters(*args):
+    def validateRequiredParameters(*args):
         for arg in args:
             if arg is None:
                 raise TypeError

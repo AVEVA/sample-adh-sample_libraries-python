@@ -44,7 +44,7 @@ class Events(Securable, object):
             If None returns a dynamic Python object from the data.
         """
 
-        self.__base_client.validateParameters(namespace_id, event_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, event_type_id)
 
         params = {}
         params['typeId'] = event_type_id
@@ -88,7 +88,7 @@ class Events(Securable, object):
             Type must support .fromJson()  Default is None.
             If None returns a dynamic Python object from the data.
         """
-        self.__base_client.validateParameters(namespace_id, event_type_id, events)
+        self.__base_client.validateRequiredParameters(namespace_id, event_type_id, events)
 
         params = {}
         params['typeId'] = event_type_id
@@ -120,7 +120,7 @@ class Events(Securable, object):
         :param event_type_id: The event TypeId being deleted.
         :param event_id: The event id to delete.
         """
-        self.__base_client.validateParameters(namespace_id, event_type_id, event_id)
+        self.__base_client.validateRequiredParameters(namespace_id, event_type_id, event_id)
 
         params = {}
         params['typeId'] = event_type_id

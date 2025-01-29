@@ -30,7 +30,7 @@ class Enumerations(Securable, object):
         :param bool include_deleted: Parameter indicating whether to include soft-deleted Enumerations. If unspecified, a default value of false is used.
         :param str filter: Parameter representing the condition for results to be filtered by. If unspecified, results are not filtered.
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         params = {}
         if skip is not None:
@@ -63,7 +63,7 @@ class Enumerations(Securable, object):
         :param Enumeration enumeration: An enumeration object
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         if not isinstance(enumeration, Enumeration):
             raise TypeError
@@ -86,7 +86,7 @@ class Enumerations(Securable, object):
         :param str enumeration_id: The enumeration identifier
         :param bool include_deleted: Parameter indicating whether to include soft-deleted Enumerations. If unspecified, a default value of false is used.
         """
-        self.__base_client.validateParameters(namespace_id, enumeration_id)
+        self.__base_client.validateRequiredParameters(namespace_id, enumeration_id)
 
         params = {}
         if include_deleted is not None:
@@ -111,7 +111,7 @@ class Enumerations(Securable, object):
         :param Enumeration enumeration: An enumeration object
         """
 
-        self.__base_client.validateParameters(namespace_id, enumeration_id)
+        self.__base_client.validateRequiredParameters(namespace_id, enumeration_id)
 
         if not isinstance(enumeration, Enumeration):
             raise TypeError
@@ -135,7 +135,7 @@ class Enumerations(Securable, object):
         :param Enumeration enumeration: An enumeration object
         """
 
-        self.__base_client.validateParameters(namespace_id, enumeration_id)
+        self.__base_client.validateRequiredParameters(namespace_id, enumeration_id)
 
         if not isinstance(enumeration, Enumeration):
             raise TypeError
@@ -157,7 +157,7 @@ class Enumerations(Securable, object):
         :param str enumeration_id: The enumeration identifier
         """
 
-        self.__base_client.validateParameters(namespace_id, enumeration_id)
+        self.__base_client.validateRequiredParameters(namespace_id, enumeration_id)
 
         response = self.__base_client.request('delete', self.__enumeration_path.format(
             namespace_id=namespace_id, enumeration_id=enumeration_id))
@@ -174,7 +174,7 @@ class Enumerations(Securable, object):
         :param list[Enumeration] enumerations: A list of enumeration objects
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         if not isinstance(enumerations, list[Enumeration]):
             raise TypeError
