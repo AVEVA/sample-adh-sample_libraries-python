@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.15_preview / 2025-01-29
+
+- Fixed regression calling Signups without CommunityId
+
 ## 0.10.14_preview / 2024-12-26
 
 - Fixed issue where variables were not included in GraphQL request
