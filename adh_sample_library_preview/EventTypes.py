@@ -30,7 +30,7 @@ class EventTypes(Securable, object):
         :param bool include_deleted: Parameter indicating whether to include soft-deleted EventTypes. If unspecified, a default value of false is used.
         :param str filter: Parameter representing the condition for results to be filtered by. If unspecified, results are not filtered.
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         params = {}
         if skip is not None:
@@ -63,7 +63,7 @@ class EventTypes(Securable, object):
         :param EventType event_type: An event type object
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         if not isinstance(event_type, EventType):
             raise TypeError
@@ -86,7 +86,7 @@ class EventTypes(Securable, object):
         :param str event_type_id: The id of the EventType.
         :param bool include_deleted: Parameter indicating whether to include soft-deleted EventTypes. If unspecified, a default value of false is used.
         """
-        self.__base_client.validateParameters(namespace_id, event_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, event_type_id)
 
         params = {}
         if include_deleted is not None:
@@ -111,7 +111,7 @@ class EventTypes(Securable, object):
         :param EventType event_type:  An event type object
         """
 
-        self.__base_client.validateParameters(namespace_id, event_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, event_type_id)
 
         if not isinstance(event_type, EventType):
             raise TypeError
@@ -135,7 +135,7 @@ class EventTypes(Securable, object):
         :param EventType event_type:  An event type object
         """
 
-        self.__base_client.validateParameters(namespace_id, event_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, event_type_id)
 
         if not isinstance(event_type, EventType):
             raise TypeError
@@ -157,7 +157,7 @@ class EventTypes(Securable, object):
         :param str event_type_id: The id of the EventType.
         """
 
-        self.__base_client.validateParameters(namespace_id, event_type_id)
+        self.__base_client.validateRequiredParameters(namespace_id, event_type_id)
 
         response = self.__base_client.request('delete', self.__event_type_path.format(
             namespace_id=namespace_id, event_type_id=event_type_id))
@@ -174,7 +174,7 @@ class EventTypes(Securable, object):
         :param list[EventType] event_types: A list list event type objects
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         if not isinstance(event_types, list[EventType]):
             raise TypeError
