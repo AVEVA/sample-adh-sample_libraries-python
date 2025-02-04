@@ -3,6 +3,7 @@
 ## 0.10.15_preview / 2025-01-29
 
 - Fixed regression calling Signups without CommunityId
+- BREAKING CHANGE: to named parameters in Signups.createSignup and Signups.updateSignup
 
 ## 0.10.14_preview / 2024-12-26
 
