@@ -55,8 +55,8 @@ class Signups(object):
         Creates a signup for the list of resource identifiers provided. 
 
         :param str namespace_id: id of namespace to work against
-        :param str community_id: Community unique identifier. Represents a signup for resources shared to the specified Community Id.
         :param CreateSignupInput body: Input of the signup to be created.
+        :param str community_id: Unique Community Identifier.
         """
 
         self.__base_client.validateRequiredParameters(namespace_id)
@@ -83,6 +83,7 @@ class Signups(object):
 
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup Identifier.
+        :param str community_id: Unique Community Identifier.
         """
 
         self.__base_client.validateRequiredParameters(namespace_id, signup_id)
@@ -109,6 +110,7 @@ class Signups(object):
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup Identifier.
         :param UpdateSignupInput body: Signup input object to replace the existing signup's properties.
+        :param str community_id: Unique Community Identifier.
         """
 
         self.__base_client.validateRequiredParameters(namespace_id, signup_id, body)
@@ -132,6 +134,7 @@ class Signups(object):
 
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup unique identifier
+        :param str community_id: Unique Community Identifier.
         """
 
         self.__base_client.validateRequiredParameters(namespace_id, signup_id)
@@ -152,6 +155,7 @@ class Signups(object):
 
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup unique identifier
+        :param str community_id: Unique Community Identifier.
         """
         self.__base_client.validateRequiredParameters(namespace_id, signup_id)
         
@@ -174,6 +178,7 @@ class Signups(object):
 
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Signup unique identifier
+        :param str community_id: Unique Community Identifier.
         """
         self.__base_client.validateRequiredParameters(namespace_id, signup_id)
         
@@ -198,8 +203,8 @@ class Signups(object):
 
         :param str namespace_id: id of namespace to work against
         :param str signup_id: Unique Signup Identifier.
-        :param str community_id: Unique Community Identifier.
         :param SignupResourcesInput body: Signup resources input object to replace signup's resources.
+        :param str community_id: Unique Community Identifier.
         """
 
         self.__base_client.validateRequiredParameters(namespace_id, signup_id, body)
@@ -222,6 +227,7 @@ class Signups(object):
         :param str namespace_id: The namespace identifier.
         :param str signup_id: The signup identifier.
         :param str bookmark: An encoded token representing a sequential starting point from which updates are to be retrieved for the current request. A request URI including a starter Bookmark token is provided in the 'Get-Updates' header of a successful Signup activation response.
+        :param str community_id: Unique Community Identifier.
         """
 
         self.__base_client.validateRequiredParameters(namespace_id, signup_id)
