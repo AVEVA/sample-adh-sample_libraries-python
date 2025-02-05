@@ -36,7 +36,7 @@ class Streams(PatchableSecurable, object):
         :param stream_id: id of the stream
         :return:the Stream as SdsStream
         """
-        self.__base_client.validateParameters(namespace_id, stream_id)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id)
         
         response = self.__base_client.request(
             'GET',
@@ -80,7 +80,7 @@ class Streams(PatchableSecurable, object):
         :param stream_id: id of the stream
         :return: the stream type as an SdsType
         """
-        self.__base_client.validateParameters(namespace_id, stream_id)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id)
 
         response = self.__base_client.request(
             'GET',
@@ -104,7 +104,7 @@ class Streams(PatchableSecurable, object):
         :param count: number of streams to limit to
         :return: array of SdsStreams
         """
-        self.__base_client.validateParameters(namespace_id, query)
+        self.__base_client.validateRequiredParameters(namespace_id, query)
 
         response = self.__base_client.request(
             'GET',
@@ -124,7 +124,7 @@ class Streams(PatchableSecurable, object):
         :param stream: the stream to Create or retrieve, as a SDsStream
         :return: the created Stream as an SdsStream
         """
-        self.__base_client.validateParameters(namespace_id, stream)
+        self.__base_client.validateRequiredParameters(namespace_id, stream)
         if stream is None or not isinstance(stream, SdsStream):
             raise TypeError
 
@@ -148,7 +148,7 @@ class Streams(PatchableSecurable, object):
         :param stream: the stream to Create or update, as a SDsStream
         :return: the created or updated Stream as an SdsStream
         """
-        self.__base_client.validateParameters(namespace_id, stream)
+        self.__base_client.validateRequiredParameters(namespace_id, stream)
         if not isinstance(stream, SdsStream):
             raise TypeError
 
@@ -171,7 +171,7 @@ class Streams(PatchableSecurable, object):
         :param stream_view_id: if of the streamview to change the type to
         :return:
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, stream_view_id)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, stream_view_id)
 
         response = self.__base_client.request(
             'PUT',
@@ -191,7 +191,7 @@ class Streams(PatchableSecurable, object):
         :param stream_id: id of the stream to delete
         :return:
         """
-        self.__base_client.validateParameters(namespace_id, stream_id)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id)
 
         response = self.__base_client.request(
             'DELETE',
@@ -211,7 +211,7 @@ class Streams(PatchableSecurable, object):
         :param tags: tags to create or update. expected for is an array of strings
         :return:
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         response = self.__base_client.request(
             'PUT',
@@ -232,7 +232,7 @@ class Streams(PatchableSecurable, object):
         :param metadata: metadata to create or update. expected for is an dict(string,string)
         :return:
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         response = self.__base_client.request(
             'PUT',
@@ -253,7 +253,7 @@ class Streams(PatchableSecurable, object):
         :param patch: a JSON patch document
         :return:
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         response = self.__base_client.request(
             'PATCH',
@@ -273,7 +273,7 @@ class Streams(PatchableSecurable, object):
         :param stream_id: id of the stream to get the tags of
         :return: stream's tags
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         response = self.__base_client.request(
             'GET',
@@ -295,7 +295,7 @@ class Streams(PatchableSecurable, object):
         :param key: specific metadata field to retrieve
         :return: value at the key
         """
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         response = self.__base_client.request(
             'GET',
@@ -327,7 +327,7 @@ class Streams(PatchableSecurable, object):
         :return: the value.  If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, index)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, index)
 
         return self.getValueUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -346,7 +346,7 @@ class Streams(PatchableSecurable, object):
         :return: the value.  If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, index)
+        self.__base_client.validateRequiredParameters(url, index)
 
         response = self.__base_client.request(
             'GET', self.__data_path.format(stream=url), params={'index': index}, additional_headers=additional_headers)
@@ -368,7 +368,7 @@ class Streams(PatchableSecurable, object):
         :return: the value.  If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id)
 
         return self.getFirstValueUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -387,7 +387,7 @@ class Streams(PatchableSecurable, object):
         :return: the value.  If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url)
+        self.__base_client.validateRequiredParameters(url)
 
         response = self.__base_client.request(
             'GET', self.__first_path.format(stream=url), additional_headers=additional_headers)
@@ -409,7 +409,7 @@ class Streams(PatchableSecurable, object):
         :return: the value.  If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id)
 
         return self.getLastValueUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -428,7 +428,7 @@ class Streams(PatchableSecurable, object):
         :return: the value.  If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url)
+        self.__base_client.validateRequiredParameters(url)
 
         response = self.__base_client.request(
             'GET', self.__last_path.format(stream=url), additional_headers=additional_headers)
@@ -455,7 +455,7 @@ class Streams(PatchableSecurable, object):
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, end)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, end)
 
         return self.getWindowValuesUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -479,7 +479,7 @@ class Streams(PatchableSecurable, object):
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, start, end)
+        self.__base_client.validateRequiredParameters(url, start, end)
 
         response = self.__base_client.request(
             'GET', self.__data_path.format(stream=url),
@@ -517,7 +517,7 @@ class Streams(PatchableSecurable, object):
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, end, count, continuation_token)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, end, count, continuation_token)
 
         return self.getWindowValuesPagedUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -553,7 +553,7 @@ class Streams(PatchableSecurable, object):
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, start, end, count, continuation_token)
+        self.__base_client.validateRequiredParameters(url, start, end, count, continuation_token)
 
         params = {'startIndex': start, 'endIndex': end, 'filter': filter,
                 'count': count, 'continuationToken': continuation_token}
@@ -592,7 +592,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class
             defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, end)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, end)
 
         return self.getWindowValuesFormUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -616,7 +616,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class
             defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, start, start, end)
+        self.__base_client.validateRequiredParameters(url, start, start, end)
 
         response = self.__base_client.request(
             'GET', self.__data_path.format(stream=url), params={'startIndex': start, 'endIndex': end, 'form': form}, additional_headers=additional_headers)
@@ -649,7 +649,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class
             is defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, skip, count, boundary_type)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, skip, count, boundary_type)
         if reversed is None or not isinstance(reversed, bool):
             raise TypeError
 
@@ -683,7 +683,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class
             is defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, start, start, skip, count, boundary_type)
+        self.__base_client.validateRequiredParameters(url, start, start, skip, count, boundary_type)
         if reversed is None or not isinstance(reversed, bool):
             raise TypeError
 
@@ -720,7 +720,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class is
         defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, end, count)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, end, count)
 
         return self.getRangeValuesInterpolatedUrl(
             self.__stream_path.format(
@@ -746,7 +746,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class is
         defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, start, end, count)
+        self.__base_client.validateRequiredParameters(url, start, end, count)
 
         response = self.__base_client.request(
             'GET', self.__transform_interpolated_path.format(stream=url),
@@ -772,7 +772,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class is
         defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, index)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, index)
 
         return self.getIndexCollectionValuesUrl(
             self.__stream_path.format(
@@ -797,7 +797,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class is
         defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, index)
+        self.__base_client.validateRequiredParameters(url, index)
 
         params = []
         for i in index:
@@ -837,7 +837,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class is
             defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, end, sample_by, intervals)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, end, sample_by, intervals)
 
         return self.getSampledValuesUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -870,7 +870,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data in type specified if value_class is
             defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, start, end, sample_by, intervals)
+        self.__base_client.validateRequiredParameters(url, start, end, sample_by, intervals)
 
         # if stream_view_id is set, use /transform/ route
         if len(stream_view_id):
@@ -913,7 +913,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data summary in type specified if value_class
             is defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, end, count)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, end, count)
 
         return self.getSummariesUrl(self.__stream_path.format(
             tenant_id=self.__tenant,
@@ -939,7 +939,7 @@ class Streams(PatchableSecurable, object):
         :return: An array of the data summary in type specified if value_class
             is defined.  Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(url, start, end, count)
+        self.__base_client.validateRequiredParameters(url, start, end, count)
 
         paramsToUse = {'startIndex': start,
                         'endIndex': end,
@@ -971,7 +971,7 @@ class Streams(PatchableSecurable, object):
             Can be an array of values of a type that has toJson defined.
         :return:
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, values)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, values)
 
         if callable(getattr(values[0], 'toJson', None)):
             events = []
@@ -1003,7 +1003,7 @@ class Streams(PatchableSecurable, object):
         Can be an array of values of a type that has toJson defined.
         :return:
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, values)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, values)
 
         if callable(getattr(values[0], 'toJson', None)):
             events = []
@@ -1035,7 +1035,7 @@ class Streams(PatchableSecurable, object):
             Can be an array of values of a type that has toJson defined.
         :return:
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, values)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, values)
 
         if callable(getattr(values[0], 'toJson', None)):
             events = []
@@ -1065,7 +1065,7 @@ class Streams(PatchableSecurable, object):
         :param key: the index to remove
         :return:
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, key)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, key)
 
         response = self.__base_client.request(
             'DELETE',
@@ -1088,7 +1088,7 @@ class Streams(PatchableSecurable, object):
         :param end: ending index
         :return:
         """
-        self.__base_client.validateParameters(namespace_id, stream_id, start, end)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_id, start, end)
 
         response = self.__base_client.request(
             'delete',
@@ -1120,7 +1120,7 @@ class Streams(PatchableSecurable, object):
             If value_class is defined it is in this type.
             Otherwise it is a dynamic Python object
         """
-        self.__base_client.validateParameters(namespace_id, stream_ids, start, end, join_mode)
+        self.__base_client.validateRequiredParameters(namespace_id, stream_ids, start, end, join_mode)
     
         response = self.__base_client.request(
             'GET',
