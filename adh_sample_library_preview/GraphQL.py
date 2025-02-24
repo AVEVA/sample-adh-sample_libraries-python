@@ -14,7 +14,7 @@ class GraphQL(object):
 
         self.__setPathAndQueryTemplates()
 
-    def executeQuery(self, namespace_id: str, query: str, variables: str = None, operation_name: str = None, continuation: str = None, metrics: bool = None, data_class: type = None) -> Any:
+    def executeQuery(self, namespace_id: str, query: str, variables: dict = None, operation_name: str = None, continuation: str = None, metrics: bool = None, data_class: type = None) -> Any:
         """
         Executes a GraphQL Query or Mutation based on the query arguments of a GET request.
         It returns a GraphQLResponse in JSON format. The format of the response varies depending on the request.
@@ -31,10 +31,11 @@ class GraphQL(object):
             If None returns a dynamic Python object from the data.
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
 
         request_body = {
-            'query': query
+            'query': query,
+            'variables': variables
         }
 
         params = {}
@@ -76,7 +77,7 @@ class GraphQL(object):
         :param namespace_id: id of namespace to work against
         """
 
-        self.__base_client.validateParameters(namespace_id)
+        self.__base_client.validateRequiredParameters(namespace_id)
         response = self.__base_client.request('post', self.__graph_ql_schema_path.format(
             namespace_id=namespace_id), data=body, additional_headers={'Content-type': 'text/plain'})
         self.__base_client.checkResponse(

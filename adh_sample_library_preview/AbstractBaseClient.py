@@ -16,7 +16,7 @@ class AbstractBaseClient(ABC):
 
 
     @abstractmethod
-    def validateParameters(*args):
+    def validateRequiredParameters(*args):
         pass
 
 

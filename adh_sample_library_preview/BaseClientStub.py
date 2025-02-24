@@ -38,7 +38,7 @@ class BaseClientStub(AbstractBaseClient):
         return response
 
 
-    def validateParameters(*args):
+    def validateRequiredParameters(*args):
         for arg in args:
             if arg is None:
                 raise TypeError
