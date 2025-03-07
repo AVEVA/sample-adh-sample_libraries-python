@@ -65,7 +65,10 @@ class StatusConfiguration(object):
             return result
 
         if 'DefinitionType' in content:
-            result.DefinitionType = StatusDefinitionType[content['DefinitionType']]
+            try:
+                result.DefinitionType = StatusDefinitionType(content['DefinitionType'])
+            except: 
+                result.DefinitionType = StatusDefinitionType[content['DefinitionType']]
 
         if 'Definition' in content:
             result.Definition = StatusMapping.fromJson(content['Definition'])
