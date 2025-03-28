@@ -47,7 +47,7 @@ class Update(object):
         return json.dumps(self.toDictionary())
 
     def toDictionary(self) -> dict[str, Any]:
-        result = {}
+        result = {'events':[]}
 
         if self.ResourceId is not None:
             result['resourceId'] = self.ResourceId

@@ -2,6 +2,10 @@
 
 ## 0.10.16_preview / 2025-03-07
 
+- Fixed issue in Update toDictionary function
+
+## 0.10.16_preview / 2025-03-07
+
 - Fixed issue with status enum support
   
 ## 0.10.15_preview / 2025-01-29
