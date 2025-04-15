@@ -56,6 +56,7 @@ class Update(object):
             result['operation'] = self.Operation.name
 
         if self.Events is not None:
+            result['events'] = []
             for event in self.Events:
                 result['events'].append(event)
 
