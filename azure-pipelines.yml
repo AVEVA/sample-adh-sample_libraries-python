@@ -35,7 +35,7 @@ variables:
 
 parameters:
   - name: pool
-    default: DevOps Managed AKS Linux General Purpose 
+    default: DevOps-Managed-Ubt22-Mdp 
   - name: containerDemands
     type: object
     default: ['Agent.OS -equals Linux']
