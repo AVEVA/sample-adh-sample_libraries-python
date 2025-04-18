@@ -26,6 +26,7 @@ resources:
     - repository: templates
       type: github
       name: AVEVA/AVEVA-Samples
+      endpoint: AVEVA
       ref: refs/heads/agentpoolmigration
 
 variables:
