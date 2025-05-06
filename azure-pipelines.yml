@@ -19,14 +19,15 @@ schedules:
 
 resources:
   repositories:
-    - repository: OpsGuildAutomationRepo
+    - repository: ArchitectureRepo
       type: git
-      name: DevOps/opsguild.automation
+      name: Architecture/Architecture
       ref: refs/heads/main
     - repository: templates
       type: github
       name: AVEVA/AVEVA-Samples
       endpoint: AVEVA
+      ref: refs/heads/agentpoolmigration
 
 variables:
   - name: analysisProject
@@ -34,7 +35,7 @@ variables:
 
 parameters:
   - name: pool
-    default: DevOps Managed Containers Build
+    default: DevOps-Managed-Ubt22-Mdp 
   - name: containerDemands
     type: object
     default: ['Agent.OS -equals Linux']
@@ -42,6 +43,7 @@ parameters:
 jobs:
   - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
     parameters:
+      poolForExecution: 'Cloud Platform CONNECT v2 Development'
       buildSteps:
         - script: |
             echo Install tools
