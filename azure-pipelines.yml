@@ -45,6 +45,13 @@ jobs:
       buildSteps:
         - script: |
             echo Install tools
+            echo DEBUG print tool locations
+            which python
+            which python3
+            echo DEBUG print pip locations
+            python -m pip --version
+            python3 -m pip --version
+            echo Begin installing with pip
             pip install wheel
             pip install twine
             echo Build library
