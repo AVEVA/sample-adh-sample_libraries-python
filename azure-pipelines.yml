@@ -45,10 +45,10 @@ jobs:
       buildSteps:
         - script: |
             echo Install tools
-            call pip install wheel
-            call pip install twine
+            pip install wheel
+            pip install twine
             echo Build library
-            call python setup.py sdist bdist_wheel
+            python setup.py sdist bdist_wheel
             echo Complete
           displayName: 'Build'
 
