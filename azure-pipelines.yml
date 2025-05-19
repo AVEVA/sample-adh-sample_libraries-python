@@ -56,6 +56,8 @@ jobs:
             pip install twine
             echo Build library
             python setup.py sdist bdist_wheel
+            echp Install library
+            pip install .
             echo Complete
           displayName: 'Build'
 
