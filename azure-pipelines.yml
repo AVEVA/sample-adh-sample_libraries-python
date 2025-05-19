@@ -72,10 +72,10 @@ jobs:
           secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, Resource'
 
       - script: |
-          echo Install test tools  
-          pip install pytest
           echo Install requirements
-          pip install -r requirements.txt
+          pip install ".[test]"
+          echo Listing pip packages after installing test suite
+          pip list
           echo Run tests
           cd ./adh_sample_library_preview/Tests
           python -m pytest --junitxml=junit/test-results-baseclient.xml test_baseclient.py --e2e True
