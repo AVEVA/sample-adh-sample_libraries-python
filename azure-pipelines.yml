@@ -22,7 +22,7 @@ resources:
     - repository: ArchitectureRepo
       type: git
       name: Architecture/Architecture
-      ref: refs/heads/main
+      ref: refs/heads/fixpip
     - repository: templates
       type: github
       name: AVEVA/AVEVA-Samples
