@@ -45,18 +45,11 @@ jobs:
       buildSteps:
         - script: |
             echo Install tools
-            echo DEBUG print tool locations
-            which python
-            which python3
-            echo DEBUG print pip locations
-            python -m pip --version
-            python3 -m pip --version
-            echo Begin installing with pip
             pip install wheel
             pip install twine
             echo Build library
             python setup.py sdist bdist_wheel
-            echp Install library
+            echo Install library
             pip install .
             echo Complete
           displayName: 'Build'
@@ -72,10 +65,8 @@ jobs:
           secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, Resource'
 
       - script: |
-          echo Install requirements
+          echo Install requirements for tests
           pip install ".[test]"
-          echo Listing pip packages after installing test suite
-          pip list
           echo Run tests
           cd ./adh_sample_library_preview/Tests
           python -m pytest --junitxml=junit/test-results-baseclient.xml test_baseclient.py --e2e True
