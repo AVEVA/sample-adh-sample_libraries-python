@@ -34,11 +34,11 @@ def test_check_response_error_response(baseClient):
 
 def test_validate_parameters_raises_error(baseClient):
     with pytest.raises(TypeError):
-        baseClient.validateParameters('good', 'gooder', None)
+        baseClient.validateRequiredParameters('good', 'gooder', None)
 
     with pytest.raises(TypeError):
-        baseClient.validateParameters('good', 'gooder', [])
+        baseClient.validateRequiredParameters('good', 'gooder', [])
 
 
 def test_validate_parameters_valid(baseClient):
-    baseClient.validateParameters('good', 'gooder', 'goodest')
+    baseClient.validateRequiredParameters('good', 'gooder', 'goodest')
