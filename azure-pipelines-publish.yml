@@ -1,7 +1,7 @@
 jobs:
   - job: PublishLibrary
     pool:
-      name: DevOps Managed Containers Build
+      name: DevOps-Managed-Ubt22-Mdp
       demands: Agent.OS -equals Linux
     steps:
       - bash: |
