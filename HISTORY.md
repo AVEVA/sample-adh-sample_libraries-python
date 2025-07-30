@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.18_preview / 2025-07-30
+
+- Fixed issue using fields parameter in Events.getEvents()
+
 ## 0.10.17_preview / 2025-04-15
 
 - Fixed issue in Update toDictionary function
