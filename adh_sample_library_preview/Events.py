@@ -52,7 +52,7 @@ class Events(Securable, object):
         if id is not None:
             params['id'] = id
         if fields is not None:
-            params['count'] = count
+            params['fields'] = fields
         if filter is not None:
             params['filter'] = filter
         if order_by is not None:
