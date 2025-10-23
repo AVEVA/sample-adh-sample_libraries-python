@@ -187,6 +187,6 @@ class TypeProperty(object):
             result.Description = content['Description']
 
         if 'Uom' in content:
-            result.Description = content['Uom']
+            result.Uom = content['Uom']
 
         return result
