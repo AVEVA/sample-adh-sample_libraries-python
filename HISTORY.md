@@ -1,9 +1,14 @@
 # Version History
 
-## 0.10.18_preview / 2025-05-19
+## 0.10.19_preview / 2025-10-23
 
+- Fixed issue where event type property Uom and description fields are swapped
 - Fixed failing tests 
 - Updated requirements for tests
+
+## 0.10.18_preview / 2025-07-30
+
+- Fixed issue using fields parameter in Events.getEvents()
 
 ## 0.10.17_preview / 2025-04-15
 
