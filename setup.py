@@ -19,9 +19,11 @@ setuptools.setup(
         'python-dateutil>=2.8.2',
         'jsonpatch>=1.32'
     ],
-    tests_require = [
-        'pytest>=7.0.1',
-    ],
+    extras_require={
+        'test': [
+            'pytest>=7.0.1',
+        ]
+    },
     python_requires='>=3.7',
     classifiers=[
         'Programming Language :: Python :: 3',

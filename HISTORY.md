@@ -3,6 +3,8 @@
 ## 0.10.19_preview / 2025-10-23
 
 - Fixed issue where event type property Uom and description fields are swapped
+- Fixed failing tests 
+- Updated requirements for tests
 
 ## 0.10.18_preview / 2025-07-30
 

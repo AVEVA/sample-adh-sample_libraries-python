@@ -45,10 +45,12 @@ jobs:
       buildSteps:
         - script: |
             echo Install tools
-            call pip install wheel
-            call pip install twine
+            pip install wheel
+            pip install twine
             echo Build library
-            call python setup.py sdist bdist_wheel
+            python setup.py sdist bdist_wheel
+            echo Install library
+            pip install .
             echo Complete
           displayName: 'Build'
 
@@ -63,10 +65,8 @@ jobs:
           secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, Resource'
 
       - script: |
-          echo Install test tools  
-          pip install pytest
-          echo Install requirements
-          pip install -r requirements.txt
+          echo Install requirements for tests
+          pip install ".[test]"
           echo Run tests
           cd ./adh_sample_library_preview/Tests
           python -m pytest --junitxml=junit/test-results-baseclient.xml test_baseclient.py --e2e True
