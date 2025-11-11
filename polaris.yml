@@ -1,5 +1,5 @@
 version: '1'
-serverUrl: https://osisoft.polaris.synopsys.com
+serverUrl: __POLARIS_SERVER_URL_TOKEN__
 install:
   coverity:
     version: default
