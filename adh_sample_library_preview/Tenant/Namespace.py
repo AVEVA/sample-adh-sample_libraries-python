@@ -9,12 +9,13 @@ from .NamespaceProvisioningState import NamespaceProvisioningState
 class Namespace(object):
     """ADH namespace definition"""
 
-    def __init__(self, id: str = None, region: str = None, namespace_self: str = None, description: str = None, state: NamespaceProvisioningState = None,
+    def __init__(self, id: str = None, region: str = None, namespace_self: str = None, description: str = None, name: str = None, state: NamespaceProvisioningState = None,
                  owner: Trustee = None, access_control: AccessControlList = None, region_id: str = None, instance_id: str = None):
         self.Id = id
         self.Region = region
         self.Self = namespace_self
         self.Description = description
+        self.Name = name
         self.State = state
         self.Owner = owner
         self.AccessControl = access_control
@@ -52,6 +53,14 @@ class Namespace(object):
     @Description.setter
     def Description(self, value: str):
         self.__description = value
+
+    @property
+    def Name(self) -> str:
+        return self.__name
+
+    @Name.setter
+    def Name(self, value: str):
+        self.__name = value
 
     @property
     def State(self) -> NamespaceProvisioningState:
@@ -108,6 +117,9 @@ class Namespace(object):
         if self.Description is not None:
             result['Description'] = self.Description
 
+        if self.Name is not None:
+            result['Name'] = self.Name
+
         if self.State is not None:
             result['State'] = self.State.value
 
@@ -143,6 +155,9 @@ class Namespace(object):
 
         if 'Description' in content:
             result.Description = content['Description']
+
+        if 'Name' in content:
+            result.Name = content['Name']
 
         if 'State' in content:
             result.State = content['State']

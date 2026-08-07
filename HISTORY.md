@@ -1,5 +1,9 @@
 # Version History
 
+## 0.10.20_preview / 2026-06-24
+
+- Added Name property to Namespace class definition
+
 ## 0.10.19_preview / 2025-10-23
 
 - Fixed issue where event type property Uom and description fields are swapped
